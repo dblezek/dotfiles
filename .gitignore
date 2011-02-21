@@ -1,0 +1,3 @@
+*.elc
+.emacs.desktop
+auto-save-list
