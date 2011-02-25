@@ -8,7 +8,7 @@
  '(longlines-show-hard-newlines nil)
  '(longlines-wrap-follows-window-size t)
  '(matlab-auto-fill f)
- '(save-place t nil (saveplace))
+;; '(save-place t nil (saveplace))
  '(show-paren-mode t nil (paren))
  '(spell-command "aspell")
  '(standard-indent 2)
