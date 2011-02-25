@@ -3,7 +3,6 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-;;  '(fringe-mode (quote (0)) nil (fringe))
  '(groovy-indent-level 2 t)
  '(js-indent-level 2)
  '(longlines-show-hard-newlines nil)
@@ -85,31 +84,15 @@
 ;; (global-set-key [f10] 'call-last-kbd-macro)
 (global-set-key '[(f6)] 'join-line)
 
-(c-add-style "itk"
-             '("stroustrup"
-               (c-basic-offset . 2)
-               (c-offsets-alist
-                (c . c-lineup-dont-change)
-                (innamespace . 0)
-                (inline-open . 0)
-                (substatement-open . +)
-                (statement-block-intro . 0) ) ) )
-(defun itk-c-mode-hook ()
-  (c-set-style
-   (if (and (buffer-file-name)
-            (string-match "itk" (buffer-file-name)))
-       "itk"
-     "stroustrup")))
-
 ;; (add-hook 'c++-mode-hook (function (lambda () (c-set-style "itk"))))
 ;; (add-hook 'c++-mode-hook 'itk-c-mode-hook)
+
 ;; (setq auto-mode-alist (cons '("\\.txx$" . itk-c-mode-hook) auto-mode-alist))
 (when (fboundp 'magic-mode-alist)
-  (add-to-list 'magic-mode-alist '( "^#ifndef[[:space:]]?__itk.*" . itk-c-mode-hook))
+  (add-to-list 'magic-mode-alist '( "^#ifndef[[:space:]]?__itk.*" . itk-mode))
 )
 
-(add-to-list 'load-path "~/.emacs.d/")
-;; (require 'auto-save)
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/"))
 (require 'backup-dir)
 (setq bkup-backup-directory-info
       '((t "~/Temp/XEmacsBackups" ok-create full-path prepend-name)))
@@ -163,6 +146,10 @@
 (setq
  uniquify-buffer-name-style 'post-forward
  uniquify-separator ":")
+
+(autoload 'itk-mode "itk-mode" "ITK editing mode." t)
+(setq auto-mode-alist (cons '("itk*" . itk-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("sitk*$" . itk-mode) auto-mode-alist))
 
 ;; Trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
