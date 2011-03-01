@@ -88,9 +88,11 @@
 ;; (add-hook 'c++-mode-hook 'itk-c-mode-hook)
 
 ;; (setq auto-mode-alist (cons '("\\.txx$" . itk-c-mode-hook) auto-mode-alist))
-(when (fboundp 'magic-mode-alist)
-  (add-to-list 'magic-mode-alist '( "^#ifndef[[:space:]]?__itk.*" . itk-mode))
-)
+(setq auto-mode-alist (cons '("itk.*$" . itk-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("sitk.*$" . itk-mode) auto-mode-alist))
+;; (when (fboundp 'magic-mode-alist)
+;;   (add-to-list 'magic-mode-alist '( "^#ifndef[[:space:]]?__itk.*" . itk-mode))
+;;)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/"))
 (require 'backup-dir)
