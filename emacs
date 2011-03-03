@@ -87,6 +87,7 @@
 ;; (add-hook 'c++-mode-hook (function (lambda () (c-set-style "itk"))))
 ;; (add-hook 'c++-mode-hook 'itk-c-mode-hook)
 
+(autoload 'itk-mode "itk-mode" "ITK editing mode." t)
 ;; (setq auto-mode-alist (cons '("\\.txx$" . itk-c-mode-hook) auto-mode-alist))
 (setq auto-mode-alist (cons '("^[s]?itk" . itk-mode) auto-mode-alist))
 ;; (when (fboundp 'magic-mode-alist)
@@ -147,10 +148,6 @@
 (setq
  uniquify-buffer-name-style 'post-forward
  uniquify-separator ":")
-
-(autoload 'itk-mode "itk-mode" "ITK editing mode." t)
-(setq auto-mode-alist (cons '("itk*" . itk-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("sitk*$" . itk-mode) auto-mode-alist))
 
 ;; Trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
