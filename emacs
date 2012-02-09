@@ -4,11 +4,15 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(groovy-indent-level 2 t)
+ '(ispell-highlight-face (quote flyspell-incorrect))
+ '(ispell-program-name "/opt/local/bin/aspell")
  '(js-indent-level 2)
  '(longlines-show-hard-newlines nil)
  '(longlines-wrap-follows-window-size t)
  '(matlab-auto-fill f)
-;; '(save-place t nil (saveplace))
+ '(sh-basic-offset 2)
+ '(sh-indent-comment 4)
+ '(shell-file-name "/bin/bash")
  '(show-paren-mode t nil (paren))
  '(spell-command "aspell")
  '(standard-indent 2)
@@ -17,17 +21,23 @@
  '(tool-bar-mode nil)
  '(transient-mark-mode t))
 
-(custom-set-faces
+;; (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+;;  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "grey90" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "apple" :family "Monaco")))))
+
+;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
+(setq mac-command-modifier 'meta)
 
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\M-g"'goto-line)
 (global-set-key "\M-s" 'save-buffer)
+;; Move to the next window/frame
+(global-set-key "\M-`" 'next-multiframe-window)
 (setq kill-whole-line t)
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 ;; (load "/Users/blezek/.emacs.d/lua-mode.el")
 (setq auto-mode-alist
       (append
@@ -35,8 +45,8 @@
        '(("\\.config\\'" . lua-mode))
        '(("\\.h\\'" . c++-mode))
        '(("\\.json\\'" . js-mode))
+       '(("\.lua\'" . lua-mode))
        auto-mode-alist))
-;; '(("\.lua\'" . lua-mode))
 ;; '(("\.pro\'" . makefile-mode))
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
@@ -67,16 +77,20 @@
 (setq interpreter-mode-alist ( cons '("tclsh" . tcl-mode) interpreter-mode-alist))
 
 (setq auto-mode-alist (cons '("CMakeLists\\.txt$" . cmake-mode) auto-mode-alist))
-(autoload 'cmake-mode "cmake-mode""CMake editing mode." t)
+(autoload 'cmake-mode "cmake-mode" "CMake editing mode." t)
 
 ;; Autofill mode
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . flyspell-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("svn-commit\\.tmp$" . auto-fill-mode) auto-mode-alist))
 
 ;; Spaces not tabs
 (setq-default indent-tabs-mode nil)
 (setq kill-whole-line t)       ;;; Killing line also deletes \n
 (setq require-final-newline t) ;;; Put \n at end of last line
+
+;; Bash editing
+(setq sh-indent-comment 4)
 
 ;; F3 and F4 do the right thing!
 ;; (global-set-key [f8] 'defining-kbd-macro)
@@ -90,14 +104,35 @@
 (autoload 'itk-mode "itk-mode" "ITK editing mode." t)
 ;; (setq auto-mode-alist (cons '("\\.txx$" . itk-c-mode-hook) auto-mode-alist))
 (setq auto-mode-alist (cons '("^[s]?itk" . itk-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("^sitk" . itk-mode) auto-mode-alist))
 ;; (when (fboundp 'magic-mode-alist)
 ;;   (add-to-list 'magic-mode-alist '( "^#ifndef[[:space:]]?__itk.*" . itk-mode))
 ;;)
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/themes"))
+
+(require 'color-theme) 
+(color-theme-initialize) 
+(setq color-theme-is-global t)
+(color-theme-dark-laptop)
+
+;; Useful color themes:
+;; charcoal-black
+;; arjen
+;; clarity
+;; dark-laptop
+;; hober
+;; matrix
+;; midnight
+;; hacker
+
+
 (require 'backup-dir)
 (setq bkup-backup-directory-info
       '((t "~/Temp/XEmacsBackups" ok-create full-path prepend-name)))
+;; Keep Tramp happy...
+(setq tramp-bkup-backup-directory-info nil)
 (setq delete-old-versions t
       kept-old-versions 1
       kept-new-versions 3
@@ -123,6 +158,7 @@
 (require 'cmake-mode)
 (setq auto-mode-alist
       (append '(
+                ("\\.rst.inc\\'" . rst-mode)
                 ("\\.cl\\'" . c-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.cmake\\'" . cmake-mode))
@@ -140,17 +176,31 @@
         ))
 
 (add-hook 'c-mode-common-hook
-  (lambda()
-    (local-set-key  (kbd "M-<up>") 'ff-find-other-file)))
-
+          (lambda()
+            (local-set-key  (kbd "M-<up>") 'ff-find-other-file)))
+;; Remove trailing white space in C/C++ code
+(add-hook 'c-mode-common-hook
+      (lambda()
+        (add-hook 'local-write-file-hooks
+              '(lambda()
+                 (save-excursion
+                   (delete-trailing-whitespace))))))
 
 (require 'uniquify)
 (setq
  uniquify-buffer-name-style 'post-forward
  uniquify-separator ":")
 
+;; reStructuredText mode
+(add-hook 'rst-mode-hook 'flyspell-mode)
+(add-hook 'rst-mode-hook 'longlines-mode)
+
+
 ;; Trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'rst-mode-hook
+;;          (lambda()
+;;            (remove-hook 'before-save-hook 'delete-trailing-whitespace 'true) ) )
 
 
 ;; Cedet system

@@ -23,7 +23,6 @@
 (setq-default indent-tabs-mode nil)
 
 (autoload 'ispell "ispell" "Start ispell." t)
-(setq ispell-really-aspell t)
 (setq ispell-prefer-aspell t)
 
 (add-hook 'tex-mode-hook 'flyspell-mode)
