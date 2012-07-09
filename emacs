@@ -3,13 +3,14 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
  '(groovy-indent-level 2 t)
  '(ispell-highlight-face (quote flyspell-incorrect))
  '(ispell-program-name "/opt/local/bin/aspell")
  '(js-indent-level 2)
  '(longlines-show-hard-newlines nil)
  '(longlines-wrap-follows-window-size t)
- '(matlab-auto-fill f)
+ '(matlab-auto-fill nil)
  '(sh-basic-offset 2)
  '(sh-indent-comment 4)
  '(shell-file-name "/bin/bash")
@@ -81,7 +82,8 @@
 
 ;; Autofill mode
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . flyspell-mode) auto-mode-alist))
+;; (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . flyspell-mode) auto-mode-alist))
+
 (setq auto-mode-alist (cons '("svn-commit\\.tmp$" . auto-fill-mode) auto-mode-alist))
 
 ;; Spaces not tabs
@@ -127,6 +129,9 @@
 ;; midnight
 ;; hacker
 
+(require 'icicles)
+
+(require 'minimap)
 
 (require 'backup-dir)
 (setq bkup-backup-directory-info
@@ -160,6 +165,7 @@
       (append '(
                 ("\\.rst.inc\\'" . rst-mode)
                 ("\\.cl\\'" . c-mode)
+                ("\\.cu\\'" . c-mode)
                 ("CMakeLists\\.txt\\'" . cmake-mode)
                 ("\\.cmake\\'" . cmake-mode))
               auto-mode-alist))
@@ -210,3 +216,9 @@
 ;; (global-srecode-minor-mode 1)            ; Enable template insertion menu
 ;; (require 'semantic-ia)
 
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
