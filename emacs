@@ -1,8 +1,8 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
  '(groovy-indent-level 2 t)
  '(ispell-highlight-face (quote flyspell-incorrect))
@@ -19,8 +19,7 @@
  '(standard-indent 2)
  '(tcl-continued-indent-level 2)
  '(tcl-indent-level 2)
- '(tool-bar-mode nil)
- '(transient-mark-mode t))
+ '(tool-bar-mode nil))
 
 ;; (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -49,6 +48,13 @@
        '(("\.lua\'" . lua-mode))
        auto-mode-alist))
 ;; '(("\.pro\'" . makefile-mode))
+
+;;
+;; Setup puppet-mode for autoloading
+;;
+(autoload 'puppet-mode "puppet-mode" "Major mode for editing puppet manifests")
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
+
 
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
 (add-hook 'latex-mode-hook 'flyspell-mode)
@@ -149,6 +155,8 @@
 (setq font-lock-use-colors t)
 (setq font-lock-use-fonts nil)
 
+;; Font
+(set-face-attribute 'default nil :font "Source Code Pro-15")
 
 (autoload 'groovy-mode "groovy-mode""Groovy editing mode." t)
 ;; (setq-default groovy-indent-level 2)
@@ -217,8 +225,8 @@
 ;; (require 'semantic-ia)
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 145 :width normal :foundry "apple" :family "Source Code Pro")))))
