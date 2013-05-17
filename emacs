@@ -19,7 +19,8 @@
  '(standard-indent 2)
  '(tcl-continued-indent-level 2)
  '(tcl-indent-level 2)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch))))
 
 ;; (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -30,6 +31,8 @@
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
+;; Also in v23, moving was line by line visually, not by logical line
+(setq line-move-visual nil)
 
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\M-g"'goto-line)
@@ -70,6 +73,11 @@
              (define-key c++-mode-map "\C-m"
                'reindent-then-newline-and-indent)
              ))
+
+;; always indent on return
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+
 ;; If we match the text on the first line, set the mode
 (when (fboundp 'magic-mode-alist)
   (add-to-list 'magic-mode-alist '( ".*?iMI3C" . lua-mode))
@@ -209,6 +217,11 @@
 (add-hook 'rst-mode-hook 'flyspell-mode)
 (add-hook 'rst-mode-hook 'longlines-mode)
 
+;; Smart tabs?
+
+
+(require 'git)
+(require 'egg)
 
 ;; Trailing whitespace
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
