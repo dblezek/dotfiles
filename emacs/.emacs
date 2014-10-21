@@ -19,8 +19,8 @@
  '(standard-indent 2)
  '(tcl-continued-indent-level 2)
  '(tcl-indent-level 2)
- '(tool-bar-mode nil)
- '(vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch))))
+ '(tool-bar-mode nil))
+;; '(vc-handled-backends (quote (RCS CVS SVN SCCS Bzr Hg Mtn Arch))))
 
 ;; (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -221,7 +221,7 @@
 
 
 (require 'git)
-(require 'egg)
+;; (require 'egg)
 
 ;; Trailing whitespace
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
