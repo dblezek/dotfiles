@@ -5,6 +5,7 @@ install:
 	stow emacs
 	stow bash
 	stow slate
+	stow -t ~/.ssh ssh
 
 remove:
 	stow -vvD emacs
