@@ -33,12 +33,6 @@ alias lsl="ls -GF -la"
 alias dir=ls
 alias top="top -u"
 alias iMI3C-debug="/Users/blezek/Source/MI3CLib-macosx-debug/bin/iMI3C"
-# alias make3="make -j 3"
-# alias nmake="nice make"
-# alias SyncMusings="rsync -avz -e ssh ~/Source/Musings/ blezek@mi3c:/home/blezek/Source/Musings/"
-# alias SyncMusings="unison Musings"
-# alias SyncBlender="rsync -avz -e ssh ~/Documents/Animations/AneurysmDetection blezek@mi3c:/mi3c/projects/DJB/Blender/"
-# alias SyncCTA="rsync -avz -e ssh ~/Data/CTA/ blezek@mi3c:/mi3c/projects/CTA/"
 alias QMon="ssh -f -X mi3c qmon"
 alias g="./gradlew"
 
@@ -121,18 +115,18 @@ function current_git_branch {
 # Alias to help when a branch has moved on
 alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 
-# Ps1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:numbers}\W\#: '
-# PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:numbers$(parse_git_branch)}:\W\n\#: '
-
-# PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:numbers}\W\#: '
-# PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u$(parse_git_branch)}:\W\n\#: '
-
 
 # Color the GIT branch
 # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
 # No colors
 PS1='\h:\W$(parse_git_branch) \u\$ '
+
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:numbers}\W\#: '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:numbers$(parse_git_branch)}:\W\n\#: '
+# Make our terminal names more helpful to Timing
+PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 
 # Correcting directory names
 shopt -s cdspell
@@ -153,6 +147,8 @@ function cronenv () {
 
 # Clean up history by ignoring certain items
 export HISTIGNORE="&:ls"
+export HISTCONTROL=erasedups
+
 
 # bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
@@ -162,22 +158,14 @@ fi
 # Ignore files in completion, dumb .DS_Store files!
 export FIGNORE=.DS_Store
 
-##
-# Your previous /Users/blezek/.profile file was backed up as /Users/blezek/.profile.macports-saved_2011-08-24_at_14:04:26
-##
-
-# MacPorts Installer addition on 2011-08-24_at_14:04:26: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
+# Node modules
+export PATH=./node_modules/.bin:$PATH
 
 # Editor for commit messages
 export EDITOR="emacs -nw"
 
 # Correcting directory names
 shopt -s cdspell
-
-# ignore duplicates
-export HISTCONTROL=erasedups
 
 # Use logout to exit the shell
 set -o ignoreeof
