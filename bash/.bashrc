@@ -35,6 +35,7 @@ alias top="top -u"
 alias iMI3C-debug="/Users/blezek/Source/MI3CLib-macosx-debug/bin/iMI3C"
 alias QMon="ssh -f -X mi3c qmon"
 alias g="./gradlew"
+alias atom="/Applications/Atom.app/Contents/MacOS/Atom"
 
 function enscriptCode() {  enscript  -Ecpp -r2 -fCourier8 -o - "$@" | ps2pdf - "$@".pdf; }
 
