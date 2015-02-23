@@ -188,3 +188,6 @@ set visible-stats on
 # NPM, see .npmrc for details
 export PATH=${HOME}/macosx/npm/bin:${PATH}
 
+# GO
+export GOPATH=${HOME}/Source/go
+export PATH=${GOPATH}/bin:${PATH}

@@ -3,7 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
+ '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
+ '(go-command "~/Source/go/bin/go")
  '(groovy-indent-level 2 t)
  '(ispell-highlight-face (quote flyspell-incorrect))
  '(ispell-program-name "/opt/local/bin/aspell")
@@ -217,9 +218,46 @@
 (add-hook 'rst-mode-hook 'flyspell-mode)
 (add-hook 'rst-mode-hook 'longlines-mode)
 
+;; IDO, allows smart search
+(require 'ido)
+(ido-mode t)
+
 ;; Smart tabs?
 
+;; Package manager
+(require 'package)
+(package-initialize)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 
+(require 'auto-complete)
+(require 'auto-complete-config)
+(require 'go-autocomplete)
+(ac-config-default)
+
+;; Go configuration
+(defun my-go-mode-hook ()
+  ; Godef jump key binding                                                      
+  (local-set-key (kbd "M-.") 'godef-jump)
+  ;; Use goimports
+  (setq gofmt-command "goimports")
+  ;; Call Gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  )
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
+;; Tab width
+(setq default-tab-width 2)
+
+;; Get our path from the shell
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+(require 'fiplr)
+(global-set-key (kbd "C-x f") 'fiplr-find-file)
+(setq fiplr-ignored-globs '((directories (".git" ".svn" "build"))
+                            (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class"))))
 (require 'git)
 ;; (require 'egg)
 
