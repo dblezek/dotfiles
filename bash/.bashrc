@@ -184,3 +184,7 @@ ulimit -n 2048
 
 # Cross-compiling GO
 export PATH=${HOME}/Source/go/bin:${PATH}
+
+# GO
+export GOPATH=${HOME}/Source/go
+export PATH=${GOPATH}/bin:${PATH}
