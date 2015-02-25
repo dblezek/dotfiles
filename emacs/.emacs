@@ -3,7 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
+ '(completion-ignored-extensions
+   (quote
+    (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo" ".DS_Store")))
  '(go-command "~/Source/go/bin/go")
  '(groovy-indent-level 2 t)
  '(ispell-highlight-face (quote flyspell-incorrect))
@@ -13,7 +15,7 @@
  '(longlines-wrap-follows-window-size t)
  '(matlab-auto-fill nil)
  '(sh-basic-offset 2)
- '(sh-indent-comment 4)
+ '(sh-indent-comment 4 t)
  '(shell-file-name "/bin/bash")
  '(show-paren-mode t nil (paren))
  '(spell-command "aspell")
@@ -144,7 +146,7 @@
 ;; midnight
 ;; hacker
 
-(require 'icicles)
+;; (require 'icicles)
 
 (require 'minimap)
 
@@ -165,12 +167,18 @@
 (setq font-lock-use-fonts nil)
 
 ;; Font
-(set-face-attribute 'default nil :font "Source Code Pro-15")
+(set-face-attribute 'default nil :font "Source Code Pro-16")
 
 (autoload 'groovy-mode "groovy-mode""Groovy editing mode." t)
 ;; (setq-default groovy-indent-level 2)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
 (autoload 'longlines-mode "longlines.el""Minor mode for automatically wrapping long lines." t)
+
+;; In Makefiles, set the tab-width to 8
+(add-hook 'makefile-mode-hook
+          (function
+           (lambda()
+           (setq tab-width 8))))
 
 
 (autoload 'matlab-mode "matlab" "Enter Matlab mode." t)
@@ -226,10 +234,9 @@
 
 ;; Package manager
 (require 'package)
+;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
 
 (require 'auto-complete)
 (require 'auto-complete-config)
@@ -278,6 +285,11 @@
 (global-set-key (kbd "M-{") 'previous-buffer)
 (global-set-key (kbd "M-}") 'next-buffer)
 
+
+;; Neotree / projectile
+(require 'projectile)
+(require 'neotree)
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
