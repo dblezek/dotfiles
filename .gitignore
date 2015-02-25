@@ -1,3 +1,5 @@
 *.elc
 .emacs.desktop
 auto-save-list
+ac-comphist.dat
+

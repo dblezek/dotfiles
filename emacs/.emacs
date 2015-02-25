@@ -236,6 +236,30 @@
 (require 'go-autocomplete)
 (ac-config-default)
 
+;; Auto pair parens
+(electric-pair-mode 1)
+
+;; Make M-/ comment and uncomment lines
+(defun comment-eclipse ()
+  (interactive)
+  (let ((start (line-beginning-position))
+        (end (line-end-position)))
+    (when (or (not transient-mark-mode) (region-active-p))
+      (setq start (save-excursion
+                    (goto-char (region-beginning))
+                    (beginning-of-line)
+                    (point))
+            end (save-excursion
+                  (goto-char (region-end))
+                  (end-of-line)
+                  (point))))
+    (comment-or-uncomment-region start end)))
+
+(global-set-key (kbd "M-/") 'comment-eclipse)
+
+;; Line numbers
+(global-linum-mode)
+
 ;; Go configuration
 (defun my-go-mode-hook ()
   ; Godef jump key binding                                                      
@@ -250,9 +274,16 @@
 ;; Tab width
 (setq default-tab-width 2)
 
+;; Next / previous buffers
+(global-set-key (kbd "M-{") 'previous-buffer)
+(global-set-key (kbd "M-}") 'next-buffer)
+
+
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+
+
 
 (require 'fiplr)
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
@@ -281,3 +312,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 145 :width normal :foundry "apple" :family "Source Code Pro")))))
+
+;; Kill the scratch buffer
+(kill-buffer "*scratch*")
