@@ -9,6 +9,7 @@ export PATH=/usr/local/bin:$PATH
 # MI3CLib path
 export PATH=~/Source/MI3CLib-macosx/bin:$PATH
 export PATH=~/macosx/play/:$PATH
+export PATH=~/.macosx/BladeRunnerJS/sdk/:$PATH
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate MANPATH variable for use with MacPorts.
 export MANPATH=/opt/local/share/man:$MANPATH
@@ -176,6 +177,13 @@ set visible-stats on
 
 # NPM, see .npmrc for details
 export PATH=${HOME}/macosx/npm/bin:${PATH}
+export PATH=${HOME}/.macosx/bin:${PATH}
+
+# Bump up open files
+ulimit -n 2048
+
+# Cross-compiling GO
+export PATH=${HOME}/Source/go/bin:${PATH}
 
 # GO
 export GOPATH=${HOME}/Source/go
