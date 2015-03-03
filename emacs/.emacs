@@ -1,5 +1,5 @@
-(setenv "PATH" "/Users/blezek/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/blezek/Source/go/bin:/Users/blezek/Source/go-bin/bin")
-(setenv "GOPATH" "/Users/blezek/Source/go-bin")
+(setenv "PATH" "/Users/blezek/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/blezek/Source/go/bin")
+(setenv "GOPATH" "/Users/blezek/Source/go-bin:/Users/blezek/Source/bumped:/Users/blezek/Source/DEWEY/kiln")
 (setenv "GOROOT" "/Users/blezek/Source/go")
 
 ;; Package manager
@@ -26,8 +26,7 @@
 
 (require 'projectile)
 (setq projectile-mode t)
-;; No toolbar
-(tool-bar-mode nil)
+(load-file "~/.emacs.d/rename.el")
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
@@ -35,7 +34,8 @@
 (setq line-move-visual nil)
 
 (global-set-key [C-tab] 'other-window)
-(global-set-key "\M-g"'goto-line)
+(global-set-key "\M-g" 'goto-line)
+(global-set-key "\M-?" 'auto-complete)
 (global-set-key "\M-s" 'save-buffer)
 ;; Move to the next window/frame
 (global-set-key "\M-`" 'next-multiframe-window)
@@ -62,6 +62,14 @@
 (color-theme-initialize)
 (setq color-theme-is-global t)
 (color-theme-dark-laptop)
+
+;; Set the backup directory
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
 
 ;; (require 'backup-dir)
 ;; (setq bkup-backup-directory-info
@@ -139,9 +147,12 @@
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
+<<<<<<< Updated upstream
 ;; Tab width
 (setq tab-width 2)
 
+=======
+>>>>>>> Stashed changes
 ;; Next / previous buffers
 (global-set-key (kbd "M-{") 'previous-buffer)
 (global-set-key (kbd "M-}") 'next-buffer)
@@ -178,4 +189,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+<<<<<<< Updated upstream
+=======
+ '(tab-width 2)
+>>>>>>> Stashed changes
  '(tool-bar-mode nil))
