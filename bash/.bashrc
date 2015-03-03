@@ -182,9 +182,8 @@ export PATH=${HOME}/.macosx/bin:${PATH}
 # Bump up open files
 ulimit -n 2048
 
-# Cross-compiling GO
-export PATH=${HOME}/Source/go/bin:${PATH}
+# Cross-compiling GO, and standard go-bin
+export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:${PATH}
 
 # GO
-export GOPATH=${HOME}/Source/go
-export PATH=${GOPATH}/bin:${PATH}
+export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln

@@ -1,4 +1,4 @@
-(setenv "PATH" "/Users/blezek/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/blezek/Source/go/bin")
+(setenv "PATH" "/Users/blezek/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/blezek/Source/go/bin:/Users/blezek/Source/go-bin/bin")
 (setenv "GOPATH" "/Users/blezek/Source/go-bin")
 (setenv "GOROOT" "/Users/blezek/Source/go")
 
@@ -8,6 +8,11 @@
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
+
+;; smooth scrolling
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 ;; Go Configuration
 (require 'go-mode)
@@ -19,8 +24,10 @@
 (yas-global-mode 1)
 (setq ac-go-expand-arguments-into-snippets t)
 
+(require 'projectile)
+(setq projectile-mode t)
 ;; No toolbar
-(setq tool-bar-mode nil)
+(tool-bar-mode nil)
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
@@ -133,7 +140,7 @@
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 ;; Tab width
-(setq default-tab-width 2)
+(setq tab-width 2)
 
 ;; Next / previous buffers
 (global-set-key (kbd "M-{") 'previous-buffer)
@@ -166,3 +173,9 @@
 
 ;; Kill the scratch buffer
 (kill-buffer "*scratch*")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(tool-bar-mode nil))
