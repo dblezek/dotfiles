@@ -88,7 +88,7 @@
 (setq font-lock-use-fonts nil)
 
 ;; ;; Font
-(set-face-attribute 'default nil :font "Source Code Pro-14")
+(set-face-attribute 'default nil :font "Source Code Pro-15")
 
 ;; In Makefiles, set the tab-width to 8
 (add-hook 'makefile-mode-hook
@@ -110,10 +110,13 @@
 
 ;; IDO, allows smart search
 (require 'ido)
-(ido-mode t)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
 ;; Auto pair parens
 (electric-pair-mode 1)
+(show-paren-mode 1)
 
 ;; Make M-/ comment and uncomment lines
 (defun comment-eclipse ()
@@ -147,12 +150,6 @@
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
-<<<<<<< Updated upstream
-;; Tab width
-(setq tab-width 2)
-
-=======
->>>>>>> Stashed changes
 ;; Next / previous buffers
 (global-set-key (kbd "M-{") 'previous-buffer)
 (global-set-key (kbd "M-}") 'next-buffer)
@@ -162,6 +159,24 @@
 ;; (require 'projectile)
 ;; (require 'neotree)
 ;; (setq projectile-switch-project-action 'neotree-projectile-action)
+
+
+;; directory tree
+(require 'direx)
+(require 'popwin)
+(popwin-mode 1)
+;; (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
+
+;; If you are using popwin, you can use directory viewer as temporary "side-bar", like this:
+
+(push '(direx:direx-mode :position right :width 30 :dedicated t)
+      popwin:special-display-config)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+
+
+
+
+
 
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
@@ -189,8 +204,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-<<<<<<< Updated upstream
-=======
+ '(js-indent-level 2)
  '(tab-width 2)
->>>>>>> Stashed changes
  '(tool-bar-mode nil))

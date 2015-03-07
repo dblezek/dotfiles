@@ -125,10 +125,10 @@ alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 PS1='\h:\W$(parse_git_branch) \u\$ '
 
 PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h$(parse_git_branch)}:\W\n\#$ '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h$(parse_git_branch)}:\W\n\#: '
 
 if [[ `hostname -s` = myst ]]; then
-    PS1='\h:\W$(parse_git_branch) \u\$ '
+    PS1='\h:\W$(parse_git_branch) \u\: '
 fi
 
 # Make our terminal names more helpful to Timing
