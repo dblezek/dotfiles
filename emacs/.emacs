@@ -39,6 +39,7 @@
 (global-set-key "\M-g" 'goto-line)
 (global-set-key "\M-?" 'auto-complete)
 (global-set-key "\M-s" 'save-buffer)
+
 ;; Move to the next window/frame
 (global-set-key "\M-`" 'next-multiframe-window)
 
@@ -85,7 +86,7 @@
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
 
-(set-face-attribute 'default nil :height 140)
+(set-face-attribute 'default nil :height 150)
 (setq font-lock-use-colors t)
 (setq font-lock-use-fonts nil)
 
@@ -102,7 +103,7 @@
 ;; auto reload
 (global-auto-revert-mode 1)
 
-;; (setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
+(setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
 
 
 (require 'uniquify)
@@ -175,17 +176,11 @@
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 (global-set-key (kbd "C-x C-k") 'direx-project:jump-to-project-root-other-window)
 
-<<<<<<< HEAD
-
 ;; Align with spaces, not tabs...
 (defadvice align-regexp (around align-regexp-with-spaces activate)
   (let ((indent-tabs-mode nil))
     ad-do-it))
 
-
-
-=======
->>>>>>> d4d8893cf44d4168106db9bf4d50a14d5ff76df8
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
