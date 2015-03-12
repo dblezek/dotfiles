@@ -4,10 +4,12 @@
 
 ;; Package manager
 (require 'package)
-;; (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")))
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
-
 
 ;; smooth scrolling
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
@@ -168,12 +170,12 @@
 ;; (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
 
 ;; If you are using popwin, you can use directory viewer as temporary "side-bar", like this:
-
 (push '(direx:direx-mode :position right :width 30 :dedicated t)
       popwin:special-display-config)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 (global-set-key (kbd "C-x C-k") 'direx-project:jump-to-project-root-other-window)
 
+<<<<<<< HEAD
 
 ;; Align with spaces, not tabs...
 (defadvice align-regexp (around align-regexp-with-spaces activate)
@@ -182,12 +184,13 @@
 
 
 
+=======
+>>>>>>> d4d8893cf44d4168106db9bf4d50a14d5ff76df8
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-
-
+;; Fuzzy finder
 (require 'fiplr)
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
 (setq fiplr-ignored-globs '((directories (".git" ".svn" "build"))
