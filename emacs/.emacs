@@ -25,7 +25,7 @@
 (setq ac-go-expand-arguments-into-snippets t)
 
 (require 'projectile)
-(setq projectile-mode t)
+(projectile-global-mode)
 (load-file "~/.emacs.d/rename.el")
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
@@ -172,9 +172,13 @@
 (push '(direx:direx-mode :position right :width 30 :dedicated t)
       popwin:special-display-config)
 (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
+(global-set-key (kbd "C-x C-k") 'direx-project:jump-to-project-root-other-window)
 
 
-
+;; Align with spaces, not tabs...
+(defadvice align-regexp (around align-regexp-with-spaces activate)
+  (let ((indent-tabs-mode nil))
+    ad-do-it))
 
 
 
@@ -195,7 +199,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 160 :width normal :foundry "apple" :family "Source Code Pro")))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro")))))
 
 ;; Kill the scratch buffer
 (kill-buffer "*scratch*")
@@ -204,6 +208,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ido-ignore-directories
+   (quote
+    ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
  '(js-indent-level 2)
  '(tab-width 2)
  '(tool-bar-mode nil))
