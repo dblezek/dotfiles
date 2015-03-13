@@ -131,6 +131,10 @@ if [[ `hostname -s` = myst ]]; then
     PS1='\h:\W$(parse_git_branch) \u: '
 fi
 
+if [[ $TERM = dumb ]]; then
+    PS1=':$'
+fi
+
 # Make our terminal names more helpful to Timing
 PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
