@@ -1,6 +1,6 @@
-(setenv "PATH" "/Users/blezek/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/blezek/Source/go/bin")
-(setenv "GOPATH" "/Users/blezek/Source/go-bin:/Users/blezek/Source/bumped:/Users/blezek/Source/DEWEY/kiln")
-(setenv "GOROOT" "/Users/blezek/Source/go")
+(setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
+(setenv "GOPATH" "~/Source/go-bin:~/Source/bumped:~/Source/DEWEY/kiln")
+(setenv "GOROOT" "~/Source/go")
 
 ;; Package manager
 (require 'package)
@@ -45,8 +45,16 @@
 
 (setq kill-whole-line t)       ;;; Killing line also deletes \n
 
+;; Set the frame title
+(setq-default frame-title-format "%b (%f)")
+
 ;; always indent on return
 (define-key global-map (kbd "RET") 'newline-and-indent)
+(defun indent-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+(global-set-key "\M-i" 'indent-buffer)
 
 ;; Spaces not tabs
 (setq-default indent-tabs-mode nil)
@@ -67,12 +75,14 @@
 (color-theme-dark-laptop)
 
 ;; Set the backup directory
-(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-directory-alist `((".*" . "~/.saves")))
 (setq backup-by-copying t)
 (setq delete-old-versions t
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
+(setq auto-save-file-name-transforms
+      `((".*" , "~/.saves" t)))
 
 ;; (require 'backup-dir)
 ;; (setq bkup-backup-directory-info
@@ -106,10 +116,9 @@
 (setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
 
 
+;; Gives us unique buffer names
 (require 'uniquify)
-(setq
- uniquify-buffer-name-style 'post-forward
- uniquify-separator ":")
+(setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
 
 ;; IDO, allows smart search
 (require 'ido)
@@ -190,6 +199,7 @@
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
 (setq fiplr-ignored-globs '((directories (".git" ".svn" "build"))
                             (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class"))))
+
 ;; (require 'git)
 
 (custom-set-faces
@@ -213,3 +223,6 @@
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(vc-follow-symlinks nil))
+
+;; Start the server
+(server-start)
