@@ -1,7 +1,7 @@
 
 
 install:
-	git pull
+#	git pull
 	stow emacs
 	stow bash
 	stow slate
