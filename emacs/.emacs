@@ -188,8 +188,8 @@
 ;; Fuzzy finder
 (require 'fiplr)
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
-(setq fiplr-ignored-globs '((directories (".git" ".svn" "build"))
-                            (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class"))))
+(setq fiplr-ignored-globs '((directories (".git" ".svn" "build" "DEWEYLocal"))
+                            (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
 ;; (require 'git)
 
 (custom-set-faces
