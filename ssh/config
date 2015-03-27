@@ -18,7 +18,7 @@ Host ftjava
      HostName ec2-107-23-23-127.compute-1.amazonaws.com
      User ftjava
 
-Host qia* ril* mi3c* qin* research-gpu*
+Host qia* ril* mi3c* qin* research-gpu* myst
   User mra9161
 
 Host dewey*

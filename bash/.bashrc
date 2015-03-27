@@ -196,3 +196,7 @@ export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:${PATH}
 
 # GO
 export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln
+
+function ec () {
+    osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
+}
