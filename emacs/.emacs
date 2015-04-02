@@ -1,7 +1,3 @@
-(setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
-(setenv "GOPATH" "~/Source/go-bin:~/Source/bumped:~/Source/DEWEY/kiln")
-(setenv "GOROOT" "~/Source/go")
-
 ;; Package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -193,6 +189,11 @@
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
+;; (setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
+(setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
+(setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
+;; (setenv "GOROOT" "~/Source/go")
+
 
 ;; Fuzzy finder
 (require 'fiplr)

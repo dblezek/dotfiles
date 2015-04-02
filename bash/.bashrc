@@ -44,7 +44,7 @@ function enscriptCode() {  enscript  -Ecpp -r2 -fCourier8 -o - "$@" | ps2pdf - "
 export HISTCONTROL=erasedups
 
 # Java, choose the most recent
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # Use logout to exit the shell
 set -o ignoreeof
