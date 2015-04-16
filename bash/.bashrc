@@ -7,9 +7,9 @@ export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export PATH=/usr/local/bin:$PATH
 
 # MI3CLib path
-export PATH=~/Source/MI3CLib-macosx/bin:$PATH
-export PATH=~/macosx/play/:$PATH
-export PATH=~/.macosx/BladeRunnerJS/sdk/:$PATH
+export PATH=${HOME}/Source/MI3CLib-macosx/bin:$PATH
+export PATH=${HOME}/.macosx/play/:$PATH
+export PATH=${HOME}/.macosx/BladeRunnerJS/sdk/:$PATH
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate MANPATH variable for use with MacPorts.
 export MANPATH=/opt/local/share/man:$MANPATH
@@ -19,11 +19,11 @@ export MANPATH=/opt/local/share/man:$MANPATH
 # export DCMDICTPATH=/opt/local/lib/dicom.dic
 
 # Test directory
-export MI3CTESTDATADIR=/Users/blezek/Source/MI3CTestData
+export MI3CTESTDATADIR=${HOME}/Source/MI3CTestData
 export MI3CTESTOUTPUTDIR=/tmp/
 
 # Local packages
-export PATH=/Users/blezek/Source/bin:$PATH
+export PATH=${HOME}/Source/bin:$PATH
 
 alias CC="emacs -nw CMakeCache.txt"
 alias rm="rm -i"
@@ -33,7 +33,7 @@ alias ls="ls -GF"
 alias lsl="ls -GF -la"
 alias dir=ls
 alias top="top -u"
-alias iMI3C-debug="/Users/blezek/Source/MI3CLib-macosx-debug/bin/iMI3C"
+alias iMI3C-debug="${HOME}/Source/MI3CLib-macosx-debug/bin/iMI3C"
 alias QMon="ssh -f -X mi3c qmon"
 alias g="./gradlew"
 alias atom="/Applications/Atom.app/Contents/MacOS/Atom"
@@ -62,12 +62,12 @@ export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 
 # VMTK
-# export PATH=/Users/blezek/Source/bin:$PATH  # Already added
-# export DYLD_LIBRARY_PATH=/Users/blezek/macosx/bin:/Users/blezek/Source/VTK-macosx/bin:$DYLD_LIBRARY_PATH
-# export PYTHONPATH=/Users/blezek/macosx/lib/vmtk/:/Users/blezek/Source/VTK-macosx/Wrapping/Python/:/Users/blezek/Source/VTK-macosx/bin:$PYTHONPATH
+# export PATH=${HOME}/Source/bin:$PATH  # Already added
+# export DYLD_LIBRARY_PATH=${HOME}/.macosx/bin:${HOME}/Source/VTK-macosx/bin:$DYLD_LIBRARY_PATH
+# export PYTHONPATH=${HOME}/.macosx/lib/vmtk/:${HOME}/Source/VTK-macosx/Wrapping/Python/:${HOME}/Source/VTK-macosx/bin:$PYTHONPATH
 # source /Applications/vmtk.app/Contents/MacOS/vmtk
 
-export PYTHONPATH=/Users/blezek/macosx/python/lib/python2.7/site-packages:$PYTHONPATH
+export PYTHONPATH=${HOME}/.macosx/python/lib/python2.7/site-packages:$PYTHONPATH
 # Change the title of the terminal window
 function titleold() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
 
@@ -77,17 +77,17 @@ function title {
 }
 
 # installed software
-export DYLD_LIBRARY_PATH=/Users/blezek/macosx/lib:$DYLD_LIBRARY_PATH
-export PATH=/Users/blezek/macosx/bin:/Users/blezek/macosx/dcm4che/bin:$PATH
-export PATH=/Users/blezek/Source/MI3CLib/Applications/PipelineApps:$PATH
+export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
+export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:$PATH
+export PATH=${HOME}/Source/MI3CLib/Applications/PipelineApps:$PATH
 
 # Add developer tools
 # export PATH=$PATH:/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
-# instead (cd ~/macosx/bin && ln -s /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool .)
+# instead (cd ${HOME}/.macosx/bin && ln -s /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool .)
 # We only really want texturetool...
 
 ##
-# Your previous /Users/blezek/.profile file was backed up as /Users/blezek/.profile.macports-saved_2010-04-01_at_15:44:49
+# Your previous ${HOME}/.profile file was backed up as ${HOME}/.profile.macports-saved_2010-04-01_at_15:44:49
 ##
 
 # MacPorts Installer addition on 2010-04-01_at_15:44:49: adding an appropriate PATH variable for use with MacPorts.
@@ -185,7 +185,7 @@ set show-all-if-ambiguous on
 set visible-stats on
 
 # NPM, see .npmrc for details
-export PATH=${HOME}/macosx/npm/bin:${PATH}
+export PATH=${HOME}/.macosx/npm/bin:${PATH}
 export PATH=${HOME}/.macosx/bin:${PATH}
 
 # Bump up open files
