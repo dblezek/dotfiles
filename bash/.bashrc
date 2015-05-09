@@ -44,7 +44,7 @@ function enscriptCode() {  enscript  -Ecpp -r2 -fCourier8 -o - "$@" | ps2pdf - "
 export HISTCONTROL=erasedups
 
 # Java, choose the most recent
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7+`
 
 # Use logout to exit the shell
 set -o ignoreeof
@@ -195,7 +195,7 @@ ulimit -n 2048
 export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:${PATH}
 
 # GO
-export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln
+export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor
 
 function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"

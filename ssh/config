@@ -1,22 +1,21 @@
 Host *
   ServerAliveInterval 60
   StrictHostKeyChecking no
+  # Share connections
+  ControlMaster auto
+  ControlPath ~/.ssh/%r@%h:%p
+  ServerAliveCountMax 30
+  ServerAliveInterval 5
+  # Not supported on Mac
+  # ControlPersist 4h
 
-Host aws aws-2015
+Host aws-2015
      HostName ec2-54-172-83-212.compute-1.amazonaws.com
      User ec2-user
 
-Host first.rails rails aws-2013 aws-2014
-     # HostName ec2-23-22-155-191.compute-1.amazonaws.com
-     # HostName www.youngreformedreader.org
-     HostName ec2-107-23-23-127.compute-1.amazonaws.com
+Host aws aws-2016
+     HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
-
-Host ftjava
-     # HostName ec2-23-22-155-191.compute-1.amazonaws.com
-     # HostName www.youngreformedreader.org
-     HostName ec2-107-23-23-127.compute-1.amazonaws.com
-     User ftjava
 
 Host qia* ril* mi3c* qin* research-gpu* myst
   User mra9161
@@ -39,8 +38,3 @@ Host riven
   User blezek
   LocalForward localhost:28080 10.20.0.5:80
 
-# Share connections
-ControlMaster auto
-ControlPath /tmp/ssh_mux_%l_%h_%p_%r
-# Not supported on Mac
-# ControlPersist 4h

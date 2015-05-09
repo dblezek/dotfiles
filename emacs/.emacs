@@ -8,13 +8,14 @@
 (package-initialize)
 
 ;; smooth scrolling
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 ;; Go Configuration
 (require 'go-mode)
 
+;; Emacs parses the buffer and creates a suggestion list
 (require 'auto-complete-config)
 (ac-config-default)
 (require 'go-autocomplete)
@@ -22,12 +23,21 @@
 (yas-global-mode 1)
 (setq ac-go-expand-arguments-into-snippets t)
 
+
+;; PROJECTILE MODE
 (require 'projectile)
 (projectile-global-mode)
+(setq projectile-enable-caching t)
+;; disable remote file caching (https://github.com/bbatsov/projectile)
+(setq projectile-file-exists-remote-cache-expire nil)
 (load-file "~/.emacs.d/rename.el")
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
+
+;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
+;; (setq mac-option-modifier 'meta)
+;; (global-set-key (kbd "s-/") 'auto-complete)
 ;; Also in v23, moving was line by line visually, not by logical line
 (setq line-move-visual nil)
 
@@ -79,6 +89,11 @@
   version-control t)
 (setq auto-save-file-name-transforms
       `((".*" , "~/.saves" t)))
+;; No more # files
+(setq auto-save-default nil)
+
+;; restore opened files
+(desktop-save-mode 1)
 
 ;; (require 'backup-dir)
 ;; (setq bkup-backup-directory-info
@@ -89,6 +104,9 @@
       kept-old-versions 1
       kept-new-versions 3
       version-control t)
+(setq tramp-verbose 5)
+
+
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
 
@@ -191,7 +209,7 @@
   (exec-path-from-shell-initialize))
 ;; (setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
 (setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
-(setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
+;; (setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
 ;; (setenv "GOROOT" "~/Source/go")
 
 
