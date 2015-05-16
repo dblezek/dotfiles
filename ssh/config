@@ -2,8 +2,8 @@ Host *
   ServerAliveInterval 60
   StrictHostKeyChecking no
   # Share connections
-  ControlMaster auto
-  ControlPath ~/.ssh/%r@%h:%p
+  # ControlMaster auto
+  # ControlPath ~/.ssh/%r@%h:%p
   ServerAliveCountMax 30
   ServerAliveInterval 5
   # Not supported on Mac
