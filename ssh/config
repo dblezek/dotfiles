@@ -2,8 +2,11 @@ Host *
   ServerAliveInterval 60
   StrictHostKeyChecking no
   # Share connections
-  # ControlMaster auto
-  # ControlPath ~/.ssh/%r@%h:%p
+  ControlMaster auto
+  ControlPath ~/.ssh/%r@%h:%p
+  # Keep the control open for 1 hour after all the connections exit
+  # This also puts the initial connection into the background!
+  ControlPersist 1h
   ServerAliveCountMax 30
   ServerAliveInterval 5
   # Not supported on Mac
@@ -38,4 +41,3 @@ Host riven
   User blezek
   LocalForward localhost:28080 10.20.0.5:80
 
- 

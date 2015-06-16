@@ -129,6 +129,12 @@
            (lambda()
            (setq tab-width 8))))
 
+;; In Python, set to 4 character tabs
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  tab-width 4)))
+
 
 ;; auto reload
 (global-auto-revert-mode 1)
@@ -245,6 +251,8 @@
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
  '(js-indent-level 2)
+ '(python-guess-indent t)
+ '(python-indent 2)
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(vc-follow-symlinks nil))
