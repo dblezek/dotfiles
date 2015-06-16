@@ -7,7 +7,6 @@ Host *
   # Keep the control open for 1 hour after all the connections exit
   # This also puts the initial connection into the background!
   ControlPersist 1h
-  
   ServerAliveCountMax 30
   ServerAliveInterval 5
   # Not supported on Mac

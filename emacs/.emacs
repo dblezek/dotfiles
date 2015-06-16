@@ -31,6 +31,12 @@
 ;; disable remote file caching (https://github.com/bbatsov/projectile)
 (setq projectile-file-exists-remote-cache-expire nil)
 (load-file "~/.emacs.d/rename.el")
+;; Remove for TRAMP connections
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (file-remote-p default-directory)
+              (setq-local projectile-mode-line "Projectile"))))
+
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
