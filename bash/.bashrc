@@ -38,7 +38,7 @@ alias QMon="ssh -f -X mi3c qmon"
 alias g="./gradlew"
 alias atom="/Applications/Atom.app/Contents/MacOS/Atom"
 
-function enscriptCode() {  enscript  -Ecpp -r2 -fCourier8 -o - "$@" | ps2pdf - "$@".pdf; }
+function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
 
 # ignore duplicates
 export HISTCONTROL=erasedups
