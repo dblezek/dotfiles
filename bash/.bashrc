@@ -192,7 +192,9 @@ export PATH=${HOME}/.macosx/bin:${PATH}
 ulimit -n 2048
 
 # Cross-compiling GO, and standard go-bin
-export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:${PATH}
+# export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:/usr/local/go/bin:${PATH}
+export PATH=/usr/local/go/bin:${PATH}
+export GO15VENDOREXPERIMENT=1
 
 # GO
 export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor

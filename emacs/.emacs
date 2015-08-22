@@ -1,3 +1,6 @@
+;; Autofill for GIT COMMIT Messages
+(setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
+
 ;; Package manager
 (require 'package)
 (add-to-list 'package-archives
@@ -6,6 +9,8 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
+
+
 
 ;; smooth scrolling
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
@@ -182,7 +187,7 @@
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   ;; Use goimports
-  (setq gofmt-command "goimports")
+  ;;  (setq gofmt-command "goimports")
   ;; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
   )
