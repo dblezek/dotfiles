@@ -20,7 +20,7 @@ Host aws aws-2016
      HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
 
-Host qia* ril* mi3c* qin* research-gpu* myst
+Host qia* ril* mi3c* qin* research-gpu* myst*
   User mra9161
 
 Host dewey*
