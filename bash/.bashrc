@@ -1,7 +1,7 @@
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
+export MANPATH=/opt/local/share/man:$MANPATH
 
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
@@ -10,13 +10,6 @@ export PATH=/usr/local/bin:$PATH
 export PATH=${HOME}/Source/MI3CLib-macosx/bin:$PATH
 export PATH=${HOME}/.macosx/play/:$PATH
 export PATH=${HOME}/.macosx/BladeRunnerJS/sdk/:$PATH
-
-# MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate MANPATH variable for use with MacPorts.
-export MANPATH=/opt/local/share/man:$MANPATH
-# Finished adapting your MANPATH environment variable for use with MacPorts.
-
-# DCMTK dictionary, not needed as of 2010-04-14
-# export DCMDICTPATH=/opt/local/lib/dicom.dic
 
 # Test directory
 export MI3CTESTDATADIR=${HOME}/Source/MI3CTestData
@@ -85,14 +78,6 @@ export PATH=${HOME}/Source/MI3CLib/Applications/PipelineApps:$PATH
 # export PATH=$PATH:/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
 # instead (cd ${HOME}/.macosx/bin && ln -s /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool .)
 # We only really want texturetool...
-
-##
-# Your previous ${HOME}/.profile file was backed up as ${HOME}/.profile.macports-saved_2010-04-01_at_15:44:49
-##
-
-# MacPorts Installer addition on 2010-04-01_at_15:44:49: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
 
 # Editor
 export EDITOR=emacs
@@ -193,11 +178,12 @@ ulimit -n 2048
 
 # Cross-compiling GO, and standard go-bin
 # export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:/usr/local/go/bin:${PATH}
-export PATH=/usr/local/go/bin:${PATH}
+export PATH=/usr/local/go/bin:${HOME}/Source/go-bin${PATH}
 export GO15VENDOREXPERIMENT=1
 
 # GO
-export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor
+# "go get" by default installs in the first directory, make sure it's in our path.
+export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor:${HOME}/Source/Whitelist/corsair/
 
 function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
