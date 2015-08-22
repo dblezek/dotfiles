@@ -139,7 +139,10 @@
           (lambda ()
             (setq indent-tabs-mode nil
                   tab-width 4)))
+(add-hook 'python-mode-hook 'subword-mode)
 
+;; When commiting in git, set auto-fill-mode
+(add-to-list 'auto-mode-alist '("\\COMMIT_EDITMSG\\'" . auto-fill-mode))
 
 ;; auto reload
 (global-auto-revert-mode 1)
@@ -190,8 +193,10 @@
   ;;  (setq gofmt-command "goimports")
   ;; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
+  ;; Kill by camel case
   )
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+(add-hook 'go-mode-hook 'subword-mode)
 
 ;; Next / previous buffers
 (global-set-key (kbd "M-{") 'previous-buffer)
