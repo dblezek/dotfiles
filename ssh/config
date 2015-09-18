@@ -1,6 +1,5 @@
 Host *
   ServerAliveInterval 60
-  StrictHostKeyChecking no
   # Share connections
   ControlMaster auto
   ControlPath ~/.ssh/%r@%h:%p
@@ -25,6 +24,7 @@ Host qia* ril* mi3c* qin* research-gpu* myst*
 
 Host dewey*
   User dewey
+  StrictHostKeyChecking no
 
 Host tactic* mirmaid
   User apache
