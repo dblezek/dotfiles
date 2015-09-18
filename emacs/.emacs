@@ -243,6 +243,14 @@
 
 ;; (require 'git)
 
+;; Find tags without the prompt
+(defun find-tag-no-prompt ()
+  "Jump to the tag at point without prompting"
+  (interactive)
+  (find-tag (find-tag-default)))
+;; don't prompt when finding a tag
+(global-set-key (kbd "M-.") 'find-tag-no-prompt)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

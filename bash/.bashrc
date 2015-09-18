@@ -178,7 +178,7 @@ ulimit -n 2048
 
 # Cross-compiling GO, and standard go-bin
 # export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:/usr/local/go/bin:${PATH}
-export PATH=/usr/local/go/bin:${HOME}/Source/go-bin${PATH}
+export PATH=/usr/local/go/bin:${HOME}/Source/go-bin/bin:${PATH}
 export GO15VENDOREXPERIMENT=1
 
 # GO
