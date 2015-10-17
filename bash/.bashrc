@@ -37,7 +37,7 @@ function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" 
 export HISTCONTROL=erasedups
 
 # Java, choose the most recent
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7+`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
 
 # Use logout to exit the shell
 set -o ignoreeof
@@ -183,7 +183,7 @@ export GO15VENDOREXPERIMENT=1
 
 # GO
 # "go get" by default installs in the first directory, make sure it's in our path.
-export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor:${HOME}/Source/Whitelist/corsair/
+export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor:${HOME}/Source/Whitelist/corsair/:${HOME}/Source/LIDCTooling
 
 function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"

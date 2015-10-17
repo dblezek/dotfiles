@@ -190,7 +190,7 @@
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   ;; Use goimports
-  ;;  (setq gofmt-command "goimports")
+  (setq gofmt-command "goimports")
   ;; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
   ;; Kill by camel case
@@ -208,6 +208,9 @@
 ;; (require 'neotree)
 ;; (setq projectile-switch-project-action 'neotree-projectile-action)
 
+;; Markdown mode should include visual-line-mode and flyspell mode
+(add-hook `markdown-mode-hook `flyspell-mode)
+(add-hook `markdown-mode-hook `visual-line-mode)
 
 ;; directory tree
 (require 'direx)
