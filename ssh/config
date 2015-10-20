@@ -41,3 +41,7 @@ Host riven
   User blezek
   LocalForward localhost:28080 10.20.0.5:80
 
+Host notion
+  Hostname qia.mayo.edu
+  User mra9161
+  LocalForward :8884 localhost:8884

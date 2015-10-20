@@ -137,14 +137,9 @@ function cronenv () {
     env -i MAILTO=blezek.daniel@mayo.edu SHELL=/bin/sh USER=$USER PATH=/usr/bin:/bin PWD=/home/noop SHLVL=1 LOGNAME=$LOGNAME _=/usr/bin/env HOME=$HOME /bin/bash --noprofile --norc -c "$t"
 }
 
-# Helper for SimpleITK stage
-# Outmoded by SimpleITK developer script
-# alias stage="ssh git@itk.org stage SimpleITK"
-
 # Clean up history by ignoring certain items
 export HISTIGNORE="&:ls"
 export HISTCONTROL=erasedups
-
 
 # bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
