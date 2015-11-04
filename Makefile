@@ -2,13 +2,9 @@
 
 install:
 #	git pull
-	stow emacs
-	stow bash
-	stow slate
-	stow -t ~/.ssh ssh
-
-remove:
-	stow -vvD emacs
-	stow -vvD bash
-	stow -vvD slate
-	stow -vvD -t ~/.ssh ssh
+	ln -sfn .dotfiles/emacs/.emacs ${HOME}
+	ln -sfn .dotfiles/emacs/.emacs.d ${HOME}
+	ln -sfn .dotfiles/bash/.bash_profile ${HOME}
+	ln -sfn .dotfiles/bash/.bashrc ${HOME}
+	ln -sfn .dotfiles/slate/.slate ${HOME}
+	ln -sfn ../.dotfiles/ssh/config ${HOME}/.ssh
