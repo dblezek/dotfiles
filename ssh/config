@@ -18,6 +18,7 @@ Host aws-2015
 Host aws aws-2016
      HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
+     LocalForward localhost:4747 localhost:4747
 
 Host qia* ril* mi3c* qin* research-gpu* myst*
   User mra9161

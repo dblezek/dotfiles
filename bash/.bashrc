@@ -6,11 +6,6 @@ export MANPATH=/opt/local/share/man:$MANPATH
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
 
-# MI3CLib path
-export PATH=${HOME}/Source/MI3CLib-macosx/bin:$PATH
-export PATH=${HOME}/.macosx/play/:$PATH
-export PATH=${HOME}/.macosx/BladeRunnerJS/sdk/:$PATH
-
 # Test directory
 export MI3CTESTDATADIR=${HOME}/Source/MI3CTestData
 export MI3CTESTOUTPUTDIR=/tmp/
@@ -45,22 +40,12 @@ set -o ignoreeof
 set show-all-if-ambiguous on
 set visible-stats on
 
-
-# For linux3JCB7L
-# export LS_COLORS='no=00:fi=00:di=01;36:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'
-
+# LESS options
+export LESS="-XF --search-skip-screen --ignore-case --raw-control-chars"
 
 # make directories grey...
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
-
-# VMTK
-# export PATH=${HOME}/Source/bin:$PATH  # Already added
-# export DYLD_LIBRARY_PATH=${HOME}/.macosx/bin:${HOME}/Source/VTK-macosx/bin:$DYLD_LIBRARY_PATH
-# export PYTHONPATH=${HOME}/.macosx/lib/vmtk/:${HOME}/Source/VTK-macosx/Wrapping/Python/:${HOME}/Source/VTK-macosx/bin:$PYTHONPATH
-# source /Applications/vmtk.app/Contents/MacOS/vmtk
-
-export PYTHONPATH=${HOME}/.macosx/python/lib/python2.7/site-packages:$PYTHONPATH
 # Change the title of the terminal window
 function titleold() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
 
@@ -72,7 +57,6 @@ function title {
 # installed software
 export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
 export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:$PATH
-export PATH=${HOME}/Source/MI3CLib/Applications/PipelineApps:$PATH
 
 # Add developer tools
 # export PATH=$PATH:/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
@@ -151,6 +135,11 @@ export FIGNORE=.DS_Store
 
 # Node modules
 export PATH=./node_modules/.bin:$PATH
+
+# Locally installed python
+if [ -d $HOME/Library/Python/2.7/bin/ ]; then
+    export PATH=$HOME/Library/Python/2.7/bin:$PATH
+fi
 
 # Editor for commit messages
 export EDITOR="emacs -nw"
