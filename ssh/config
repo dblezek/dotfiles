@@ -11,6 +11,12 @@ Host *
   # Not supported on Mac
   # ControlPersist 4h
 
+## To control shared connections...
+## Manual page: http://www.openbsd.org/cgi-bin/man.cgi/OpenBSD-current/man1/ssh.1?query=ssh
+# -O ctl_cmd
+# Control an active connection multiplexing master process. When the -O option is specified, the ctl_cmd argument is interpreted and passed to the master process. Valid commands are: check (check that the master process is running), forward (request forwardings without command execution), cancel (cancel forwardings), exit (request the master to exit), and stop (request the master to stop accepting further multiplexing requests).
+
+
 Host aws-2015
      HostName ec2-54-172-83-212.compute-1.amazonaws.com
      User ec2-user
@@ -29,17 +35,12 @@ Host dewey*
 Host tactic* mirmaid
   User apache
 
-Host feynman* crick* rcfcluster-ftp
+Host feynman* crick* franklin* rcfcluster-ftp
   User mra9161
   ForwardX11 yes
 
-Host feynman crick
-  Hostname feynman7
-
-Host riven
-  Hostname myst.mayo.edu
-  User blezek
-  LocalForward localhost:28080 10.20.0.5:80
+Host feynman crick rcf
+  Hostname franklin07.mayo.edu
 
 Host notion
   Hostname qia.mayo.edu

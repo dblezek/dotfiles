@@ -91,15 +91,19 @@
 (setq color-theme-is-global t)
 (color-theme-dark-laptop)
 
-;; Set the backup directory
-(setq backup-directory-alist `((".*" . "~/.saves")))
+;; Set the backup directoryto $TMPDIR/emacs$UID/                                                        
+(defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
+(setq backup-directory-alist
+      `((".*" . ,emacs-tmp-dir)))
+(setq auto-save-file-name-transforms
+      `((".*" ,emacs-tmp-dir t)))
+(setq auto-save-list-file-prefix
+      emacs-tmp-dir)
 (setq backup-by-copying t)
 (setq delete-old-versions t
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
-(setq auto-save-file-name-transforms
-      `((".*" , "~/.saves" t)))
 ;; No more # files
 (setq auto-save-default nil)
 
@@ -237,6 +241,10 @@
 ;; (setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
 ;; (setenv "GOROOT" "~/Source/go")
 
+
+;; Insert the date
+(defun insert-date () (interactive)
+  (insert (shell-command-to-string "echo -n $(date +%F)")))
 
 ;; Fuzzy finder
 (require 'fiplr)
