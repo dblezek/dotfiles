@@ -1,3 +1,7 @@
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
@@ -180,8 +184,4 @@ if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
   . /home/oge/ge2011.11/default/common/settings.sh
 fi
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
 umask 0002
