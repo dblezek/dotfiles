@@ -111,9 +111,11 @@ export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 # Correcting directory names
 shopt -s cdspell
 
-# CCACHE prefix is to use distcc
-export CCACHE_PREFIX="distcc"
-
+# Setup a gradle properties file
+if [ ! -f $HOME/.gradle/gradle.properties ]; then
+    mkdir -p $HOME/.gradle
+    touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+fi
 
 function cronenv () {
     # Expand it here, then quote it on the next line

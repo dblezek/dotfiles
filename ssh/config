@@ -11,14 +11,21 @@ Host *
   # Not supported on Mac
   # ControlPersist 4h
 
+# IF we are going to AWS, don't check the host keys
+Host ec2*
+  StrictHostKeyChecking no
+
 Host aws-2015
      HostName ec2-54-172-83-212.compute-1.amazonaws.com
      User ec2-user
 
-Host aws aws-2016
+Host aws aws-2016 ftjava
      HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
      LocalForward localhost:4747 localhost:4747
+
+Host ec2*.amazonaws.com
+     IdentityFile ~/.ssh/mykey.rsa
 
 Host qia* ril* mi3c* qin* research-gpu* myst*
   User mra9161
@@ -30,12 +37,12 @@ Host dewey*
 Host tactic* mirmaid
   User apache
 
-Host feynman* crick* rcfcluster-ftp
+Host franklin* feynman* crick* rcfcluster-ftp
   User mra9161
   ForwardX11 yes
 
 Host feynman crick
-  Hostname feynman7
+  Hostname franklin07
 
 Host riven
   Hostname myst.mayo.edu
