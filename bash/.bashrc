@@ -174,3 +174,14 @@ export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/
 function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
+
+# RCF settings
+if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
+  . /home/oge/ge2011.11/default/common/settings.sh
+fi
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+umask 0002

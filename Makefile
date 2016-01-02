@@ -7,4 +7,6 @@ install:
 	ln -sfn .dotfiles/bash/.bash_profile ${HOME}
 	ln -sfn .dotfiles/bash/.bashrc ${HOME}
 	ln -sfn .dotfiles/slate/.slate ${HOME}
+	ln -sfn .dotfiles/bash/.git-completion.bash ${HOME}
 	ln -sfn ../.dotfiles/ssh/config ${HOME}/.ssh
+	chmod 644 ${HOME}/.ssh/config
