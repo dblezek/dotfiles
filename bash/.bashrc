@@ -36,7 +36,16 @@ function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" 
 export HISTCONTROL=erasedups
 
 # Java, choose the most recent
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
+if [ -e /usr/libexec/java_home ]; then
+    export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
+else
+    export JAVA_HOME=/usr/java/latest/
+fi
+
+# Maven?
+if [ -e $HOME/Source/maven ]; then
+    export PATH=${PATH}:$HOME/Source/maven/bin
+fi
 
 # Use logout to exit the shell
 set -o ignoreeof
