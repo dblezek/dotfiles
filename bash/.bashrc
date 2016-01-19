@@ -193,4 +193,15 @@ if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
   . /home/oge/ge2011.11/default/common/settings.sh
 fi
 
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# Source RCF Cluster Definitions
+if [ -f $HOME/.bash_mayobiotools ]; then
+	. $HOME/.bash_mayobiotools
+fi
+
 umask 0002
