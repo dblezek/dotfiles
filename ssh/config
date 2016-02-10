@@ -10,6 +10,24 @@ Host *
   ServerAliveInterval 5
   # Not supported on Mac
   # ControlPersist 4h
+  IdentityFile ~/.ssh/aau_hortonworks_azure
+  IdentityFile ~/.ssh/id_rsa
+
+Host sandbox
+  StrictHostKeyChecking no
+  HostName 127.0.0.1
+  User root
+  Port 2222
+
+Host hdp
+  StrictHostKeyChecking no
+  HostName bd4gsandbox-master-01.cloudapp.net
+  User sandbox
+
+Host *cloudapp.net
+  StrictHostKeyChecking no
+  User sandbox
+
 
 # IF we are going to AWS, don't check the host keys
 Host ec2*

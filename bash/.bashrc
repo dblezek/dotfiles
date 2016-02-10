@@ -177,12 +177,12 @@ ulimit -n 2048
 
 # Cross-compiling GO, and standard go-bin
 # export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:/usr/local/go/bin:${PATH}
-export PATH=/usr/local/go/bin:${HOME}/Source/go-bin/bin:${PATH}
+export PATH=/usr/local/go/bin:${HOME}/Source/go/bin:${PATH}
 export GO15VENDOREXPERIMENT=1
 
 # GO
 # "go get" by default installs in the first directory, make sure it's in our path.
-export GOPATH=${HOME}/Source/go-bin:${HOME}/Source/corsair:${HOME}/Source/DEWEY/kiln:${HOME}/Source/bumped:${HOME}/Source/grunt:${HOME}/Source/grunt/vendor:${HOME}/Source/Whitelist/corsair/:${HOME}/Source/LIDCTooling
+export GOPATH=${HOME}/Source/go
 
 function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
