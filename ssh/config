@@ -12,6 +12,7 @@ Host *
   # ControlPersist 4h
   IdentityFile ~/.ssh/aau_hortonworks_azure
   IdentityFile ~/.ssh/id_rsa
+  StrictHostKeyChecking no
 
 Host sandbox
   StrictHostKeyChecking no
