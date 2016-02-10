@@ -20,9 +20,9 @@ Host sandbox
   User root
   Port 2222
 
-Host hdp
+Host insight
   StrictHostKeyChecking no
-  HostName bd4gsandbox-master-01.cloudapp.net
+  HostName bd4gsandbox-ssh.azurehdinsight.net
   User sandbox
 
 Host *cloudapp.net
