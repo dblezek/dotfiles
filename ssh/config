@@ -20,13 +20,23 @@ Host sandbox
   User root
   Port 2222
 
+Host darkhorse
+  HostName bd4g-darkhorse-master-01.cloudapp.net
+  User sandbox
+
+Host pony
+  HostName bd4g-pony.centralus.cloudapp.azure.com
+  User sandbox
+
 Host insight
-  StrictHostKeyChecking no
   HostName bd4gsandbox-ssh.azurehdinsight.net
   User sandbox
 
+Host cloudbreak
+  HostName 40.78.100.56
+  User cloudbreak
+  
 Host *cloudapp.net
-  StrictHostKeyChecking no
   User sandbox
 
 
