@@ -120,6 +120,13 @@
       kept-new-versions 3
       version-control t)
 (setq tramp-verbose 5)
+;; controlmaster options for tramp
+(setq tramp-ssh-controlmaster-options
+      (concat
+        "-o ControlPath=~/.ssh/tramp-%%r@%%h:%%p "
+        "-o ControlMaster=auto -o ControlPersist=yes"))
+
+
 
 
 ;; localize it for safety.
@@ -149,7 +156,7 @@
 (add-to-list 'auto-mode-alist '("\\COMMIT_EDITMSG\\'" . auto-fill-mode))
 
 ;; auto reload
-(global-auto-revert-mode 1)
+(global-auto-revert-mode t)
 
 (setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
 
@@ -194,7 +201,7 @@
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   ;; Use goimports
-  (setq gofmt-command "goimports")
+  ;; (setq gofmt-command "goimports")
   ;; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
   ;; Kill by camel case
