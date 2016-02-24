@@ -2,7 +2,9 @@ Host *
   ServerAliveInterval 60
   # Share connections
   ControlMaster auto
-  ControlPath ~/.ssh/%r@%h:%p
+  # Stupid Azure has very long host names, so we have to keep short control
+  # paths
+  ControlPath ~/.ssh/control_path_%r_%C
   # Keep the control open for 1 hour after all the connections exit
   # This also puts the initial connection into the background!
   ControlPersist 1h
@@ -21,7 +23,7 @@ Host sandbox
   Port 2222
 
 Host darkhorse
-  HostName bd4g-darkhorse-master-01.cloudapp.net
+  HostName darkhorse-master1jzecmzqgkyrsw.centralus.cloudapp.azure.com
   User sandbox
 
 Host pony
