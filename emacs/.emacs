@@ -121,13 +121,11 @@
       version-control t)
 (setq tramp-verbose 5)
 ;; controlmaster options for tramp
+;; See https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00317.html
 (setq tramp-ssh-controlmaster-options
       (concat
-        "-o ControlPath=~/.ssh/tramp-%%r@%%h:%%p "
+        "-o ControlPath=/tmp/tramp-%%r "
         "-o ControlMaster=auto -o ControlPersist=yes"))
-
-
-
 
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
