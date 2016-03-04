@@ -150,8 +150,9 @@
                   tab-width 4)))
 (add-hook 'python-mode-hook 'subword-mode)
 
-;; When commiting in git, set auto-fill-mode
-(add-to-list 'auto-mode-alist '("\\COMMIT_EDITMSG\\'" . auto-fill-mode))
+;; GLSL mode
+(add-to-list 'auto-mode-alist '("\\.vs\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.fs\\'" . glsl-mode))
 
 ;; auto reload
 (global-auto-revert-mode t)
