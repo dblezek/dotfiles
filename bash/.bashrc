@@ -242,6 +242,11 @@ function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
 
+# Docker Machine
+if [ -f /usr/local/bin/docker-machine ]; then
+    eval $(/usr/local/bin/docker-machine env default)
+fi
+    
 # RCF settings
 if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
   . /home/oge/ge2011.11/default/common/settings.sh
