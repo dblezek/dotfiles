@@ -25,6 +25,8 @@ Host sandbox
 Host darkhorse
   HostName darkhorse-master1jzecmzqgkyrsw.centralus.cloudapp.azure.com
   User sandbox
+  ForwardX11 yes
+  
 
 Host pony
   HostName bd4g-pony.centralus.cloudapp.azure.com

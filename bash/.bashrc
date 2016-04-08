@@ -242,9 +242,16 @@ function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
 
-# Docker Machine
-if [ -f /usr/local/bin/docker-machine ]; then
+# Docker Machine setup (so it can be called from bash)
+function docker-setup() {
     eval $(/usr/local/bin/docker-machine env default)
+    export DOCKER_IP=$(/usr/local/bin/docker-machine ip default)
+}
+function docker-ip() {
+    /usr/local/bin/docker-machine ip default
+}
+if [ -f /usr/local/bin/docker-machine ]; then
+    docker-setup
 fi
     
 # RCF settings
