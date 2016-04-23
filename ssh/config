@@ -53,7 +53,7 @@ Host aws-2015
      HostName ec2-54-172-83-212.compute-1.amazonaws.com
      User ec2-user
 
-Host aws aws-2016 ftjava
+Host aws aws-2016 ftjava bumped
      HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
      LocalForward localhost:4747 localhost:4747
