@@ -11,6 +11,8 @@
 (package-initialize)
 
 
+;; keep old clipboard contents
+(setq save-interprogram-paste-before-kill 't)
 
 ;; smooth scrolling
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
