@@ -1,4 +1,11 @@
 # Source global definitions
+
+# touching ~/.hushlogin is very useful for suppressing /etc/motd
+case "$-" in
+    *i*) INTERACTIVE=1 ;;
+    *) INTERACTIVE=0 ;;
+esac
+
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
@@ -261,7 +268,11 @@ fi
 
 # Source RCF Cluster Definitions
 if [ -f $HOME/.bash_mayobiotools ]; then
+  if [ $INTERACTIVE = '1' ]; then
 	. $HOME/.bash_mayobiotools
+  else
+	. $HOME/.bash_mayobiotools > /dev/null
+  fi
 fi
 
 umask 0002

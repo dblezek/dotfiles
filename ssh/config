@@ -12,7 +12,6 @@ Host *
   ServerAliveInterval 5
   # Not supported on Mac
   # ControlPersist 4h
-  IdentityFile ~/.ssh/aau_hortonworks_azure
   IdentityFile ~/.ssh/id_rsa
   StrictHostKeyChecking no
 
@@ -24,6 +23,7 @@ Host sandbox
 
 Host darkhorse
   HostName darkhorse-master1jzecmzqgkyrsw.centralus.cloudapp.azure.com
+  IdentityFile ~/.ssh/aau_hortonworks_azure
   User sandbox
   ForwardX11 yes
 
