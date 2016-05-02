@@ -4,7 +4,7 @@ Host *
   ControlMaster auto
   # Stupid Azure has very long host names, so we have to keep short control
   # paths
-  ControlPath ~/.ssh/cp-%r@%n:%p
+  ControlPath ~/.ssh/cp-%r@%h:%p
   # Keep the control open for 1 hour after all the connections exit
   # This also puts the initial connection into the background!
   ControlPersist 1h
