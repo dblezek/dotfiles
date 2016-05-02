@@ -3,6 +3,8 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
+
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 export MANPATH=/opt/local/share/man:$MANPATH
@@ -25,15 +27,38 @@ alias ls="ls -GFh"
 alias lsl="ls -GF -lah"
 alias dir=ls
 alias top="top -u"
-alias iMI3C-debug="${HOME}/Source/MI3CLib-macosx-debug/bin/iMI3C"
-alias QMon="ssh -f -X mi3c qmon"
 alias g="./gradlew"
-alias atom="/Applications/Atom.app/Contents/MacOS/Atom"
 
 function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
 
-# ignore duplicates
-export HISTCONTROL=erasedups
+# Prevent file overwrite on stdout redirection
+set -o noclobber
+
+# Update window size after every command
+shopt -s checkwinsize
+
+# History functions
+# Append to the history file, don't overwrite it
+shopt -s histappend
+
+# Save multi-line commands as one command
+shopt -s cmdhist
+
+# Record each line as it gets issued
+# PROMPT_COMMAND='history -a'
+
+# Huge history. Doesn't appear to slow things down, so why not?
+HISTSIZE=500000
+HISTFILESIZE=100000
+
+# Avoid duplicate entries
+HISTCONTROL="erasedups:ignoreboth"
+
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+
+# Useful timestamp format
+HISTTIMEFORMAT='%F %T '
 
 # Java, choose the most recent
 if [ -e /usr/libexec/java_home ]; then
@@ -50,8 +75,18 @@ fi
 # Use logout to exit the shell
 set -o ignoreeof
 
-set show-all-if-ambiguous on
-set visible-stats on
+## SMARTER TAB-COMPLETION (Readline bindings) ##
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
+
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
+
+bind "set visible-stats on"
 
 # LESS options
 export LESS="-XF --search-skip-screen --ignore-case --raw-control-chars"
@@ -121,8 +156,27 @@ fi
 PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 
+# cd options
 # Correcting directory names
 shopt -s cdspell
+# Prepend cd to directory names automatically, silence where not available
+if shopt | grep autocd > /dev/null; then
+    shopt -s autocd
+fi
+# Correct spelling errors during tab-completion, silenced
+if shopt | grep dirspell > /dev/null; then
+    shopt -s dirspell
+fi
+
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
+shopt -s cdable_vars
+
+export dotfiles="$HOME/.dotfiles"
+export Source="$HOME/Source"
+export dropbox="$HOME/Dropbox"
+
+
 
 # Setup a gradle properties file
 if [ ! -f $HOME/.gradle/gradle.properties ]; then
@@ -188,6 +242,18 @@ function ec () {
     osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
 
+# Docker Machine setup (so it can be called from bash)
+function docker-setup() {
+    eval $(/usr/local/bin/docker-machine env default)
+    export DOCKER_IP=$(/usr/local/bin/docker-machine ip default)
+}
+function docker-ip() {
+    /usr/local/bin/docker-machine ip default
+}
+if [ -f /usr/local/bin/docker-machine ]; then
+    docker-setup
+fi
+    
 # RCF settings
 if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
   . /home/oge/ge2011.11/default/common/settings.sh

@@ -11,6 +11,8 @@
 (package-initialize)
 
 
+;; keep old clipboard contents
+(setq save-interprogram-paste-before-kill 't)
 
 ;; smooth scrolling
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
@@ -121,13 +123,12 @@
       version-control t)
 (setq tramp-verbose 5)
 ;; controlmaster options for tramp
+;; See https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00317.html
+;; and https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-01/msg00890.html
 (setq tramp-ssh-controlmaster-options
       (concat
-        "-o ControlPath=~/.ssh/tramp-%%r@%%h:%%p "
+        "-o ControlPath=~/.ssh/tramp-%%C "
         "-o ControlMaster=auto -o ControlPersist=yes"))
-
-
-
 
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
@@ -152,8 +153,9 @@
                   tab-width 4)))
 (add-hook 'python-mode-hook 'subword-mode)
 
-;; When commiting in git, set auto-fill-mode
-(add-to-list 'auto-mode-alist '("\\COMMIT_EDITMSG\\'" . auto-fill-mode))
+;; GLSL mode
+(add-to-list 'auto-mode-alist '("\\.vs\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.fs\\'" . glsl-mode))
 
 ;; auto reload
 (global-auto-revert-mode t)

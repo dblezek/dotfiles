@@ -4,7 +4,7 @@ Host *
   ControlMaster auto
   # Stupid Azure has very long host names, so we have to keep short control
   # paths
-  ControlPath ~/.ssh/cp%r_%h
+  ControlPath ~/.ssh/cp-%r@%n:%p
   # Keep the control open for 1 hour after all the connections exit
   # This also puts the initial connection into the background!
   ControlPersist 1h
@@ -25,19 +25,16 @@ Host sandbox
 Host darkhorse
   HostName darkhorse-master1jzecmzqgkyrsw.centralus.cloudapp.azure.com
   User sandbox
+  ForwardX11 yes
 
-Host pony
-  HostName bd4g-pony.centralus.cloudapp.azure.com
-  User sandbox
+Host udp
+  HostName clld0001240
+  User mra9161
 
 Host insight
   HostName bd4gsandbox-ssh.azurehdinsight.net
   User sandbox
 
-Host cloudbreak
-  HostName 40.78.100.56
-  User cloudbreak
-  
 Host *cloudapp.net
   User sandbox
 
@@ -56,7 +53,7 @@ Host aws-2015
      HostName ec2-54-172-83-212.compute-1.amazonaws.com
      User ec2-user
 
-Host aws aws-2016 ftjava
+Host aws aws-2016 ftjava bumped
      HostName ec2-52-6-217-70.compute-1.amazonaws.com
      User ec2-user
      LocalForward localhost:4747 localhost:4747
