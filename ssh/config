@@ -18,7 +18,7 @@ Host *
 Host sandbox
   StrictHostKeyChecking no
   HostName 127.0.0.1
-  User root
+  User sandbox
   Port 2222
 
 Host darkhorse
