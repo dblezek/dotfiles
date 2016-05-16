@@ -275,4 +275,10 @@ if [ -f $HOME/.bash_mayobiotools ]; then
   fi
 fi
 
+# UDP settings
+if [[ `hostname -s` = hdpr03en01 ]]; then
+    # emacs keybindings
+    set -o emacs
+    export PATH=$PATH:/data/home/aau/bin
+fi    
 umask 0002
