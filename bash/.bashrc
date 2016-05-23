@@ -36,6 +36,9 @@ alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
 
+# curl-trace (https://github.com/wickett/curl-trace)
+alias curl-trace='curl -w "@$HOME/.curl-format"'
+
 function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
 
 # Prevent file overwrite on stdout redirection
