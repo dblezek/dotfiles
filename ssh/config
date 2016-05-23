@@ -4,6 +4,10 @@ Host udp
   HostName hdpr03en01.mayo.edu
   User mra9161
 
+Host udp-sandbox
+  HostName hdpr04en01.mayo.edu
+  User mra9161
+
 Host udp-cloud
   HostName clld0001240
   User mra9161
@@ -20,13 +24,6 @@ Host darkhorse
   IdentityFile ~/.ssh/aau_hortonworks_azure
   User sandbox
   ForwardX11 yes
-
-Host insight
-  HostName bd4gsandbox-ssh.azurehdinsight.net
-  User sandbox
-
-Host *cloudapp.net
-  User sandbox
 
 
 # IF we are going to AWS, don't check the host keys
