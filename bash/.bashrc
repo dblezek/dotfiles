@@ -70,6 +70,11 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 # Useful timestamp format
 HISTTIMEFORMAT='%F %T '
 
+# Have PROMPT_COMMAND rewrite history to include the directory
+# Unused for the moment...
+# export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; hpwd="${hpwd% ### *} ### cd $cwd"; history -s "$hpwd"'
+
+
 # Java, choose the most recent
 if [ -e /usr/libexec/java_home ]; then
     export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
