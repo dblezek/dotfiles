@@ -68,11 +68,22 @@ HISTCONTROL="erasedups:ignoreboth"
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
 
 # Useful timestamp format
-HISTTIMEFORMAT='%F %T '
+# HISTTIMEFORMAT='%F %T '
 
 # Have PROMPT_COMMAND rewrite history to include the directory
 # Unused for the moment...
 # export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; hpwd="${hpwd% ### *} ### cd $cwd"; history -s "$hpwd"'
+
+# Have PROMPT_COMMAND log every command to a log file
+# https://spin.atomicobject.com/2016/05/28/log-bash-history/
+mkdir -p $HOME/.bash-history-log
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
+
+# Make our terminal names more helpful to Timing
+PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
+
+
 
 
 # Java, choose the most recent
@@ -89,6 +100,9 @@ fi
 
 # Use logout to exit the shell
 set -o ignoreeof
+
+# Make sure we use emacs
+set -o emacs
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
 
@@ -166,10 +180,6 @@ fi
 if [[ $TERM = dumb ]]; then
     PS1=':$'
 fi
-
-# Make our terminal names more helpful to Timing
-PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-export PROMPT_COMMAND="${PROMPT_COMMAND} ${PROMPT_TITLE}; "
 
 # cd options
 # Correcting directory names
@@ -278,3 +288,9 @@ if [[ `hostname -s` = hdpr03en01 ]]; then
     export PATH=$PATH:/data/home/aau/bin
 fi    
 umask 0002
+
+# added by Anaconda3 4.1.0 installer
+if [ -f $HOME/anaconda/bin/python ]; then
+    export PATH="/Users/mra9161/anaconda/bin:$PATH"
+fi
+
