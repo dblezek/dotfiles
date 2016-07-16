@@ -36,6 +36,9 @@ alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
 
+# Activete a Python virtulenv
+alias activate="source */bin/activate"
+
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 
