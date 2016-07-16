@@ -14,8 +14,8 @@ Host udp-cloud
 
 Host sandbox
   StrictHostKeyChecking no
-  HostName 127.0.0.1
-  User sandbox
+  HostName myst.mayo.edu
+  User  maria_dev
   Port 2222
 
 Host darkhorse
@@ -37,19 +37,23 @@ Host ec2*
 
 
 Host aws-2015
-     HostName ec2-54-172-83-212.compute-1.amazonaws.com
-     User ec2-user
+  HostName ec2-54-172-83-212.compute-1.amazonaws.com
+  User ec2-user
 
 Host aws aws-2016 ftjava bumped
-     HostName ec2-52-6-217-70.compute-1.amazonaws.com
-     User ec2-user
-     LocalForward localhost:4747 localhost:4747
+  HostName ec2-52-6-217-70.compute-1.amazonaws.com
+  User ec2-user
+  LocalForward localhost:4747 localhost:4747
 
 Host ec2*.amazonaws.com
-     IdentityFile ~/.ssh/mykey.rsa
+  IdentityFile ~/.ssh/mykey.rsa
 
-Host qia* ril* mi3c* qin* research-gpu* myst*
+Host qia* ril* mi3c* qin* research-gpu*
   User mra9161
+
+Host myst
+  User mra9161
+  HostName R0223706.mayo.edu
 
 Host dewey*
   User dewey
