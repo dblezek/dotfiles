@@ -36,6 +36,10 @@ alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
 
+# Get a website recursively
+# https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
+alias WGET="wget -mkEpnp"
+
 # Activete a Python virtulenv
 alias activate="source */bin/activate"
 
