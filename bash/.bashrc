@@ -297,3 +297,7 @@ if [ -f $HOME/anaconda/bin/python ]; then
     export PATH="/Users/mra9161/anaconda/bin:$PATH"
 fi
 
+# MacTex 2016 under El Capitan
+if [ -e /Library/TeX/texbin/ ]; then
+    export PATH=/Library/TeX/texbin/:$PATH
+fi
