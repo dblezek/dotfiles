@@ -36,6 +36,12 @@ alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
 
+# Mac specific things
+ARCH=$(uname)
+if [[ "$ARCH" == "Darwin" ]]; then
+    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
+fi    
+
 # Activete a Python virtulenv
 alias activate="source */bin/activate"
 
@@ -174,7 +180,9 @@ alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 PS1='\h:\W$(parse_git_branch) \u\$ '
 
 PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h$(parse_git_branch)}:\W\n\#: '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
+
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
 
 if [[ `hostname -s` = myst ]]; then
     PS1='\h:\W$(parse_git_branch) \u: '
