@@ -50,8 +50,8 @@ alias curl-trace='curl -w "@$HOME/.curl-format"'
 
 function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
 
-# Prevent file overwrite on stdout redirection
-set -o noclobber
+# Allow file overwrite on stdout redirection
+set +o noclobber
 
 # Update window size after every command
 shopt -s checkwinsize
