@@ -14,8 +14,6 @@
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
-	<key>NSFontPanelAttributes</key>
-	<string>1, 4</string>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/.dotfiles/iterm2</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -39,16 +37,18 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>307</string>
+		<string>322</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
-	<key>NSWindow Frame ProfilesPanel</key>
-	<string>532 957 735 382 0 0 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>858 755 796 473 0 0 2560 1417 </string>
+	<string>269 147 796 474 0 0 1920 1177 </string>
+	<key>NSWindow Frame iTerm Window 0</key>
+	<string>1053 33 810 552 0 0 1920 1177 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>247 132 810 552 0 0 1920 1177 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -646,15 +646,11 @@
 	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
-	<integer>1</integer>
-	<key>NoSyncInstallationId</key>
-	<string>4961C812-F82E-4ECE-9848-A48571839B98</string>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
-	<true/>
-	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>0</integer>
+	<key>NoSyncInstallationId</key>
+	<string>CA9040DE-4237-4273-9997-7FC2211AD4FC</string>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
-	<real>498501702.96612298</real>
+	<real>499048257.12105697</real>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -689,13 +685,19 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/mra9161/.dotfiles/iterm2</string>
+	<string>/Users/blezek/.dotfiles/iterm2</string>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/final.xml?shard=55</string>
+	<string>https://iterm2.com/appcasts/final.xml?shard=63</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
+	<key>SULastCheckTime</key>
+	<date>2016-10-25T00:32:56Z</date>
+	<key>SUSendProfileInfo</key>
+	<false/>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<true/>
 	<key>WordCharacters</key>
