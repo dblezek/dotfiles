@@ -312,3 +312,19 @@ fi
 if [ -e /Library/TeX/texbin/ ]; then
     export PATH=/Library/TeX/texbin/:$PATH
 fi
+
+# Vagrant ssh options
+ssh_config=~/.ssh/c
+# Trim off ssh
+function vtrim {
+    tmp=$(mktemp -t ssh_config)
+    line=$(grep --line-number "## VAGRANT" $ssh_config | awk -F':' '{print $1-1}')
+    if [[ $line != "" ]]; then
+        head -n $line $ssh_config > $tmp
+        cp -f $tmp $ssh_config
+    fi
+}
+
+function vadd {
+    
+}
