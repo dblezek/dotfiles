@@ -158,6 +158,9 @@ export EDITOR=emacs
 # git completion commands
 source $HOME/.git-completion.bash
 
+# iTerm2
+source $HOME/.iterm2_shell_integration.bash
+
 # Help out git a bit
 # alias cmerge='git cmerge'
 # complete -o default -o nospace -F _git_checkout cmerge
@@ -321,10 +324,12 @@ function vtrim {
     line=$(grep --line-number "## VAGRANT" $ssh_config | awk -F':' '{print $1-1}')
     if [[ $line != "" ]]; then
         head -n $line $ssh_config > $tmp
-        cp -f $tmp $ssh_config
+        \cp -f $tmp $ssh_config
     fi
 }
 
 function vadd {
-    
+    vtrim
+    printf "%s\n" "## VAGRANT" >> $ssh_config
+    vagrant ssh-config | sed "s/Host default/Host vagrant/g" >> $ssh_config
 }
