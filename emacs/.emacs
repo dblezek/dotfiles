@@ -289,8 +289,13 @@
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
  '(js-indent-level 2)
+ '(package-selected-packages
+   (quote
+    (cmake-font-lock color-theme-solarized color-theme-modern yasnippet yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode+ lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
+ '(python-indent-guess-indent-offset t)
+ '(python-indent-offset 2)
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(vc-follow-symlinks nil))
