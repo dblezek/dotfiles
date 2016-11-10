@@ -39,10 +39,14 @@ alias g="./gradlew"
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
 alias WGET="wget -mkEpnp"
+
 # Mac specific things
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
+    export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
+    export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:$PATH
+    export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
 fi    
 
 # Activete a Python virtulenv
@@ -144,8 +148,6 @@ function title {
 }
 
 # installed software
-export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
-export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:$PATH
 
 # Add developer tools
 # export PATH=$PATH:/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
