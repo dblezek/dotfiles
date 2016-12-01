@@ -11,3 +11,6 @@
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
+
+# added by Miniconda2 4.2.12 installer
+export PATH="/Users/blezek/.macosx/miniconda2/bin:$PATH"

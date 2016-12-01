@@ -45,7 +45,7 @@ ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
     export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
-    export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:$PATH
+    export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:${HOME}/.macosx/miniconda2/bin:$PATH
     export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
 fi    
 
