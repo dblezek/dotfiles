@@ -160,8 +160,6 @@ export EDITOR=emacs
 # git completion commands
 source $HOME/.git-completion.bash
 
-# iTerm2
-source $HOME/.iterm2_shell_integration.bash
 
 # Help out git a bit
 # alias cmerge='git cmerge'
@@ -181,23 +179,26 @@ function current_git_branch {
 alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 
 
-# Color the GIT branch
-# PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
-
-# No colors
-PS1='\h:\W$(parse_git_branch) \u\$ '
-
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
-
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
-
-if [[ `hostname -s` = myst ]]; then
-    PS1='\h:\W$(parse_git_branch) \u: '
-fi
-
+# Detect TRAMP from emacs and play dumb
 if [[ $TERM = dumb ]]; then
-    PS1=':$'
+    PS1='> '
+else
+    # iTerm2
+    source $HOME/.iterm2_shell_integration.bash
+    # Color the GIT branch
+    # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
+
+    # No colors
+    PS1='\h:\W$(parse_git_branch) \u\$ '
+    
+    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
+    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
+    
+    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
+    
+    if [[ `hostname -s` = myst ]]; then
+        PS1='\h:\W$(parse_git_branch) \u: '
+    fi
 fi
 
 # cd options

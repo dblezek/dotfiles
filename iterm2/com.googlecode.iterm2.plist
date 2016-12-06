@@ -8,6 +8,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AutoHideTmuxClientSession</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>5648CC0E-485F-471D-9D81-CC9B4630CD8D</string>
 	<key>DimBackgroundWindows</key>
@@ -689,7 +691,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>4961C812-F82E-4ECE-9848-A48571839B98</string>
 	<key>NoSyncLastTipTime</key>
-	<real>501101490.88175499</real>
+	<real>501602455.35910499</real>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -716,6 +718,9 @@
 		<string>0008</string>
 		<string>0009</string>
 		<string>0010</string>
+		<string>0011</string>
+		<string>0012</string>
+		<string>0013</string>
 	</array>
 	<key>PointerActions</key>
 	<dict>
@@ -761,13 +766,20 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-11-17T13:19:47Z</date>
+	<date>2016-11-23T14:03:49Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartPlacement</key>
 	<true/>
 	<key>TabStyle</key>
 	<integer>0</integer>
+	<key>TmuxDashboardLimit</key>
+	<integer>1</integer>
+	<key>ToolbeltTools</key>
+	<array>
+		<string>Command History</string>
+		<string>Jobs</string>
+	</array>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<true/>
 	<key>UseBorder</key>

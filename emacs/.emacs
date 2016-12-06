@@ -26,9 +26,9 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (require 'go-autocomplete)
-(require 'yasnippet)
-(yas-global-mode 1)
-(setq ac-go-expand-arguments-into-snippets t)
+;; (require 'yasnippet)
+;; (yas-global-mode 1)
+;; (setq ac-go-expand-arguments-into-snippets t)
 
 
 ;; PROJECTILE MODE
@@ -158,7 +158,7 @@
 (add-to-list 'auto-mode-alist '("\\.fs\\'" . glsl-mode))
 
 ;; auto reload
-(global-auto-revert-mode t)
+;; (global-auto-revert-mode t)
 
 (setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
 
@@ -267,7 +267,7 @@
 (defun find-tag-no-prompt ()
   "Jump to the tag at point without prompting"
   (interactive)
-  (find-tag (find-tag-default)))
+  (xref-find-definitions (find-tag-default)))
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'find-tag-no-prompt)
 
@@ -289,7 +289,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yasnippet yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
