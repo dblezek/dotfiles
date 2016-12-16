@@ -48,6 +48,9 @@
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
 
+;; Company (complete anything), see http://company-mode.github.io/
+(add-hook 'after-init-hook 'global-company-mode)
+
 ;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
 ;; (setq mac-option-modifier 'meta)
 ;; (global-set-key (kbd "s-/") 'auto-complete)
@@ -158,7 +161,7 @@
 (add-to-list 'auto-mode-alist '("\\.fs\\'" . glsl-mode))
 
 ;; auto reload
-;; (global-auto-revert-mode t)
+(global-auto-revert-mode t)
 
 (setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
 
@@ -192,8 +195,7 @@
                   (end-of-line)
                   (point))))
     (comment-or-uncomment-region start end)))
-
-(global-set-key (kbd "M-/") 'comment-eclipse)
+;; (global-set-key (kbd "M-/") 'comment-eclipse)
 
 ;; Line numbers
 (global-linum-mode)
@@ -289,7 +291,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
