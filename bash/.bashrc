@@ -51,7 +51,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
-    export PATH=${HOME}/.software/bin
+    export PATH=${HOME}/.software/bin:${PATH}
 fi
 
 # Activete a Python virtulenv
@@ -316,8 +316,17 @@ umask 0002
 
 # added by Anaconda3 4.1.0 installer
 if [ -f $HOME/anaconda/bin/python ]; then
-    export PATH="/Users/mra9161/anaconda/bin:$PATH"
+    export PATH="$HOME/anaconda/bin:$PATH"
 fi
+if [ -f /research/projects/DJB/anaconda/bin/python ]; then
+    export PATH="/research/projects/DJB/anaconda/bin:$PATH"
+fi
+
+# added by Miniconda2 4.2.12 installer
+if [ -f $HOME/.macosx/miniconda2/bin/python ]; then
+    export PATH="$HOME/.macosx/miniconda2/bin:$PATH"
+fi
+
 
 # MacTex 2016 under El Capitan
 if [ -e /Library/TeX/texbin/ ]; then
