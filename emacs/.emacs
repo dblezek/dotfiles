@@ -306,4 +306,6 @@
 ;; Start the server
 (server-start)
 ;; Kill the scratch buffer
-(kill-buffer "*scratch*")
+(when (get-buffer "*scratch*")
+  (kill-buffer "*scratch*")
+  )
