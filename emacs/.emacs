@@ -23,9 +23,9 @@
 (require 'go-mode)
 
 ;; Emacs parses the buffer and creates a suggestion list
-(require 'auto-complete-config)
-(ac-config-default)
-(require 'go-autocomplete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+;; (require 'go-autocomplete)
 ;; (require 'yasnippet)
 ;; (yas-global-mode 1)
 ;; (setq ac-go-expand-arguments-into-snippets t)
@@ -51,6 +51,9 @@
 ;; Company (complete anything), see http://company-mode.github.io/
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; bind to A-/ for autocomplete now
+(global-set-key "\M-?" 'company-complete-common)
+
 ;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
 ;; (setq mac-option-modifier 'meta)
 ;; (global-set-key (kbd "s-/") 'auto-complete)
@@ -59,7 +62,7 @@
 
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\M-g" 'goto-line)
-(global-set-key "\M-?" 'auto-complete)
+;; (global-set-key "\M-?" 'auto-complete)
 (global-set-key "\M-s" 'save-buffer)
 
 ;; Move to the next window/frame
