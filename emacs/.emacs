@@ -1,3 +1,5 @@
+;; -*-no-byte-compile: t; -*-
+
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
@@ -51,8 +53,11 @@
 ;; Company (complete anything), see http://company-mode.github.io/
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; bind to A-/ for autocomplete now
+;; bind to M-? for autocomplete now
 (global-set-key "\M-?" 'company-complete-common)
+;; in text, company mode always suggests lowercase options.
+;; see http://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text for fix
+(setq company-dabbrev-downcase nil)
 
 ;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
 ;; (setq mac-option-modifier 'meta)
