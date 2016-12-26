@@ -35,6 +35,7 @@ alias lsl="ls -GF -lah"
 alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
+alias tags="ctags -e -R"
 
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/

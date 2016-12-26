@@ -8,6 +8,7 @@ install:
 	ln -sfn .dotfiles/bash/.bashrc ${HOME}
 	ln -sfn .dotfiles/bash/.curl-format ${HOME}
 	ln -sfn .dotfiles/bash/.screenrc ${HOME}
+	ln -sfn .dotfiles/bash/.ctags ${HOME}
 	ln -sfn .dotfiles/slate/.slate ${HOME}
 	ln -sfn .dotfiles/bash/.git-completion.bash ${HOME}
 	ln -sfn .dotfiles/bash/.iterm2_shell_integration.bash ${HOME}
