@@ -35,11 +35,6 @@ Host ec2*
 # -O ctl_cmd
 # Control an active connection multiplexing master process. When the -O option is specified, the ctl_cmd argument is interpreted and passed to the master process. Valid commands are: check (check that the master process is running), forward (request forwardings without command execution), cancel (cancel forwardings), exit (request the master to exit), and stop (request the master to stop accepting further multiplexing requests).
 
-
-Host aws-2015
-  HostName ec2-54-172-83-212.compute-1.amazonaws.com
-  User ec2-user
-
 Host aws aws-2016 ftjava bumped
   HostName ec2-52-6-217-70.compute-1.amazonaws.com
   User ec2-user
@@ -48,12 +43,13 @@ Host aws aws-2016 ftjava bumped
 Host ec2*.amazonaws.com
   IdentityFile ~/.ssh/mykey.rsa
 
-Host qia* ril* mi3c* qin* research-gpu*
-  User mra9161
-
 Host myst
   User mra9161
   HostName R0223706.mayo.edu
+
+Host dewey-gpu-04
+  User mra9161
+  StrictHostKeyChecking no
 
 Host dewey*
   User dewey
@@ -73,6 +69,18 @@ Host notion
   Hostname qia.mayo.edu
   User mra9161
   LocalForward :8884 localhost:8884
+
+# localhost is often a VM, so skip host key checking
+Host localhost 127.0.0.1
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host packer
+  Hostname localhost
+  Port 2222
+  User dewey
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
 
 Host *
   ServerAliveInterval 60

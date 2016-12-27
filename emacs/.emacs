@@ -208,7 +208,7 @@
                   (end-of-line)
                   (point))))
     (comment-or-uncomment-region start end)))
-;; (global-set-key (kbd "M-/") 'comment-eclipse)
+(global-set-key (kbd "M-/") 'comment-eclipse)
 
 ;; Line numbers
 (global-linum-mode)
@@ -304,7 +304,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (web-mode company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
