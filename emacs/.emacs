@@ -311,7 +311,12 @@
  '(python-indent-offset 2)
  '(tab-width 2)
  '(tool-bar-mode nil)
- '(vc-follow-symlinks nil))
+ '(vc-follow-symlinks nil)
+ '(web-mode-script-padding 0)
+ '(web-mode-attr-indent-offset 2)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-attr-value-indent-offset 2)
+ '(web-mode-css-indent-offset 2))
 
 ;; Start the server
 (server-start)
