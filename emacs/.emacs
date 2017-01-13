@@ -138,10 +138,10 @@
 ;; controlmaster options for tramp
 ;; See https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00317.html
 ;; and https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-01/msg00890.html
-(setq tramp-ssh-controlmaster-options
-      (concat
-        "-o ControlPath=~/.ssh/tramp-%%C "
-        "-o ControlMaster=auto -o ControlPersist=yes"))
+;; (setq tramp-ssh-controlmaster-options
+;;       (concat
+;;         "-o ControlPath=~/.ssh/tramp-%%C "
+;;         "-o ControlMaster=auto -o ControlPersist=yes"))
 
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
