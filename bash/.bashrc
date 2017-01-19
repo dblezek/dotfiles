@@ -36,6 +36,7 @@ alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
 alias tags="ctags -e -R"
+alias tmux="tmux -CC new-sessian -A -s main"
 
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/

@@ -32,6 +32,11 @@
 ;; (yas-global-mode 1)
 ;; (setq ac-go-expand-arguments-into-snippets t)
 
+;; convert a buffer to unix from DOS
+(defun dos2unix ()
+  "Not exactly but it's easier to remember"
+  (interactive)
+  (set-buffer-file-coding-system 'unix 't))
 
 ;; PROJECTILE MODE
 (require 'projectile)
@@ -91,9 +96,6 @@
 ;; Spaces not tabs
 (setq-default indent-tabs-mode nil)
 (setq require-final-newline t) ;;; Put \n at end of last line
-
-;; Bash editing
-(setq sh-indent-comment 4)
 
 ;; F3 and F4 do the right thing!
 ;; (global-set-key [f8] 'defining-kbd-macro)
@@ -302,6 +304,8 @@
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
  '(js-indent-level 2)
+ '(lua-indent-level 2)
+ '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
     (serverspec web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
@@ -309,6 +313,9 @@
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 2)
+ '(sh-basic-offset 2)
+ '(sh-indent-comment 2)
+ '(sh-indentation 2)
  '(tab-width 2)
  '(tool-bar-mode nil)
  '(vc-follow-symlinks nil)
