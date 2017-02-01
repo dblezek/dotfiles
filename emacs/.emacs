@@ -58,6 +58,9 @@
 ;; Company (complete anything), see http://company-mode.github.io/
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
+(add-hook 'js-mode-hook (lambda() (tern-mode t)))
+
 ;; bind to M-? for autocomplete now
 (global-set-key "\M-?" 'company-complete-common)
 ;; in text, company mode always suggests lowercase options.
@@ -174,11 +177,16 @@
 
 ;; Web mode http://web-mode.org/
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
+(setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
+(add-to-list 'web-mode-comment-formats '("javascript" . "//"))
+
 
 ;; auto reload
 (global-auto-revert-mode t)
 
-(setq confirm-kill-emacs 'yes-or-no-p)          ; Confirm quit
+;; Confirm quit
+(setq confirm-kill-emacs 'yes-or-no-p)          
 
 
 ;; Gives us unique buffer names
@@ -308,7 +316,7 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (serverspec web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)

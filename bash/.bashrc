@@ -50,6 +50,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
     export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:${HOME}/.macosx/miniconda2/bin:$PATH
     export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
     export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
+    export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
