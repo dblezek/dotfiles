@@ -27,6 +27,8 @@ export MI3CTESTOUTPUTDIR=/tmp/
 export PATH=${HOME}/Source/bin:$PATH
 
 alias CC="emacs -nw CMakeCache.txt"
+# Copy last command into the clipboard (Mac) http://apple.stackexchange.com/questions/110343/copy-last-command-in-terminal
+alias cc="history 1 | cut -d ' ' -f 4- | pbcopy"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
@@ -89,7 +91,8 @@ HISTFILESIZE=100000
 HISTCONTROL="erasedups:ignoreboth"
 
 # Don't record some commands
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+# Specifically, ignore any command that has a leading space using the ' *' pattern
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear: *"
 
 # Useful timestamp format
 # HISTTIMEFORMAT='%F %T '
@@ -336,20 +339,7 @@ if [ -e /Library/TeX/texbin/ ]; then
     export PATH=/Library/TeX/texbin/:$PATH
 fi
 
-# Vagrant ssh options
-ssh_config=~/.ssh/c
-# Trim off ssh
-function vtrim {
-    tmp=$(mktemp -t ssh_config)
-    line=$(grep --line-number "## VAGRANT" $ssh_config | awk -F':' '{print $1-1}')
-    if [[ $line != "" ]]; then
-        head -n $line $ssh_config > $tmp
-        \cp -f $tmp $ssh_config
-    fi
-}
-
-function vadd {
-    vtrim
-    printf "%s\n" "## VAGRANT" >> $ssh_config
-    vagrant ssh-config | sed "s/Host default/Host vagrant/g" >> $ssh_config
+# Remote tmux connection
+function rtmux {
+  ssh -t $1 'tmux -CC attach || tmux -CC'
 }

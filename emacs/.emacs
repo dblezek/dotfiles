@@ -1,5 +1,9 @@
 ;; -*-no-byte-compile: t; -*-
 
+;; Start the server
+(require 'server)
+(unless (boundp 'server-process) (server-start))
+
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
@@ -38,6 +42,11 @@
   (interactive)
   (set-buffer-file-coding-system 'unix 't))
 
+;; clear the echo area
+(defun clear-message-area ()
+  (interactive)
+  (message nil)
+  )
 ;; PROJECTILE MODE
 (require 'projectile)
 (projectile-global-mode)
@@ -51,6 +60,10 @@
             (when (file-remote-p default-directory)
               (setq-local projectile-mode-line "Projectile"))))
 
+
+;; Latex mode
+(add-hook 'tex-mode-hook 'visual-line-mode)
+(add-hook 'tex-mode-hook 'flyspell-mode)
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
@@ -199,7 +212,7 @@
 (setq ido-everywhere t)
 (ido-mode 1)
 
-;; Auto pair parens
+;; Auto pair parens!  cool
 (electric-pair-mode 1)
 (show-paren-mode 1)
 
@@ -249,6 +262,11 @@
 ;; Markdown mode should include visual-line-mode and flyspell mode
 (add-hook `markdown-mode-hook `flyspell-mode)
 (add-hook `markdown-mode-hook `visual-line-mode)
+;; Make back-ticks be an electric-pair in markdown mode
+(add-hook `markdown-mode-hook (lambda()
+                                (setq-local electric-pair-pairs (append electric-pair-pairs '((?` . ?`))))
+                                (setq-local elctric-pair-text-pairs electric-pair-pairs)
+                                ))
 
 ;; directory tree
 (require 'direx)
@@ -312,6 +330,7 @@
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
  '(js-indent-level 2)
+ '(latex-run-command "latex --synctex=1")
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
  '(package-selected-packages
@@ -333,9 +352,6 @@
  '(web-mode-css-indent-offset 2)
  '(web-mode-script-padding 0))
 
-;; Start the server
-(require 'server)
-(unless (boundp 'server-process) (server-start))
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")
   (kill-buffer "*scratch*")
