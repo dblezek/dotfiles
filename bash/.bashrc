@@ -28,7 +28,7 @@ export PATH=${HOME}/Source/bin:$PATH
 
 alias CC="emacs -nw CMakeCache.txt"
 # Copy last command into the clipboard (Mac) http://apple.stackexchange.com/questions/110343/copy-last-command-in-terminal
-alias cc="history 1 | cut -d ' ' -f 4- | pbcopy"
+alias cc="history 2 | head -1 | cut -d ' ' -f 4- | pbcopy"
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
@@ -50,7 +50,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
     export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
     export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:${HOME}/.macosx/miniconda2/bin:$PATH
-    export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
+    # export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
     export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
     export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
 fi
