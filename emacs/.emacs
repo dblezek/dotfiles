@@ -178,8 +178,8 @@
 ;; Web mode http://web-mode.org/
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
-(setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
-(add-to-list 'web-mode-comment-formats '("javascript" . "//"))
+;; (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
+;; (add-to-list 'web-mode-comment-formats '("javascript" . "//"))
 
 
 ;; auto reload
@@ -328,6 +328,7 @@
  '(tool-bar-mode nil)
  '(vc-follow-symlinks nil)
  '(web-mode-attr-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
  '(web-mode-attr-value-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)

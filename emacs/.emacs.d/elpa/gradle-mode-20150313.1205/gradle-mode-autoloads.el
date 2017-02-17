@@ -1,15 +1,16 @@
 ;;; gradle-mode-autoloads.el --- automatically extracted autoloads
 ;;
 ;;; Code:
-(add-to-list 'load-path (or (file-name-directory #$) (car load-path)))
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "gradle-mode" "gradle-mode.el" (21844 44721
+;;;### (autoloads nil "gradle-mode" "gradle-mode.el" (22695 13878
 ;;;;;;  0 0))
 ;;; Generated autoloads from gradle-mode.el
 
 (defvar gradle-mode nil "\
 Non-nil if Gradle mode is enabled.
-See the command `gradle-mode' for a description of this minor mode.")
+See the `gradle-mode' command
+for a description of this minor mode.")
 
 (custom-autoload 'gradle-mode "gradle-mode" nil)
 
