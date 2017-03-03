@@ -16,6 +16,14 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+;; Get our path from the shell
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+;; (setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
+(setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
+;; (setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
+;; (setenv "GOROOT" "~/Source/go")
+
 
 ;; keep old clipboard contents
 (setq save-interprogram-paste-before-kill 't)
@@ -285,13 +293,6 @@
   (let ((indent-tabs-mode nil))
     ad-do-it))
 
-;; Get our path from the shell
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-;; (setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
-(setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
-;; (setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
-;; (setenv "GOROOT" "~/Source/go")
 
 
 ;; Insert the date
@@ -345,7 +346,7 @@
  '(sh-indentation 2)
  '(tab-width 2)
  '(tool-bar-mode nil)
- '(vc-follow-symlinks nil)
+ '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
  '(web-mode-attr-value-indent-offset 2)
