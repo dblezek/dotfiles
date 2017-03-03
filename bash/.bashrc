@@ -39,6 +39,16 @@ alias top="top -u"
 alias g="./gradlew"
 alias tags="ctags -e -R"
 alias tmuxa="tmux attach || tmux -CC new"
+# Activate a Python virtulenv
+alias activate="source */bin/activate"
+# curl-trace (https://github.com/wickett/curl-trace)
+alias curl-trace='curl -w "@$HOME/.curl-format"'
+
+# Quick nav
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
@@ -49,21 +59,20 @@ ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
     alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
     export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
-    export PATH=${HOME}/.macosx/bin:${HOME}/.macosx/dcm4che/bin:${HOME}/.macosx/miniconda2/bin:$PATH
-    # export DCMDICTPATH=${HOME}/.macosx/share/dcmtk/dicom.dic
+    export PATH=${HOME}/.macosx/bin:$PATH
     export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
     export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
+    if [[ -e ${HOME}/.macosx/fsl ]]; then
+        export FSLDIR=${HOME}/.macosx/fsl
+        . $FSLDIR/etc/fslconf/fsl.sh
+        export PATH=${FSLDIR}/bin:${PATH}
+    fi
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
     export PATH=${HOME}/.software/bin:${PATH}
 fi
 
-# Activete a Python virtulenv
-alias activate="source */bin/activate"
-
-# curl-trace (https://github.com/wickett/curl-trace)
-alias curl-trace='curl -w "@$HOME/.curl-format"'
 
 function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
 
@@ -109,8 +118,6 @@ export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:
 # Make our terminal names more helpful to Timing
 PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
-
-
 
 
 # Java, choose the most recent
@@ -170,6 +177,11 @@ export EDITOR=emacs
 
 # git completion commands
 source $HOME/.git-completion.bash
+alias gs='git status'
+alias gc='git commit -m' # requires you to type a commit message
+alias gp='git push'
+alias gl='git pull'
+alias gf='git fetch'
 
 
 # Help out git a bit
@@ -231,7 +243,6 @@ shopt -s cdable_vars
 export dotfiles="$HOME/.dotfiles"
 export Source="$HOME/Source"
 export dropbox="$HOME/Dropbox"
-
 
 
 # Setup a gradle properties file
@@ -343,3 +354,13 @@ fi
 function rtmux {
   ssh -t $1 'tmux -CC attach || tmux -CC'
 }
+
+# history grep
+function hgrep {
+    grep $1 ${HOME}/.bash-history-log/*
+}
+
+# z from https://github.com/rupa/z
+if [ -e ${HOME}/.z.sh ]; then
+  . ${HOME}/.z.sh
+fi
