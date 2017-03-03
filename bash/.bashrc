@@ -323,13 +323,22 @@ if [ -f $HOME/.bash_mayobiotools ]; then
   fi
 fi
 
-# UDP settings
-if [[ `hostname -s` = hdpr03en01 ]]; then
-    # emacs keybindings
-    set -o emacs
-    export PATH=$PATH:/data/home/aau/bin
-fi    
-umask 0002
+# Look for Freesurfer
+for fsdir in "${HOME}/Applications/freesurfer"; do
+    if [ -e "$fsdir" ]; then
+        export FREESURFER_HOME="$fsdir"
+        source "$FREESURFER_HOME/SetUpFreeSurfer.sh"  2&>1 /dev/null
+    fi
+done
+
+# Look for FSL
+for fsldir in "${HOME}/Applications/fsl"; do
+    if [ -e "$fsldir" ]; then
+        export FSLDIR="$fsldir"
+        source "${FSLDIR}/etc/fslconf/fsl.sh"
+        export PATH=${FSLDIR}/bin:${PATH}
+    fi
+done
 
 # added by Anaconda3 4.1.0 installer
 if [ -f $HOME/anaconda/bin/python ]; then
