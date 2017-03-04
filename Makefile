@@ -1,6 +1,4 @@
-
-
-install:
+install: brew
 #	git pull
 	ln -sfn .dotfiles/emacs/.emacs ${HOME}
 	ln -sfn .dotfiles/emacs/.emacs.d ${HOME}
@@ -21,6 +19,11 @@ ssh:
 
 pull: ssh
 	git pull
+
+# Dump brew so we can rebuild using brew bundle
+HN:=$(shell hostname -s)
+brew:
+	@type brew > /dev/null 2>&1 && brew bundle dump --file=${HN}.brew --force
 
 
 .PHONY: ssh pull install
