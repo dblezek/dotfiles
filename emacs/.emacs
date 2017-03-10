@@ -67,7 +67,13 @@
           (lambda ()
             (when (file-remote-p default-directory)
               (setq-local projectile-mode-line "Projectile"))))
-
+(defadvice projectile-on (around exlude-tramp activate)
+    (unless  (--any? (and it (file-remote-p it))
+        (list
+            (buffer-file-name)
+            list-buffers-directory
+            default-directory))
+    ad-do-it))
 
 ;; Latex mode
 (add-hook 'tex-mode-hook 'visual-line-mode)
@@ -245,6 +251,7 @@
 (global-linum-mode)
 
 ;; Go configuration
+(setq gofmt-command "goimports")
 (defun my-go-mode-hook ()
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
@@ -336,7 +343,7 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
@@ -348,10 +355,10 @@
  '(tool-bar-mode nil)
  '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
- '(web-mode-markup-indent-offset 2)
  '(web-mode-attr-value-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-css-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
  '(web-mode-script-padding 0))
 
 ;; Kill the scratch buffer
