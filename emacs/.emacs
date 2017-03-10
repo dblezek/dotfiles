@@ -195,7 +195,7 @@
 (add-hook 'python-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
-                  tab-width 4)))
+                  tab-width 2)))
 (add-hook 'python-mode-hook 'subword-mode)
 
 ;; GLSL mode
