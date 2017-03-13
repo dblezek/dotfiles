@@ -350,6 +350,7 @@ add_path $HOME/Source/maven/bin
 # RCF tools
 add_path /data5/radiology/bje01/mra9161/mricron_lx/
 add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin/
+add_path /data5/radiology/bje01/shared/anaconda/bin
 
 # Remote tmux connection
 function rtmux {
