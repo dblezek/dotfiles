@@ -78,7 +78,7 @@ Host localhost 127.0.0.1
 # Field of Dreams server
 Host fod fod1
   Hostname fod1.mayo.edu
-  ForwardX11 yes
+  # ForwardX11 yes
   # LocalForward :8080 localhost:8080
   # LocalForward :8123 localhost:8123
   # LocalForward :8124 localhost:8124
