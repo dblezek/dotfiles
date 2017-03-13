@@ -22,8 +22,11 @@ pull: ssh
 
 # Dump brew so we can rebuild using brew bundle
 HN:=$(shell hostname -s)
+BREW := $(shell command -v brew 2> /dev/null )
 brew:
-	@type brew > /dev/null 2>&1 && brew bundle dump --file=${HN}.brew --force
+ifdef $BREW
+	echo brew bundle dump --file=${HN}.brew --force
+endif
 
 
 .PHONY: ssh pull install
