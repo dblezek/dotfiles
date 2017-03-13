@@ -127,11 +127,6 @@ else
     export JAVA_HOME=/usr/java/latest/
 fi
 
-# Maven?
-if [ -e $HOME/Source/maven ]; then
-    export PATH=${PATH}:$HOME/Source/maven/bin
-fi
-
 # Use logout to exit the shell
 set -o ignoreeof
 
@@ -272,11 +267,6 @@ export FIGNORE=.DS_Store
 # Node modules
 export PATH=./node_modules/.bin:$PATH
 
-# Locally installed python
-if [ -d $HOME/Library/Python/2.7/bin/ ]; then
-    export PATH=$HOME/Library/Python/2.7/bin:$PATH
-fi
-
 # Editor for commit messages
 export EDITOR="emacs -nw"
 
@@ -340,24 +330,26 @@ for fsldir in "${HOME}/Applications/fsl"; do
     fi
 done
 
-# added by Anaconda3 4.1.0 installer
-if [ -f $HOME/anaconda/bin/python ]; then
-    export PATH="$HOME/anaconda/bin:$PATH"
-fi
-if [ -f /research/projects/DJB/anaconda/bin/python ]; then
-    export PATH="/research/projects/DJB/anaconda/bin:$PATH"
-fi
+# Helper to manage all the paths
+function add_path() {
+  if [ -d "$1" ]; then
+    export PATH="$1":${PATH}
+    return 1
+  fi
+  return 0
+}
 
-# added by Miniconda2 4.2.12 installer
-if [ -f $HOME/.macosx/miniconda2/bin/python ]; then
-    export PATH="$HOME/.macosx/miniconda2/bin:$PATH"
-fi
-
-
+add_path $HOME/anaconda/bin/python
+add_path /research/projects/DJB/anaconda/bin/python
+add_path $HOME/.macosx/miniconda2/bin/python
 # MacTex 2016 under El Capitan
-if [ -e /Library/TeX/texbin/ ]; then
-    export PATH=/Library/TeX/texbin/:$PATH
-fi
+add_path /Library/TeX/texbin/
+# Maven?
+add_path $HOME/Source/maven/bin
+
+# RCF tools
+add_path /data5/radiology/bje01/mra9161/mricron_lx/
+add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin/
 
 # Remote tmux connection
 function rtmux {
