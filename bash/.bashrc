@@ -34,6 +34,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 alias ls="ls -GFh"
 alias lsl="ls -GF -lah"
+alias la="lsl"
 alias dir=ls
 alias top="top -u"
 alias g="./gradlew"
@@ -339,9 +340,9 @@ function add_path() {
   return 0
 }
 
-add_path $HOME/anaconda/bin/python
-add_path /research/projects/DJB/anaconda/bin/python
-add_path $HOME/.macosx/miniconda2/bin/python
+add_path $HOME/anaconda/bin/
+add_path /research/projects/DJB/anaconda/bin/
+add_path $HOME/.macosx/miniconda2/bin/
 # MacTex 2016 under El Capitan
 add_path /Library/TeX/texbin/
 # Maven?
