@@ -202,7 +202,7 @@ if [[ $TERM = dumb ]]; then
     PS1='> '
 else
     # iTerm2
-    source $HOME/.iterm2_shell_integration.bash
+    source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
     # Color the GIT branch
     # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
