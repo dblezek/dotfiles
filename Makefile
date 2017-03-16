@@ -25,8 +25,8 @@ pull: ssh
 HN:=$(shell hostname -s)
 BREW := $(shell command -v brew 2> /dev/null )
 brew:
-ifdef $BREW
-	echo brew bundle dump --file=${HN}.brew --force
+ifdef BREW
+	brew bundle dump --file=${HN}.brew --force
 endif
 
 
