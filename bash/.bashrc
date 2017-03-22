@@ -203,7 +203,8 @@ alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 if [[ $TERM = dumb ]]; then
     PS1='> '
 else
-    # iTerm2
+  # iTerm2
+  # from https://gitlab.com/gnachman/iterm2/issues/4743
     source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
     # Color the GIT branch
     # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
