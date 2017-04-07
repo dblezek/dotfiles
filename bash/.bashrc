@@ -2,8 +2,8 @@
 
 # touching ~/.hushlogin is very useful for suppressing /etc/motd
 case "$-" in
-    *i*) INTERACTIVE=1 ;;
-    *) INTERACTIVE=0 ;;
+  *i*) INTERACTIVE=1 ;;
+  *) INTERACTIVE=0 ;;
 esac
 
 if [ -f /etc/bashrc ]; then
@@ -39,8 +39,8 @@ alias lr="ls -ltr"
 alias dir=ls
 # alias top="top -u"
 alias g="./gradlew"
+alias l="less"
 alias tags="ctags -e -R"
-alias tmuxa="tmux attach || tmux -CC new"
 # Activate a Python virtulenv
 alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
@@ -59,20 +59,20 @@ alias WGET="wget -mkEpnp"
 # Mac specific things
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
-    export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
-    export PATH=${HOME}/.macosx/bin:$PATH
-    export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
-    export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
-    if [[ -e ${HOME}/.macosx/fsl ]]; then
-        export FSLDIR=${HOME}/.macosx/fsl
-        . $FSLDIR/etc/fslconf/fsl.sh
-        export PATH=${FSLDIR}/bin:${PATH}
-    fi
+  alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
+  export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
+  export PATH=${HOME}/.macosx/bin:$PATH
+  export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
+  export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
+  if [[ -e ${HOME}/.macosx/fsl ]]; then
+    export FSLDIR=${HOME}/.macosx/fsl
+    . $FSLDIR/etc/fslconf/fsl.sh
+    export PATH=${FSLDIR}/bin:${PATH}
+  fi
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
-    export PATH=${HOME}/.software/bin:${PATH}
+  export PATH=${HOME}/.software/bin:${PATH}
 fi
 
 
@@ -90,6 +90,10 @@ shopt -s histappend
 
 # Save multi-line commands as one command
 shopt -s cmdhist
+
+# Use the physical directory structure instead of symbolic links
+# http://stackoverflow.com/questions/10456784/behavior-of-cd-bash-on-symbolic-links
+set -o physical
 
 # Record each line as it gets issued
 # PROMPT_COMMAND='history -a'
@@ -124,9 +128,9 @@ export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
 
 # Java, choose the most recent
 if [ -e /usr/libexec/java_home ]; then
-    export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
+  export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
 else
-    export JAVA_HOME=/usr/java/latest/
+  export JAVA_HOME=/usr/java/latest/
 fi
 
 # Use logout to exit the shell
@@ -201,24 +205,27 @@ alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
 
 # Detect TRAMP from emacs and play dumb
 if [[ $TERM = dumb ]]; then
-    PS1='> '
+  PS1='> '
 else
-    # iTerm2
-    source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
-    # Color the GIT branch
-    # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
+  # iTerm2
 
-    # No colors
-    PS1='\h:\W$(parse_git_branch) \u\$ '
-    
-    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
-    
-    PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
-    
-    if [[ `hostname -s` = myst ]]; then
-        PS1='\h:\W$(parse_git_branch) \u: '
-    fi
+  # Gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
+  # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
+  source $HOME/.iterm2_shell_integration.bash
+  # Color the GIT branch
+  # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
+
+  # No colors
+  PS1='\h:\W$(parse_git_branch) \u\$ '
+  
+  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
+  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
+  
+  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
+  
+  if [[ `hostname -s` = myst ]]; then
+    PS1='\h:\W$(parse_git_branch) \u: '
+  fi
 fi
 
 # cd options
@@ -226,11 +233,11 @@ fi
 shopt -s cdspell
 # Prepend cd to directory names automatically, silence where not available
 if shopt | grep autocd > /dev/null; then
-    shopt -s autocd
+  shopt -s autocd
 fi
 # Correct spelling errors during tab-completion, silenced
 if shopt | grep dirspell > /dev/null; then
-    shopt -s dirspell
+  shopt -s dirspell
 fi
 
 # This allows you to bookmark your favorite places across the file system
@@ -244,14 +251,14 @@ export dropbox="$HOME/Dropbox"
 
 # Setup a gradle properties file
 if [ ! -f $HOME/.gradle/gradle.properties ]; then
-    mkdir -p $HOME/.gradle
-    touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
+  mkdir -p $HOME/.gradle
+  touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
 fi
 
 function cronenv () {
-    # Expand it here, then quote it on the next line
-    t=$@
-    env -i MAILTO=blezek.daniel@mayo.edu SHELL=/bin/sh USER=$USER PATH=/usr/bin:/bin PWD=/home/noop SHLVL=1 LOGNAME=$LOGNAME _=/usr/bin/env HOME=$HOME /bin/bash --noprofile --norc -c "$t"
+  # Expand it here, then quote it on the next line
+  t=$@
+  env -i MAILTO=blezek.daniel@mayo.edu SHELL=/bin/sh USER=$USER PATH=/usr/bin:/bin PWD=/home/noop SHLVL=1 LOGNAME=$LOGNAME _=/usr/bin/env HOME=$HOME /bin/bash --noprofile --norc -c "$t"
 }
 
 # Clean up history by ignoring certain items
@@ -260,7 +267,7 @@ export HISTCONTROL=erasedups
 
 # bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
+  . /opt/local/etc/bash_completion
 fi
 
 # Ignore files in completion, dumb .DS_Store files!
@@ -298,7 +305,7 @@ export GO15VENDOREXPERIMENT=1
 export GOPATH=${HOME}/Source/go
 
 function ec () {
-    osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
+  osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
 
 # RCF settings
@@ -309,27 +316,27 @@ fi
 # Source RCF Cluster Definitions
 if [ -f $HOME/.bash_mayobiotools ]; then
   if [ $INTERACTIVE = '1' ]; then
-	. $HOME/.bash_mayobiotools
+	  . $HOME/.bash_mayobiotools
   else
-	. $HOME/.bash_mayobiotools > /dev/null
+	  . $HOME/.bash_mayobiotools > /dev/null
   fi
 fi
 
 # Look for Freesurfer
-for fsdir in "${HOME}/Applications/freesurfer"; do
-    if [ -e "$fsdir" ]; then
-        export FREESURFER_HOME="$fsdir"
-        source "$FREESURFER_HOME/SetUpFreeSurfer.sh"  2&>1 /dev/null
-    fi
+for fsdir in "${HOME}/Applications/freesurfer" /Applications/freesurfer; do
+  if [ -e "$fsdir" ]; then
+    export FREESURFER_HOME="$fsdir"
+    source "$FREESURFER_HOME/SetUpFreeSurfer.sh"  2>&1 /dev/null
+  fi
 done
 
 # Look for FSL
 for fsldir in "${HOME}/Applications/fsl"; do
-    if [ -e "$fsldir" ]; then
-        export FSLDIR="$fsldir"
-        source "${FSLDIR}/etc/fslconf/fsl.sh"
-        export PATH=${FSLDIR}/bin:${PATH}
-    fi
+  if [ -e "$fsldir" ]; then
+    export FSLDIR="$fsldir"
+    source "${FSLDIR}/etc/fslconf/fsl.sh"
+    export PATH=${FSLDIR}/bin:${PATH}
+  fi
 done
 
 # Helper to manage all the paths
@@ -341,17 +348,25 @@ function add_path() {
   return 0
 }
 
-add_path $HOME/anaconda/bin/
-add_path /research/projects/DJB/anaconda/bin/
-add_path $HOME/.macosx/miniconda2/bin/
+add_path $HOME/anaconda/bin
+add_path /research/projects/DJB/anaconda/bin
+add_path $HOME/.macosx/miniconda2/bin
+add_path $HOME/Applications/MRIcron
+# catch itksnap
+add_path $HOME/Applications
 # MacTex 2016 under El Capitan
-add_path /Library/TeX/texbin/
+add_path /Library/TeX/texbin
 # Maven?
 add_path $HOME/Source/maven/bin
+# brew
+add_path /usr/local/sbin
+
+# HCP Workbench
+add_path $HOME/Applications/workbench/bin_macosx64
 
 # RCF tools
-add_path /data5/radiology/bje01/mra9161/mricron_lx/
-add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin/
+add_path /data5/radiology/bje01/mra9161/mricron_lx
+add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 add_path /data5/radiology/bje01/shared/anaconda/bin
 
 # Remote tmux connection
@@ -361,7 +376,13 @@ function rtmux {
 
 # history grep
 function hgrep {
-    grep $1 ${HOME}/.bash-history-log/*
+  if hash ag 2>/dev/null; then
+    # Use ag, if it exists
+    ag $1 ${HOME}/.bash-history-log/
+  else
+    # Fall back to good old grep
+    grep -i $1 ${HOME}/.bash-history-log/*
+  fi
 }
 
 # z from https://github.com/rupa/z

@@ -56,24 +56,24 @@
   (message nil)
   )
 ;; PROJECTILE MODE
-(require 'projectile)
-(projectile-global-mode)
-(setq projectile-enable-caching t)
+;;(require 'projectile)
+;;(projectile-global-mode)
+;;(setq projectile-enable-caching t)
 ;; disable remote file caching (https://github.com/bbatsov/projectile)
-(setq projectile-file-exists-remote-cache-expire nil)
-(load-file "~/.emacs.d/rename.el")
+;;(setq projectile-file-exists-remote-cache-expire nil)
+;; (load-file "~/.emacs.d/rename.el")
 ;; Remove for TRAMP connections
-(add-hook 'find-file-hook
-          (lambda ()
-            (when (file-remote-p default-directory)
-              (setq-local projectile-mode-line "Projectile"))))
-(defadvice projectile-on (around exlude-tramp activate)
-    (unless  (--any? (and it (file-remote-p it))
-        (list
-            (buffer-file-name)
-            list-buffers-directory
-            default-directory))
-    ad-do-it))
+;; (add-hook 'find-file-hook
+;;           (lambda ()
+;;             (when (file-remote-p default-directory)
+;;               (setq-local projectile-mode-line "Projectile"))))
+;; (defadvice projectile-on (around exlude-tramp activate)
+;;     (unless  (--any? (and it (file-remote-p it))
+;;         (list
+;;             (buffer-file-name)
+;;             list-buffers-directory
+;;             default-directory))
+;;     ad-do-it))
 
 ;; Latex mode
 (add-hook 'tex-mode-hook 'visual-line-mode)
@@ -83,7 +83,7 @@
 (setq mac-command-modifier 'meta)
 
 ;; Company (complete anything), see http://company-mode.github.io/
-(add-hook 'after-init-hook 'global-company-mode)
+(global-company-mode)
 
 ;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
 (add-hook 'js-mode-hook (lambda() (tern-mode t)))
@@ -343,7 +343,7 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-projectile go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
