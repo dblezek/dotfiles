@@ -208,6 +208,10 @@ if [[ $TERM = dumb ]]; then
   PS1='> '
 else
   # iTerm2
+  # from https://gitlab.com/gnachman/iterm2/issues/4743
+    source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
+    # Color the GIT branch
+    # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
   # Gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
   # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
