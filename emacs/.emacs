@@ -1,8 +1,9 @@
 ;; -*-no-byte-compile: t; -*-
 
 ;; Start the server
-(require 'server)
-(unless (boundp 'server-process) (server-start))
+;;(require 'server)
+;;(unless (boundp 'server-process) (server-start))
+(server-start)
 
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
@@ -321,6 +322,11 @@
   (xref-find-definitions (find-tag-default)))
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'find-tag-no-prompt)
+(require 'etags-select)
+(require 'etags-table)
+(setq etags-table-search-up-depth 10)
+;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
+(global-set-key (kbd "M-*") 'pop-tag-mark)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -334,6 +340,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(c-basic-offset 4)
  '(ido-ignore-directories
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
@@ -343,11 +350,12 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 2)
+ '(safe-local-variable-values (quote ((c-basic-indent . 4))))
  '(sh-basic-offset 2)
  '(sh-indent-comment 2)
  '(sh-indentation 2)

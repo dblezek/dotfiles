@@ -46,6 +46,9 @@ alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 
+alias cgrep="grep --color=always"
+alias ag='\ag --pager=less'
+
 # Quick nav
 alias ..="cd .."
 alias ...="cd ../.."
@@ -209,11 +212,7 @@ if [[ $TERM = dumb ]]; then
 else
   # iTerm2
   # from https://gitlab.com/gnachman/iterm2/issues/4743
-    source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
-    # Color the GIT branch
-    # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
-
-  # Gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
+  # Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
   # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
   source $HOME/.iterm2_shell_integration.bash
   # Color the GIT branch
@@ -364,6 +363,8 @@ add_path /Library/TeX/texbin
 add_path $HOME/Source/maven/bin
 # brew
 add_path /usr/local/sbin
+# Blender
+add_path /Applications/blender/blender.app/Contents/MacOS
 
 # HCP Workbench
 add_path $HOME/Applications/workbench/bin_macosx64
