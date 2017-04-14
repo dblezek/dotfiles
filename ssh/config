@@ -18,13 +18,11 @@ Host sandbox
   User  maria_dev
   Port 2222
 
-Host darkhorse
-  ControlPath ~/.ssh/cp-darkhorse
-  HostName darkhorse-master1jzecmzqgkyrsw.centralus.cloudapp.azure.com
-  IdentityFile ~/.ssh/aau_hortonworks_azure
-  User sandbox
-  ForwardX11 yes
-
+Host do
+  ControlPath ~/.ssh/cp-do
+  HostName 104.236.82.249
+  IdentityFile ~/.ssh/id_rsa_digitalocean
+  User root
 
 # IF we are going to AWS, don't check the host keys
 Host ec2*
