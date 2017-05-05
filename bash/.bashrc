@@ -329,7 +329,7 @@ fi
 for fsdir in "${HOME}/Applications/freesurfer" /Applications/freesurfer; do
   if [ -e "$fsdir" ]; then
     export FREESURFER_HOME="$fsdir"
-    source "$FREESURFER_HOME/SetUpFreeSurfer.sh"  2>&1 /dev/null
+    source "$FREESURFER_HOME/SetUpFreeSurfer.sh" > /dev/null 2>&1 
   fi
 done
 
@@ -351,10 +351,11 @@ function add_path() {
   return 0
 }
 
-add_path $HOME/anaconda/bin
+# add_path $HOME/anaconda/bin
 add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/.macosx/miniconda2/bin
 add_path $HOME/Applications/MRIcron
+add_path $HOME/Applications/mrtrix/bin
 # catch itksnap
 add_path $HOME/Applications
 # MacTex 2016 under El Capitan
