@@ -67,11 +67,6 @@ if [[ "$ARCH" == "Darwin" ]]; then
   export PATH=${HOME}/.macosx/bin:$PATH
   export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
   export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
-  if [[ -e ${HOME}/.macosx/fsl ]]; then
-    export FSLDIR=${HOME}/.macosx/fsl
-    . $FSLDIR/etc/fslconf/fsl.sh
-    export PATH=${FSLDIR}/bin:${PATH}
-  fi
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
@@ -337,7 +332,7 @@ done
 for fsldir in "${HOME}/Applications/fsl"; do
   if [ -e "$fsldir" ]; then
     export FSLDIR="$fsldir"
-    source "${FSLDIR}/etc/fslconf/fsl.sh"
+    source "${FSLDIR}/etc/fslconf/fsl.sh" > /dev/null 2>&1
     export PATH=${FSLDIR}/bin:${PATH}
   fi
 done
@@ -353,9 +348,9 @@ function add_path() {
 
 # add_path $HOME/anaconda/bin
 add_path /research/projects/DJB/anaconda/bin
-add_path $HOME/.macosx/miniconda2/bin
 add_path $HOME/Applications/MRIcron
-add_path $HOME/Applications/mrtrix/bin
+add_path $HOME/Applications/mrtrix3/bin
+add_path $HOME/Applications/afni
 # catch itksnap
 add_path $HOME/Applications
 # MacTex 2016 under El Capitan
