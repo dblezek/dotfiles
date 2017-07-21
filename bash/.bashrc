@@ -48,7 +48,7 @@ alias curl-trace='curl -w "@$HOME/.curl-format"'
 
 alias cgrep="grep --color=always"
 alias ag='\ag --pager=less'
-
+alias httpd='python -m SimpleHTTPServer'
 # Quick nav
 alias ..="cd .."
 alias ...="cd ../.."
@@ -67,6 +67,10 @@ if [[ "$ARCH" == "Darwin" ]]; then
   export PATH=${HOME}/.macosx/bin:$PATH
   export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
   export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
+
+  # Renderman
+  export RMANTREE=/Applications/Pixar/RenderManProServer-21.3
+  export PATH=${RMANTREE}/bin:${RMANTREE}/bin/it.app/Contents/MacOS/it:${PATH}
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
@@ -256,7 +260,16 @@ fi
 function cronenv () {
   # Expand it here, then quote it on the next line
   t=$@
-  env -i MAILTO=blezek.daniel@mayo.edu SHELL=/bin/sh USER=$USER PATH=/usr/bin:/bin PWD=/home/noop SHLVL=1 LOGNAME=$LOGNAME _=/usr/bin/env HOME=$HOME /bin/bash --noprofile --norc -c "$t"
+  env -i \
+      MAILTO=blezek.daniel@mayo.edu \
+      SHELL=/bin/sh \
+      USER=$USER \
+      PATH=/usr/bin:/bin \
+      PWD=$PWD \
+      SHLVL=1 \
+      LOGNAME=$LOGNAME \
+      _=/usr/bin/env \
+      HOME=$HOME /bin/sh --noprofile --norc -c "$t"
 }
 
 # Clean up history by ignoring certain items
@@ -350,7 +363,6 @@ function add_path() {
 add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/Applications/MRIcron
 add_path $HOME/Applications/mrtrix3/bin
-add_path $HOME/Applications/afni
 # catch itksnap
 add_path $HOME/Applications
 # MacTex 2016 under El Capitan

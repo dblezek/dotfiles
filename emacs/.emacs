@@ -3,19 +3,19 @@
 ;; Start the server
 ;;(require 'server)
 ;;(unless (boundp 'server-process) (server-start))
-(server-start)
+;; (server-start)
 
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
 ;; Package manager
 (require 'package)
+(package-initialize)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-(package-initialize)
 
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
@@ -327,6 +327,10 @@
 (setq etags-table-search-up-depth 10)
 ;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
 (global-set-key (kbd "M-*") 'pop-tag-mark)
+;; never add tags, keeps annoying waring away
+;; https://emacs.stackexchange.com/questions/14802/never-keep-current-list-of-tags-tables-also
+(setq tags-add-tables nil)
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -350,7 +354,7 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)

@@ -66,7 +66,7 @@ Host feynman crick rcf
 Host notion
   Hostname qia.mayo.edu
   User mra9161
-  LocalForward :8884 localhost:8884
+  # LocalForward :8884 localhost:8884
 
 # localhost is often a VM, so skip host key checking
 Host localhost 127.0.0.1
