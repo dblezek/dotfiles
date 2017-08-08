@@ -63,7 +63,7 @@ alias WGET="wget -mkEpnp"
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
-  export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:$DYLD_LIBRARY_PATH
+  export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:/opt/X11/lib/flat_namespace:$DYLD_LIBRARY_PATH
   export PATH=${HOME}/.macosx/bin:$PATH
   export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
   export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
@@ -369,8 +369,17 @@ add_path $HOME/.local/bin
 add_path $HOME/Applications
 # catch itksnap
 add_path /Applications/Convert3DGUI.app/Contents/bin
+
+# Matlab?
+add_path /Applications/MATLAB_R2016b.app/bin/
 # MacTex 2016 under El Capitan
 add_path /Library/TeX/texbin
+# AFNI
+add_path $HOME/Applications/afni
+
+# FSLEyes
+add_path $HOME/Applications/FSLeyes.app/Contents/MacOS
+
 # Maven?
 add_path $HOME/Source/maven/bin
 # brew
