@@ -55,6 +55,9 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+# Parallel
+alias parallel="$HOME/.dotfiles/bash/parallel"
+
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
 alias WGET="wget -mkEpnp"
