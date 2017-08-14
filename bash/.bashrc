@@ -75,6 +75,12 @@ fi
 
 if [[ "$ARCH" == "Linux" ]]; then
   export PATH=${HOME}/.software/bin:${PATH}
+  
+  if [ -e /opt/pixar/RenderManProServer-21.4/ ]; then
+    # Renderman
+    export RMANTREE=/opt/pixar/RenderManProServer-21.4/
+    export PATH=${PATH}:${RMANTREE}/bin
+  fi
 fi
 
 
@@ -353,7 +359,7 @@ done
 # Helper to manage all the paths
 function add_path() {
   if [ -d "$1" ]; then
-    export PATH="$1":${PATH}
+    export PATH=${PATH}:"$1"
     return 1
   fi
   return 0
