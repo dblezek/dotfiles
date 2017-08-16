@@ -23,6 +23,8 @@ Host do
   HostName 104.236.82.249
   IdentityFile ~/.ssh/id_rsa_digitalocean
   User root
+  LocalForward localhost:8082 localhost:8082
+  LocalForward localhost:4747 localhost:4747
 
 # IF we are going to AWS, don't check the host keys
 Host ec2*
