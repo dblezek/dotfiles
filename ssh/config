@@ -91,6 +91,8 @@ Host packer
   UserKnownHostsFile=/dev/null
 
 Host *
+  Compression yes
+  CompressionLevel 9
   ServerAliveInterval 60
   # Share connections
   ControlMaster auto

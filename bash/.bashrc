@@ -46,6 +46,7 @@ alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 
+alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
 alias ag='\ag --pager=less'
 alias httpd='python -m SimpleHTTPServer'
@@ -74,6 +75,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
   # Renderman
   export RMANTREE=/Applications/Pixar/RenderManProServer-21.3
   export PATH=${RMANTREE}/bin:${RMANTREE}/bin/it.app/Contents/MacOS/it:${PATH}
+  alias top="top -o cpu"
 fi
 
 if [[ "$ARCH" == "Linux" ]]; then
@@ -371,6 +373,7 @@ function add_path() {
 # add_path $HOME/anaconda/bin
 add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/Applications/MRIcron
+add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
 # pip local executables
 add_path $HOME/.local/bin

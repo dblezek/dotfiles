@@ -10,21 +10,40 @@
 
 ;; Package manager
 (require 'package)
-(package-initialize)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
+;; Bootstrap `use-package'
+(unless (package-installed-p 'use-package)
+	(package-refresh-contents)
+	(package-install 'use-package))
+
+(use-package try
+	:ensure t)
+
+(use-package which-key
+	:ensure t 
+	:config
+	(which-key-mode))
+
+;; org mode
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(defalias 'list-buffers 'ibuffer) ; make ibuffer default
+
 ;; Get our path from the shell
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
-;; (setenv "PATH" "~/.macosx/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:~/Source/go/bin")
 (setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
-;; (setenv "GOROOT" (shell-command-to-string ". ~/.bashrc; echo $GOROOT"))
-;; (setenv "GOROOT" "~/Source/go")
-
 
 ;; keep old clipboard contents
 (setq save-interprogram-paste-before-kill 't)
@@ -35,15 +54,8 @@
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
 ;; Go Configuration
-(require 'go-mode)
-
-;; Emacs parses the buffer and creates a suggestion list
-;; (require 'auto-complete-config)
-;; (ac-config-default)
-;; (require 'go-autocomplete)
-;; (require 'yasnippet)
-;; (yas-global-mode 1)
-;; (setq ac-go-expand-arguments-into-snippets t)
+(use-package go-mode
+  :ensure t)
 
 ;; convert a buffer to unix from DOS
 (defun dos2unix ()
@@ -56,25 +68,6 @@
   (interactive)
   (message nil)
   )
-;; PROJECTILE MODE
-;;(require 'projectile)
-;;(projectile-global-mode)
-;;(setq projectile-enable-caching t)
-;; disable remote file caching (https://github.com/bbatsov/projectile)
-;;(setq projectile-file-exists-remote-cache-expire nil)
-;; (load-file "~/.emacs.d/rename.el")
-;; Remove for TRAMP connections
-;; (add-hook 'find-file-hook
-;;           (lambda ()
-;;             (when (file-remote-p default-directory)
-;;               (setq-local projectile-mode-line "Projectile"))))
-;; (defadvice projectile-on (around exlude-tramp activate)
-;;     (unless  (--any? (and it (file-remote-p it))
-;;         (list
-;;             (buffer-file-name)
-;;             list-buffers-directory
-;;             default-directory))
-;;     ad-do-it))
 
 ;; Latex mode
 (add-hook 'tex-mode-hook 'visual-line-mode)
@@ -87,7 +80,7 @@
 (global-company-mode)
 
 ;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
-(add-hook 'js-mode-hook (lambda() (tern-mode t)))
+;; (add-hook 'js-mode-hook (lambda() (tern-mode t)))
 
 ;; bind to M-? for autocomplete now
 (global-set-key "\M-?" 'company-complete-common)
@@ -103,7 +96,6 @@
 
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\M-g" 'goto-line)
-;; (global-set-key "\M-?" 'auto-complete)
 (global-set-key "\M-s" 'save-buffer)
 
 ;; Move to the next window/frame
@@ -129,9 +121,6 @@
 (setq require-final-newline t) ;;; Put \n at end of last line
 
 ;; F3 and F4 do the right thing!
-;; (global-set-key [f8] 'defining-kbd-macro)
-;; (global-set-key [f9] 'end-kbd-macro)
-;; (global-set-key [f10] 'call-last-kbd-macro)
 (global-set-key '[(f6)] 'join-line)
 
 (require 'color-theme)
@@ -158,9 +147,6 @@
 ;; restore opened files
 (desktop-save-mode 1)
 
-;; (require 'backup-dir)
-;; (setq bkup-backup-directory-info
-;;       '((t "~/Temp/XEmacsBackups" ok-create full-path prepend-name)))
 ;; Keep Tramp happy...
 (setq tramp-bkup-backup-directory-info nil)
 (setq delete-old-versions t
@@ -168,13 +154,6 @@
       kept-new-versions 3
       version-control t)
 (setq tramp-verbose 5)
-;; controlmaster options for tramp
-;; See https://lists.gnu.org/archive/html/help-gnu-emacs/2013-04/msg00317.html
-;; and https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-01/msg00890.html
-;; (setq tramp-ssh-controlmaster-options
-;;       (concat
-;;         "-o ControlPath=~/.ssh/tramp-%%C "
-;;         "-o ControlMaster=auto -o ControlPersist=yes"))
 
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
@@ -206,16 +185,12 @@
 ;; Web mode http://web-mode.org/
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
-;; (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
-;; (add-to-list 'web-mode-comment-formats '("javascript" . "//"))
-
 
 ;; auto reload
 (global-auto-revert-mode t)
 
 ;; Confirm quit
 (setq confirm-kill-emacs 'yes-or-no-p)          
-
 
 ;; Gives us unique buffer names
 (require 'uniquify)
@@ -270,38 +245,19 @@
 (global-set-key (kbd "M-}") 'next-buffer)
 
 
-;; Neotree / projectile
-;; (require 'projectile)
-;; (require 'neotree)
-;; (setq projectile-switch-project-action 'neotree-projectile-action)
-
 ;; Markdown mode should include visual-line-mode and flyspell mode
 (add-hook `markdown-mode-hook `flyspell-mode)
 (add-hook `markdown-mode-hook `visual-line-mode)
 ;; Make back-ticks be an electric-pair in markdown mode
-(add-hook `markdown-mode-hook (lambda()
-                                (setq-local electric-pair-pairs (append electric-pair-pairs '((?` . ?`))))
-                                (setq-local elctric-pair-text-pairs electric-pair-pairs)
-                                ))
-
-;; directory tree
-(require 'direx)
-(require 'popwin)
-(popwin-mode 1)
-;; (global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
-
-;; If you are using popwin, you can use directory viewer as temporary "side-bar", like this:
-(push '(direx:direx-mode :position right :width 30 :dedicated t)
-      popwin:special-display-config)
-(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
-(global-set-key (kbd "C-x C-k") 'direx-project:jump-to-project-root-other-window)
+;; (add-hook `markdown-mode-hook (lambda()
+;;                                 (setq-local electric-pair-pairs (append electric-pair-pairs '((?` . ?`))))
+;;                                 (setq-local elctric-pair-text-pairs electric-pair-pairs)
+;;                                 ))
 
 ;; Align with spaces, not tabs...
 (defadvice align-regexp (around align-regexp-with-spaces activate)
   (let ((indent-tabs-mode nil))
     ad-do-it))
-
-
 
 ;; Insert the date
 (defun insert-date () (interactive)
@@ -312,8 +268,6 @@
 (global-set-key (kbd "C-x f") 'fiplr-find-file)
 (setq fiplr-ignored-globs '((directories (".git" ".svn" "build" "DEWEYLocal"))
                             (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
-
-;; (require 'git)
 
 ;; Find tags without the prompt
 (defun find-tag-no-prompt ()
@@ -345,6 +299,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 2)
+ '(groovy-indent-offset 2)
  '(ido-ignore-directories
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
@@ -354,7 +309,7 @@
  '(lua-prefix-key "C-c")
  '(package-selected-packages
    (quote
-    (rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
