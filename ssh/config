@@ -1,23 +1,5 @@
 # See global options at the end
 
-Host udp
-  HostName hdpr03en01.mayo.edu
-  User mra9161
-
-Host udp-sandbox
-  HostName hdpr04en01.mayo.edu
-  User mra9161
-
-Host udp-cloud
-  HostName clld0001240
-  User mra9161
-
-Host sandbox
-  StrictHostKeyChecking no
-  HostName myst.mayo.edu
-  User  maria_dev
-  Port 2222
-
 Host do
   ControlPath ~/.ssh/cp-do
   HostName 104.236.82.249
@@ -47,16 +29,9 @@ Host myst
   User mra9161
   HostName R0223706.mayo.edu
 
-Host dewey-gpu-04
-  User mra9161
-  StrictHostKeyChecking no
-
 Host dewey*
   User dewey
   StrictHostKeyChecking no
-
-Host tactic* mirmaid
-  User apache
 
 Host feynman* crick* franklin* rcfcluster-ftp
   User mra9161
@@ -64,11 +39,6 @@ Host feynman* crick* franklin* rcfcluster-ftp
 
 Host feynman crick rcf
   Hostname franklin07.mayo.edu
-
-Host notion
-  Hostname qia.mayo.edu
-  User mra9161
-  # LocalForward :8884 localhost:8884
 
 # localhost is often a VM, so skip host key checking
 Host localhost 127.0.0.1
@@ -79,7 +49,7 @@ Host localhost 127.0.0.1
 Host fod fod1
   Hostname fod1.mayo.edu
   # ForwardX11 yes
-  # LocalForward :8080 localhost:8080
+  # LocalForward :9901 localhost:9901
   # LocalForward :8123 localhost:8123
   # LocalForward :8124 localhost:8124
   # LocalForward :8125 localhost:8125
