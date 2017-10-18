@@ -291,7 +291,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro")))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
+ '(fixed-pitch ((t (:height 150 :family "Source Code Pro")))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -307,6 +308,7 @@
  '(latex-run-command "latex --synctex=1")
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
+ '(markdown-fontify-code-blocks-natively t)
  '(package-selected-packages
    (quote
     (org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
