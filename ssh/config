@@ -28,6 +28,8 @@ Host ec2*.amazonaws.com
 Host myst
   User mra9161
   HostName R0223706.mayo.edu
+  # An alias for DICOM/Horos
+  RemoteForward 21112 localhost:11112
 
 Host dewey*
   User dewey
@@ -61,6 +63,9 @@ Host packer
   User dewey
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
+
+Host bitbucket.org
+  ControlMaster no
 
 Host *
   Compression yes
