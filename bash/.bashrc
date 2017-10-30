@@ -196,6 +196,7 @@ alias gc='git commit -m' # requires you to type a commit message
 alias gp='git push'
 alias gl='git pull'
 alias gf='git fetch'
+alias git-cleanup-branches='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
 
 
 # Help out git a bit
