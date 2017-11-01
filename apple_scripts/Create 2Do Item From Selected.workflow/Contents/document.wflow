@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AMApplicationBuild</key>
+	<string>419</string>
+	<key>AMApplicationVersion</key>
+	<string>2.6</string>
+	<key>AMDocumentVersion</key>
+	<string>2</string>
+	<key>actions</key>
+	<array>
+		<dict>
+			<key>action</key>
+			<dict>
+				<key>AMAccepts</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Optional</key>
+					<true/>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>AMActionVersion</key>
+				<string>1.0.2</string>
+				<key>AMApplication</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>AMParameterProperties</key>
+				<dict>
+					<key>source</key>
+					<dict/>
+				</dict>
+				<key>AMProvides</key>
+				<dict>
+					<key>Container</key>
+					<string>List</string>
+					<key>Types</key>
+					<array>
+						<string>com.apple.applescript.object</string>
+					</array>
+				</dict>
+				<key>ActionBundlePath</key>
+				<string>/System/Library/Automator/Run AppleScript.action</string>
+				<key>ActionName</key>
+				<string>Run AppleScript</string>
+				<key>ActionParameters</key>
+				<dict>
+					<key>source</key>
+					<string>(*
+	Move the current message to the "Handled" folder
+*)on run {}			tell application "Microsoft Outlook"				-- get the currently selected message or messages		set selectedMessages to current messages				-- Check to make sure items are selected, if not then quit		if ((count of selectedMessages) &lt; 1) then return				repeat with theMessage in selectedMessages			set theName to subject of theMessage			set theBody to plain text content of theMessage			set taskTitle to urlencode(theName) of me			-- set taskNote to urlencode(theBody) of me			-- set taskNote to encode_text(theBody, true, false) of me			-- Try with Python, according to https://discussions.apple.com/thread/1988268?start=0&amp;tstart=0									-- set theID to message id of theMessage as string			set theID to id of theMessage			set theID to theID as string						set theBody to "outlooktothings://message?id=" &amp; theID &amp; "  " &amp; theBody			set taskNote to do shell script "/usr/bin/python -c 'import sys, urllib; print urllib.quote(sys.argv[1])' " &amp; quoted form of theBody						set theURL to "twodo://x-callback-url/add?forList=Inbox&amp;task=" &amp; taskTitle &amp; "&amp;note=" &amp; taskNote of me			-- display dialog theURL with icon 1			do shell script "open -g \"" &amp; theURL &amp; "\""		end repeat		display notification "Created " &amp; ((count of selectedMessages) as string) &amp; " to do items in 2Do"					end tellend run-- this sub-routine is used to encode texton encode_text(this_text, encode_URL_A, encode_URL_B)	set the standard_characters to "abcdefghijklmnopqrstuvwxyz0123456789"	set the URL_A_chars to "$+!'/?;&amp;@=#%&gt;&lt;{}[]\"~`^\\|*"	set the URL_B_chars to ".-_:"	set the acceptable_characters to the standard_characters	if encode_URL_A is false then set the acceptable_characters to the acceptable_characters &amp; the URL_A_chars	if encode_URL_B is false then set the acceptable_characters to the acceptable_characters &amp; the URL_B_chars	set the encoded_text to ""	repeat with this_char in this_text		if this_char is in the acceptable_characters then			set the encoded_text to (the encoded_text &amp; this_char)		else			set the encoded_text to (the encoded_text &amp; encode_char(this_char)) as string		end if	end repeat	return the encoded_textend encode_texton encode_char(this_char)	set the ASCII_num to (the ASCII number this_char)	set the hex_list to {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"}	set x to item ((ASCII_num div 16) + 1) of the hex_list	set y to item ((ASCII_num mod 16) + 1) of the hex_list	return ("%" &amp; x &amp; y) as stringend encode_charon urlencode(theText)	set theTextEnc to ""	repeat with eachChar in characters of theText		set useChar to eachChar		set eachCharNum to ASCII number of eachChar		if eachCharNum = 32 then			set useChar to "%20"		else if (eachCharNum ≠ 42) and (eachCharNum ≠ 95) and (eachCharNum &lt; 45 or eachCharNum &gt; 46) and (eachCharNum &lt; 48 or eachCharNum &gt; 57) and (eachCharNum &lt; 65 or eachCharNum &gt; 90) and (eachCharNum &lt; 97 or eachCharNum &gt; 122) then			set firstDig to round (eachCharNum / 16) rounding down			set secondDig to eachCharNum mod 16			if firstDig &gt; 9 then				set aNum to firstDig + 55				set firstDig to ASCII character aNum			end if			if secondDig &gt; 9 then				set aNum to secondDig + 55				set secondDig to ASCII character aNum			end if			set numHex to ("%" &amp; (firstDig as string) &amp; (secondDig as string)) as string			set useChar to numHex		end if		set theTextEnc to theTextEnc &amp; useChar as string	end repeat	return theTextEncend urlencode</string>
+				</dict>
+				<key>BundleIdentifier</key>
+				<string>com.apple.Automator.RunScript</string>
+				<key>CFBundleVersion</key>
+				<string>1.0.2</string>
+				<key>CanShowSelectedItemsWhenRun</key>
+				<false/>
+				<key>CanShowWhenRun</key>
+				<true/>
+				<key>Category</key>
+				<array>
+					<string>AMCategoryUtilities</string>
+				</array>
+				<key>Class Name</key>
+				<string>RunScriptAction</string>
+				<key>InputUUID</key>
+				<string>4E1E09A7-1084-429A-8CA2-352F04938EC4</string>
+				<key>Keywords</key>
+				<array>
+					<string>Run</string>
+				</array>
+				<key>OutputUUID</key>
+				<string>03513889-DB69-4F8D-9C4E-19D17CEE8EDD</string>
+				<key>UUID</key>
+				<string>1AF0EF53-6BCE-4A81-81A2-E40934D3176E</string>
+				<key>UnlocalizedApplications</key>
+				<array>
+					<string>Automator</string>
+				</array>
+				<key>arguments</key>
+				<dict>
+					<key>0</key>
+					<dict>
+						<key>default value</key>
+						<string>on run {input, parameters}
+	
+	(* Your script goes here *)
+	
+	return input
+end run</string>
+						<key>name</key>
+						<string>source</string>
+						<key>required</key>
+						<string>0</string>
+						<key>type</key>
+						<string>0</string>
+						<key>uuid</key>
+						<string>0</string>
+					</dict>
+				</dict>
+				<key>conversionLabel</key>
+				<integer>0</integer>
+				<key>isViewVisible</key>
+				<true/>
+				<key>location</key>
+				<string>309.000000:316.000000</string>
+				<key>nibPath</key>
+				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
+			</dict>
+			<key>isViewVisible</key>
+			<true/>
+		</dict>
+	</array>
+	<key>connectors</key>
+	<dict/>
+	<key>workflowMetaData</key>
+	<dict>
+		<key>serviceApplicationBundleID</key>
+		<string>com.microsoft.Outlook</string>
+		<key>serviceApplicationPath</key>
+		<string>/Applications/Microsoft Outlook.app</string>
+		<key>serviceInputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceOutputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>workflowTypeIdentifier</key>
+		<string>com.apple.Automator.servicesMenu</string>
+	</dict>
+</dict>
+</plist>
