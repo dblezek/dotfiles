@@ -35,6 +35,10 @@ Host dewey*
   User dewey
   StrictHostKeyChecking no
 
+Host dewey-gpu-04.mayo.edu
+  User mra9161
+  StrictHostKeyChecking no
+
 Host feynman* crick* franklin* rcfcluster-ftp
   User mra9161
   ForwardX11 yes
@@ -70,7 +74,8 @@ Host bitbucket.org
 Host *
   Compression yes
   CompressionLevel 9
-  ServerAliveInterval 60
+  # Lowering at the suggestion of the Tramp FAQ
+  ServerAliveInterval 5
   # Share connections
   ControlMaster auto
   # Stupid Azure has very long host names, so we have to keep short control

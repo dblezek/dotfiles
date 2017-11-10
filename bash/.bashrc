@@ -19,10 +19,6 @@ export MANPATH=/opt/local/share/man:$MANPATH
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
 
-# Test directory
-export MI3CTESTDATADIR=${HOME}/Source/MI3CTestData
-export MI3CTESTOUTPUTDIR=/tmp/
-
 # Local packages
 export PATH=${HOME}/Source/bin:$PATH
 
@@ -45,6 +41,8 @@ alias tags="ctags -e -R"
 alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
+# always show everyone's jobs in the SGE
+alias qstat="qstat -u '*' -f"
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
@@ -411,8 +409,12 @@ add_path /data5/radiology/bje01/shared/anaconda/bin
 
 # Remote tmux connection
 function rtmux {
-  ssh -t $1 'tmux -CC attach || tmux -CC'
+  ssh -t $1 "tmux -CC attach || tmux -CC"
 }
+
+# Silently set the session name
+# Check if TMUX is set and tmux exists and then rename the session to the hostname
+[[ -v TMUX ]] && [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1 && tmux rename-session $(hostname)
 
 # history grep
 function hgrep {
