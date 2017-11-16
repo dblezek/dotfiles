@@ -78,7 +78,6 @@ fi
 
 if [[ "$ARCH" == "Linux" ]]; then
   export PATH=${HOME}/.software/bin:${PATH}
-  
   if [ -e /opt/pixar/RenderManProServer-21.4/ ]; then
     # Renderman
     export RMANTREE=/opt/pixar/RenderManProServer-21.4/
@@ -375,6 +374,7 @@ add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/Applications/MRIcron
 add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
+add_path $HOME/Source/ntr.plugins/build/mrtrix3/bin
 # pip local executables
 add_path $HOME/.local/bin
 # catch itksnap
