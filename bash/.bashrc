@@ -10,6 +10,10 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
+# /etc/profile.d sets some toxic variables...
+unset ITK_DIR
+unset VTK_DIR
+
 # A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
@@ -370,7 +374,7 @@ function add_path() {
 }
 
 # add_path $HOME/anaconda/bin
-add_path /research/projects/DJB/anaconda/bin
+# add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/Applications/MRIcron
 add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
@@ -405,12 +409,14 @@ add_path $HOME/Applications/workbench/bin_macosx64
 # RCF tools
 add_path /data5/radiology/bje01/mra9161/mricron_lx
 add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
-add_path /data5/radiology/bje01/shared/anaconda/bin
+# add_path /data5/radiology/bje01/shared/anaconda/bin
 
 # Remote tmux connection
 function rtmux {
   ssh -t $1 "tmux -CC attach || tmux -CC"
 }
+# Rename the session if we are on a tmux
+[[ -n "$TMUX" ]] && tmux rename-session $(hostname)
 
 # Silently set the session name
 # Check if TMUX is set and tmux exists and then rename the session to the hostname
