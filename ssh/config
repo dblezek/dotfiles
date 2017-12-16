@@ -71,6 +71,9 @@ Host packer
 Host bitbucket.org
   ControlMaster no
 
+Host gpu
+  Hostname 192.168.2.4
+
 Host *
   Compression yes
   CompressionLevel 9
