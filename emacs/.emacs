@@ -1,10 +1,5 @@
 ;; -*-no-byte-compile: t; -*-
 
-;; Start the server
-;;(require 'server)
-;;(unless (boundp 'server-process) (server-start))
-;; (server-start)
-
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
@@ -37,6 +32,10 @@
   :ensure t
   :config
   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(setq org-image-actual-width '(400))
+(setq org-descriptive-links nil)
+
+(sml/setup)
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
@@ -300,6 +299,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(c-basic-offset 2)
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(groovy-indent-offset 2)
  '(ido-ignore-directories
    (quote
@@ -309,9 +311,21 @@
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
  '(markdown-fontify-code-blocks-natively t)
+ '(org-emphasis-alist
+   (quote
+    (("*" bold)
+     ("/" italic)
+     ("_" underline)
+     ("=" org-verbatim verbatim)
+     ("`" org-code verbatim)
+     ("~" org-code verbatim)
+     ("+"
+      (:strike-through t)))))
+ '(org-startup-folded nil)
+ '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 2)
  '(python-indent-guess-indent-offset t)
@@ -334,3 +348,9 @@
 (when (get-buffer "*scratch*")
   (kill-buffer "*scratch*")
   )
+
+;; Start the server
+;;(require 'server)
+;;(unless (boundp 'server-process) (server-start))
+(server-start)
+
