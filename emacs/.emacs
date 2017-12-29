@@ -72,6 +72,9 @@
 (add-hook 'tex-mode-hook 'visual-line-mode)
 (add-hook 'tex-mode-hook 'flyspell-mode)
 
+;; Highight indent mode
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
 
@@ -122,10 +125,10 @@
 ;; F3 and F4 do the right thing!
 (global-set-key '[(f6)] 'join-line)
 
-(require 'color-theme)
-(color-theme-initialize)
-(setq color-theme-is-global t)
-(color-theme-dark-laptop)
+;; (require 'color-theme)
+;; (color-theme-initialize)
+;; (setq color-theme-is-global t)
+;; (color-theme-dark-laptop)
 
 ;; Set the backup directoryto $TMPDIR/emacs$UID/                                                        
 (defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
@@ -291,18 +294,22 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
- '(fixed-pitch ((t (:height 150 :family "Source Code Pro")))))
+ '(fixed-pitch ((t (:height 150 :family "Source Code Pro"))))
+ '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9")))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(c-basic-offset 2)
- '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+ '(custom-enabled-themes nil)
  '(groovy-indent-offset 2)
+ '(highlight-indent-guides-method (quote character))
  '(ido-ignore-directories
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
@@ -311,6 +318,7 @@
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
  '(markdown-fontify-code-blocks-natively t)
+ '(org-edit-src-content-indentation 0)
  '(org-emphasis-alist
    (quote
     (("*" bold)
@@ -321,28 +329,14 @@
      ("~" org-code verbatim)
      ("+"
       (:strike-through t)))))
+ '(org-src-preserve-indentation nil)
  '(org-startup-folded nil)
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock color-theme-solarized color-theme-modern yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep color-theme cmake-mode autopair)))
+    (highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(python-guess-indent t)
- '(python-indent 2)
- '(python-indent-guess-indent-offset t)
- '(python-indent-offset 2)
- '(safe-local-variable-values (quote ((c-basic-indent . 4))))
- '(sh-basic-offset 2)
- '(sh-indent-comment 2)
- '(sh-indentation 2)
- '(tab-width 2)
- '(tool-bar-mode nil)
- '(vc-follow-symlinks t)
- '(web-mode-attr-indent-offset 2)
- '(web-mode-attr-value-indent-offset 2)
- '(web-mode-code-indent-offset 2)
- '(web-mode-css-indent-offset 2)
- '(web-mode-markup-indent-offset 2)
- '(web-mode-script-padding 0))
+ '(python-indent 2))
 
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")

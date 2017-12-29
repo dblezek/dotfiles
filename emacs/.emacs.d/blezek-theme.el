@@ -1,0 +1,47 @@
+(deftheme blezek
+  "Created 2017-12-27.")
+
+(custom-theme-set-variables
+ 'blezek
+ '(ansi-color-faces-vector [default default default italic underline success warning error])
+ '(ansi-color-names-vector ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
+ '(c-basic-offset 2)
+ '(groovy-indent-offset 2)
+ '(highlight-indent-guides-method (quote character))
+ '(ido-ignore-directories (quote ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
+ '(js-indent-level 2)
+ '(latex-run-command "latex --synctex=1")
+ '(lua-indent-level 2)
+ '(lua-prefix-key "C-c")
+ '(markdown-fontify-code-blocks-natively t)
+ '(org-edit-src-content-indentation 0)
+ '(org-emphasis-alist (quote (("*" bold) ("/" italic) ("_" underline) ("=" org-verbatim verbatim) ("`" org-code verbatim) ("~" org-code verbatim) ("+" (:strike-through t)))))
+ '(org-src-preserve-indentation nil)
+ '(org-startup-folded nil)
+ '(org-startup-truncated nil)
+ '(package-selected-packages (quote (highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+ '(python-guess-indent t)
+ '(python-indent 2)
+ '(python-indent-guess-indent-offset t)
+ '(python-indent-offset 2)
+ '(safe-local-variable-values (quote ((c-basic-indent . 4))))
+ '(sh-basic-offset 2)
+ '(sh-indent-comment 2)
+ '(sh-indentation 2)
+ '(tab-width 2)
+ '(vc-follow-symlinks t)
+ '(web-mode-attr-indent-offset 2)
+ '(web-mode-attr-value-indent-offset 2)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-css-indent-offset 2)
+ '(web-mode-markup-indent-offset 2)
+ '(web-mode-script-padding 0)
+ '(custom-safe-themes (quote ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))))
+
+(custom-theme-set-faces
+ 'blezek
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
+ '(fixed-pitch ((t (:height 150 :family "Source Code Pro"))))
+ '(highlight-indent-guides-character-face ((t (:foreground "gray30")))))
+
+(provide-theme 'blezek)
