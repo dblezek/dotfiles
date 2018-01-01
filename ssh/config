@@ -73,6 +73,9 @@ Host bitbucket.org
 
 Host gpu
   Hostname 192.168.2.4
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  LocalForward localhost:8888 localhost:8888
 
 Host *
   Compression yes

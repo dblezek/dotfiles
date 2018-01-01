@@ -13,9 +13,10 @@ cat /dev/zero | ssh-keygen -b 4096 -C "daniel.blezek@gmail.com $(hostname)" -q -
 Copy `~/.ssh/id_rsa.pub` up to [github](https://github.com/settings/keys), [bitbucket](https://bitbucket.org/account/user/blezek/ssh-keys/), etc.... 
 
 ```
-yes | git clone git@github.com:blezek/dotfiles.git .dotfiles
+git clone git@github.com:blezek/dotfiles.git .dotfiles
 (cd .dotfiles && make)
 . .bashrc
 # aah, good to be home
 ```
+
 
