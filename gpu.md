@@ -1,7 +1,7 @@
 # New Linux box w/GPU
 
 ```
-sudo yum install -y git emacs-nox wget curl bzip2
+sudo yum install -y git emacs-nox wget curl bzip2 tmux
 
 # NVIDIA driver
 
@@ -46,4 +46,11 @@ sudo pkill -SIGHUP dockerd
 # Test nvidia-smi with the latest official CUDA image
 docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
 
+```
+
+## Disable firewall
+
+```
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
 ```

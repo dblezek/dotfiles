@@ -307,7 +307,10 @@
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(c-basic-offset 2)
+<<<<<<< Updated upstream
  '(custom-enabled-themes nil)
+=======
+>>>>>>> Stashed changes
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
