@@ -413,7 +413,7 @@ add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 
 # Remote tmux connection
 function rtmux {
-  ssh -t $1 "tmux -CC attach || tmux -u -CC"
+  ssh -t $1 "tmux -u -CC attach || tmux -u -CC"
 }
 # Rename the session if we are on a tmux
 [[ -n "$TMUX" ]] && tmux rename-session $(hostname)
