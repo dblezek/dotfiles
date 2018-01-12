@@ -345,7 +345,10 @@
  '(python-indent 4)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
- '(vc-follow-symlinks t))
+ '(vc-follow-symlinks t)
+ '(web-mode-attr-indent-offset 2)
+ '(web-mode-code-indent-offset 2)
+ '(web-mode-markup-indent-offset 2))
 
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")
