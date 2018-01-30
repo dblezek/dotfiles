@@ -303,7 +303,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
  '(fixed-pitch ((t (:height 150 :family "Source Code Pro"))))
  '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9")))))
 
@@ -352,8 +352,6 @@
  '(python-indent 4)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
- '(sh-basic-offset 2)
- '(sh-indentation 2)
  '(tool-bar-mode nil)
  '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
