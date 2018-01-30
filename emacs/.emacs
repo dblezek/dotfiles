@@ -234,6 +234,7 @@
 (global-set-key (kbd "s-b") 'backward-word)
 (global-set-key (kbd "s-f") 'forward-word)
 (global-set-key (kbd "s-d") 'kill-word)
+(global-set-key (kbd "<s-backspace>") 'backward-kill-word)
 
 ;; Line numbers
 (global-linum-mode)
