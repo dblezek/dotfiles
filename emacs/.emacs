@@ -186,6 +186,7 @@
 
 ;; Web mode http://web-mode.org/
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
 
 ;; auto reload
@@ -208,7 +209,10 @@
 (electric-pair-mode 1)
 (show-paren-mode 1)
 
+;; Need to match what eclipse does...
 ;; Make M-/ comment and uncomment lines
+(setq mac-option-modifier 'super) ; make opt key do Super
+
 (defun comment-eclipse ()
   (interactive)
   (let ((start (line-beginning-position))
@@ -224,6 +228,12 @@
                   (point))))
     (comment-or-uncomment-region start end)))
 (global-set-key (kbd "M-/") 'comment-eclipse)
+(global-set-key (kbd "s-/") 'dabbrev-expand)
+
+;; helpers, so that option works like I expect...
+(global-set-key (kbd "s-b") 'backward-word)
+(global-set-key (kbd "s-f") 'forward-word)
+(global-set-key (kbd "s-d") 'kill-word)
 
 ;; Line numbers
 (global-linum-mode)
@@ -293,7 +303,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
  '(fixed-pitch ((t (:height 150 :family "Source Code Pro"))))
  '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9")))))
 
@@ -307,10 +317,7 @@
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(c-basic-offset 2)
-<<<<<<< Updated upstream
  '(custom-enabled-themes nil)
-=======
->>>>>>> Stashed changes
  '(custom-safe-themes
    (quote
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
@@ -345,6 +352,9 @@
  '(python-indent 4)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
+ '(sh-basic-offset 2)
+ '(sh-indentation 2)
+ '(tool-bar-mode nil)
  '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
