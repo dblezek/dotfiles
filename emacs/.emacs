@@ -35,8 +35,6 @@
 (setq org-image-actual-width '(400))
 (setq org-descriptive-links nil)
 
-(sml/setup)
-
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
 ;; Get our path from the shell
@@ -304,7 +302,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :height 150 :width normal :foundry "apple" :family "Source Code Pro"))))
  '(fixed-pitch ((t (:height 150 :family "Source Code Pro"))))
  '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9")))))
 
@@ -359,13 +357,18 @@
  '(web-mode-code-indent-offset 2)
  '(web-mode-markup-indent-offset 2))
 
+;; SML needs to be after custom-set-variables
+;; https://github.com/Malabarba/smart-mode-line/issues/88
+(sml/setup)
+
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")
   (kill-buffer "*scratch*")
   )
 
-;; Start the server
-;;(require 'server)
-;;(unless (boundp 'server-process) (server-start))
-(server-start)
+;; Start the server, only the graphic UI
+;; see: https://stackoverflow.com/questions/5795451/how-to-detect-that-emacs-is-in-terminal-mode
+(when (display-graphic-p)
+  (server-start)
+  )
 
