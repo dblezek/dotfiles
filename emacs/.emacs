@@ -237,6 +237,25 @@
 ;; Line numbers
 (global-linum-mode)
 
+;; open current buffer in a new frame(window)
+(global-set-key [?\C-x ?5 ?c]
+                '(lambda(newname display-flag)
+                   "Like `clone-indirect-buffer-other-window' but display in another frame."
+                   (interactive
+                    (progn
+                      (if (get major-mode 'no-clone-indirect)
+                          (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+                      (list (if current-prefix-arg
+                                (read-buffer "Name of indirect buffer: " (current-buffer))) t)))
+                   (save-window-excursion
+                     (let ((newbuf (clone-indirect-buffer newname display-flag)))
+                       (switch-to-buffer-other-frame newbuf)
+                       )
+                     )
+                   )
+                )
+
+
 ;; Go configuration
 (setq gofmt-command "goimports")
 (defun my-go-mode-hook ()
