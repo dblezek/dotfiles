@@ -35,7 +35,7 @@ alias mv="mv -i"
 alias ls="ls -GFh"
 alias lsl="ls -GF -lah"
 alias la="lsl"
-alias lr="ls -ltr"
+alias lr="ls -lhtr"
 alias dir=ls
 # alias top="top -u"
 alias g="./gradlew"
@@ -415,12 +415,10 @@ add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 function rtmux {
   ssh -t $1 "tmux -u -CC attach || tmux -u -CC"
 }
-# Rename the session if we are on a tmux
-[[ -n "$TMUX" ]] && tmux rename-session $(hostname)
 
 # Silently set the session name
-# Check if TMUX is set and tmux exists and then rename the session to the hostname
-[[ -v TMUX ]] && [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1 && tmux rename-session $(hostname)
+# Check if TMUX is set and tmux exists and then rename the session to the hostname, if it's not already set
+[[ -v TMUX ]] && [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1 && [[ $(tmux display-message -p '#S') == $(hostname) || $(tmux rename-session $(hostname)) ]]
 
 # history grep
 function hgrep {
