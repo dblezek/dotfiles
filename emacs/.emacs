@@ -163,7 +163,7 @@
 (setq font-lock-use-fonts nil)
 
 ;; ;; Font
-(set-face-attribute 'default nil :font "Source Code Pro-15")
+;; (set-face-attribute 'default nil :font "Source Code Pro-15")
 
 ;; In Makefiles, set the tab-width to 8
 (add-hook 'makefile-mode-hook
@@ -186,6 +186,12 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
+
+;; C mode for ITK
+(add-to-list 'auto-mode-alist '("\\.txx?\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cxx?\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.c?\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.h?\\'" . c++-mode))
 
 ;; auto reload
 (global-auto-revert-mode t)

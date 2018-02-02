@@ -20,3 +20,11 @@ git clone git@github.com:blezek/dotfiles.git .dotfiles
 ```
 
 
+
+# Git configuration
+
+Tell `git` to put log lines in merge messages.
+
+``` sh
+git config --global --add merge.log true
+```
