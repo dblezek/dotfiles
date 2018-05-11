@@ -42,7 +42,7 @@ alias g="./gradlew"
 alias l="less"
 alias tags="ctags -e -R"
 # Activate a Python virtulenv
-alias activate="source */bin/activate"
+# alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 # always show everyone's jobs in the SGE
