@@ -17,14 +17,14 @@ unset VTK_DIR
 # A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
 
 # MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-export MANPATH=/opt/local/share/man:$MANPATH
+# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+# export MANPATH=/opt/local/share/man:$MANPATH
 
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
 
 # Local packages
-export PATH=${HOME}/Source/bin:$PATH
+# export PATH=${HOME}/Source/bin:$PATH
 
 alias CC="emacs -nw CMakeCache.txt"
 # Copy last command into the clipboard (Mac) http://apple.stackexchange.com/questions/110343/copy-last-command-in-terminal
@@ -227,7 +227,7 @@ else
   # Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
   # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
   # if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
-  source $HOME/.iterm2_shell_integration.bash
+  [[ $(uname) == "Darwin" ]] && source $HOME/.iterm2_shell_integration.bash
   # Color the GIT branch
   # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
@@ -333,15 +333,15 @@ function ec () {
   osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
 }
 
-# RCF settings
-if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
-  . /home/oge/ge2011.11/default/common/settings.sh
-fi
 
 # Source RCF Cluster Definitions
 if [ -f $HOME/.bash_mayobiotools ]; then
   if [ $INTERACTIVE = '1' ]; then
 	  . $HOME/.bash_mayobiotools
+          # RCF settings
+          if [ -f /home/oge/ge2011.11/default/common/settings.sh ]; then
+              . /home/oge/ge2011.11/default/common/settings.sh
+          fi
   else
 	  . $HOME/.bash_mayobiotools > /dev/null
   fi
