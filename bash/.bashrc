@@ -201,7 +201,6 @@ alias gl='git pull'
 alias gf='git fetch'
 alias git-cleanup-branches='git branch --merged | egrep -v "(^\*|master|dev)" | xargs -n 1 git branch -d'
 
-
 # Help out git a bit
 # alias cmerge='git cmerge'
 # complete -o default -o nospace -F _git_checkout cmerge
