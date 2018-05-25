@@ -16,6 +16,18 @@
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
+(defun package-reinstall-activated ()
+    "Reinstall all activated packages."
+    (interactive)
+    (dolist (package-name package-activated-list)
+           (when (package-installed-p package-name)
+                    (unless (ignore-errors                   ;some packages ma\
+ y fail to install
+                                               (package-reinstall package-name\
+ )
+                                               (warn "Package %s failed to rei\
+ nstall" package-name))))))
+
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
 	(package-refresh-contents)
@@ -49,9 +61,9 @@
 
 
 ;; Get our path from the shell
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
-(setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
+;; (when (memq window-system '(mac ns))
+;;   (exec-path-from-shell-initialize))
+;; (setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
 
 ;; keep old clipboard contents
 (setq save-interprogram-paste-before-kill 't)
@@ -311,10 +323,14 @@
   (insert (shell-command-to-string "echo -n $(date +%F)")))
 
 ;; Fuzzy finder
-(require 'fiplr)
-(global-set-key (kbd "C-x f") 'fiplr-find-file)
+(use-package fiplr
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x f") 'fiplr-find-file)
 (setq fiplr-ignored-globs '((directories (".git" ".svn" "build" "DEWEYLocal"))
                             (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
+
+  )
 
 ;; Find tags without the prompt
 (defun find-tag-no-prompt ()
@@ -323,9 +339,11 @@
   (xref-find-definitions (find-tag-default)))
 ;; don't prompt when finding a tag
 (global-set-key (kbd "M-.") 'find-tag-no-prompt)
-(require 'etags-select)
-(require 'etags-table)
-(setq etags-table-search-up-depth 10)
+;; (use-package etags-select
+;;   :ensure t
+;;   )
+;; (require 'etags-table)
+;; (setq etags-table-search-up-depth 10)
 ;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
 (global-set-key (kbd "M-*") 'pop-tag-mark)
 ;; never add tags, keeps annoying waring away
