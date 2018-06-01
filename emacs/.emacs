@@ -17,16 +17,13 @@
 (package-initialize)
 
 (defun package-reinstall-activated ()
-    "Reinstall all activated packages."
-    (interactive)
-    (dolist (package-name package-activated-list)
-           (when (package-installed-p package-name)
-                    (unless (ignore-errors                   ;some packages ma\
- y fail to install
-                                               (package-reinstall package-name\
- )
-                                               (warn "Package %s failed to rei\
- nstall" package-name))))))
+  "Reinstall all activated packages."
+  (interactive)
+  (dolist (package-name package-activated-list)
+    (when (package-installed-p package-name)
+      (unless (ignore-errors                   ;some packages may fail to install
+                (package-reinstall package-name )
+                (warn "Package %s failed to reinstall" package-name))))))
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
@@ -34,25 +31,51 @@
 	(package-install 'use-package))
 
 (use-package try
-	:ensure t)
+  :ensure t)
 
 (use-package which-key
-	:ensure t 
-	:config
-	(which-key-mode))
+  :ensure t 
+  :config
+  (which-key-mode))
 
 (use-package expand-region
-	:ensure t
-	:config
-	(global-set-key (kbd "C-@") 'er/expand-region))
+  :ensure t
+  :config
+  (global-set-key (kbd "C-@") 'er/expand-region))
 
-;; ;; org mode
-;; (use-package org-bullets
-;;   :ensure t
-;;   :config
-;;   (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-;; (setq org-image-actual-width '(400))
-;; (setq org-descriptive-links nil)
+
+;; different theme
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+
+
+;; try helm http://tuhdo.github.io/helm-intro.html
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+
+;; Highight indent mode
+;; https://github.com/DarthFennec/highlight-indent-guides
+(use-package highlight-indent-guides
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-auto-odd-face-perc 35)
+  (setq highlight-indent-guides-auto-even-face-perc 35)
+  (setq highlight-indent-guides-auto-character-face-perc 30)  
+  )
+
+;; Gives us unique buffer names
+(use-package uniquify
+  :ensure t
+  :config
+  (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
+  )
+
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
@@ -93,8 +116,6 @@
 (add-hook 'tex-mode-hook 'visual-line-mode)
 (add-hook 'tex-mode-hook 'flyspell-mode)
 
-;; Highight indent mode
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
@@ -145,11 +166,6 @@
 
 ;; F3 and F4 do the right thing!
 (global-set-key '[(f6)] 'join-line)
-
-;; (require 'color-theme)
-;; (color-theme-initialize)
-;; (setq color-theme-is-global t)
-;; (color-theme-dark-laptop)
 
 ;; Set the backup directoryto $TMPDIR/emacs$UID/                                                        
 (defconst emacs-tmp-dir (format "%s/%s%s/" temporary-file-directory "emacs" (user-uid)))
@@ -222,15 +238,11 @@
 ;; Confirm quit
 (setq confirm-kill-emacs 'yes-or-no-p)          
 
-;; Gives us unique buffer names
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
-
 ;; IDO, allows smart search
-(require 'ido)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
+;; (require 'ido)
+;; (setq ido-enable-flex-matching t)
+;; (setq ido-everywhere t)
+;; (ido-mode 1)
 
 ;; Auto pair parens!  cool
 (electric-pair-mode 1)
@@ -271,7 +283,7 @@
                 '(lambda(newname display-flag)
                    "Like `clone-indirect-buffer-other-window' but display in another frame."
                    (interactive
-                    (progn
+                    (gn
                       (if (get major-mode 'no-clone-indirect)
                           (error "Cannot indirectly clone a buffer in %s mode" mode-name))
                       (list (if current-prefix-arg
@@ -370,12 +382,7 @@
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(c-basic-offset 2)
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(groovy-indent-offset 2)
- '(highlight-indent-guides-method (quote character))
  '(ido-ignore-directories
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
@@ -400,7 +407,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(python-guess-indent t)
  '(python-indent 4)
  '(python-indent-guess-indent-offset t)
