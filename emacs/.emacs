@@ -27,8 +27,8 @@
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
-	(package-refresh-contents)
-	(package-install 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (use-package try
   :ensure t)
@@ -47,15 +47,38 @@
 ;; different theme
 (use-package zenburn-theme
   :ensure t
-  :config
-  (load-theme 'zenburn t))
+  )
 
+(use-package nimbus-theme
+  :ensure t
+  :disabled
+  )
+(use-package monokai-theme
+  :ensure t
+  :disabled
+  )
 
 ;; try helm http://tuhdo.github.io/helm-intro.html
 (use-package helm
   :ensure t
   :config
-  (helm-mode 1))
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-s") 'helm-occur)
+  (setq helm-follow-mode-persistent t )
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+  (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+  ;; https://www.reddit.com/r/emacs/comments/7rho4f/now_you_can_use_helm_with_frames_instead_of/
+  (setq helm-display-function 'helm-display-buffer-in-own-frame
+        helm-display-buffer-reuse-frame t
+        helm-use-undecorated-frame-option t
+        helm-always-two-windows nil
+        helm-split-window-in-side-p t
+        helm-source-names-using-follow '("Occur")
+        helm-follow-mode-persistent t
+        )
+  (helm-mode 1)
+  )
 
 ;; Highight indent mode
 ;; https://github.com/DarthFennec/highlight-indent-guides
@@ -76,6 +99,29 @@
   (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
   )
 
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  :init
+  (bind-key '[(f8)] 'treemacs)
+  )
+
+(use-package desktop
+  :config
+  ;; see https://stackoverflow.com/questions/4053708/emacs-desktop-doesnt-remember-tramp-connections?rq=1
+  ;; for details
+  (setq desktop-buffers-not-to-save "^$")
+  (setq desktop-files-not-to-save "^$")
+)
+
+(use-package tramp
+  :config
+  (setq tramp-default-method "ssh")
+  )
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
@@ -177,9 +223,9 @@
       emacs-tmp-dir)
 (setq backup-by-copying t)
 (setq delete-old-versions t
-  kept-new-versions 6
-  kept-old-versions 2
-  version-control t)
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 ;; No more # files
 (setq auto-save-default nil)
 
@@ -208,7 +254,7 @@
 (add-hook 'makefile-mode-hook
           (function
            (lambda()
-           (setq tab-width 8))))
+             (setq tab-width 8))))
 
 ;; In Python, set to 4 character tabs
 (add-hook 'python-mode-hook
@@ -284,10 +330,10 @@
                    "Like `clone-indirect-buffer-other-window' but display in another frame."
                    (interactive
                     (gn
-                      (if (get major-mode 'no-clone-indirect)
-                          (error "Cannot indirectly clone a buffer in %s mode" mode-name))
-                      (list (if current-prefix-arg
-                                (read-buffer "Name of indirect buffer: " (current-buffer))) t)))
+                     (if (get major-mode 'no-clone-indirect)
+                         (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+                     (list (if current-prefix-arg
+                               (read-buffer "Name of indirect buffer: " (current-buffer))) t)))
                    (save-window-excursion
                      (let ((newbuf (clone-indirect-buffer newname display-flag)))
                        (switch-to-buffer-other-frame newbuf)
@@ -300,7 +346,7 @@
 ;; Go configuration
 (setq gofmt-command "goimports")
 (defun my-go-mode-hook ()
-  ; Godef jump key binding
+                                        ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump)
   ;; Use goimports
   ;; (setq gofmt-command "goimports")
@@ -332,15 +378,16 @@
 
 ;; Insert the date
 (defun insert-date () (interactive)
-  (insert (shell-command-to-string "echo -n $(date +%F)")))
+       (insert (shell-command-to-string "echo -n $(date +%F)")))
 
 ;; Fuzzy finder
 (use-package fiplr
   :ensure t
+  :disabled
   :config
   (global-set-key (kbd "C-x f") 'fiplr-find-file)
-(setq fiplr-ignored-globs '((directories (".git" ".svn" "build" "DEWEYLocal"))
-                            (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
+  (setq fiplr-ignored-globs '((directories (".git" ".svn" "build" "DEWEYLocal"))
+                              (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
 
   )
 
@@ -382,7 +429,14 @@
  '(ansi-color-names-vector
    ["#2d3743" "#ff4242" "#74af68" "#dbdb95" "#34cae2" "#008b8b" "#00ede1" "#e1e1e0"])
  '(c-basic-offset 2)
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+ '(desktop-save-mode t)
  '(groovy-indent-offset 2)
+ '(helm-mode t)
  '(ido-ignore-directories
    (quote
     ("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components")))
@@ -391,6 +445,9 @@
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
  '(markdown-fontify-code-blocks-natively t)
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(org-edit-src-content-indentation 0)
  '(org-emphasis-alist
    (quote
@@ -407,7 +464,8 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+ '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-guess-indent t)
  '(python-indent 4)
  '(python-indent-guess-indent-offset t)
