@@ -63,21 +63,54 @@
   :ensure t
   :config
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
-  (global-set-key (kbd "C-s") 'helm-occur)
+  ;; (global-set-key (kbd "C-s") 'helm-occur)
+  (global-set-key (kbd "C-S-s") 'isearch-forward)
+  (global-set-key (kbd "M-.") 'helm-etags-select)
+  (global-set-key (kbd "M-*") 'pop-tag-mark)
+  
   (setq helm-follow-mode-persistent t )
   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
   (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
   ;; https://www.reddit.com/r/emacs/comments/7rho4f/now_you_can_use_helm_with_frames_instead_of/
-  (setq helm-display-function 'helm-display-buffer-in-own-frame
-        helm-display-buffer-reuse-frame t
-        helm-use-undecorated-frame-option t
-        helm-always-two-windows nil
-        helm-split-window-in-side-p t
-        helm-source-names-using-follow '("Occur")
-        helm-follow-mode-persistent t
-        )
+  (setq
+     ;; helm-display-function 'helm-display-buffer-in-own-frame
+     helm-display-function 'helm-default-display-buffer
+     helm-display-buffer-reuse-frame t
+     helm-use-undecorated-frame-option t
+     helm-always-two-windows t
+     helm-split-window-in-side-p t
+     helm-source-names-using-follow '("Occur")
+     helm-follow-mode-persistent t
+     )
   (helm-mode 1)
+  )
+
+;; better helm search
+(use-package helm-swoop
+  :ensure t
+  :config
+  
+  ;; this is perhaps the best search tool ever
+  ;; https://github.com/ShingoFukuyama/helm-swoop
+  (defun helm-swoop-multiline-4 ()
+    (interactive)
+    (helm-swoop :$query "" :$multiline 4))
+  
+  (global-set-key (kbd "C-s") 'helm-swoop)
+  (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
+  (global-set-key (kbd "M-i") 'helm-swoop)
+  (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
+  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+
+  ;; Move up and down like isearch
+  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
   )
 
 ;; Highight indent mode
@@ -99,7 +132,7 @@
   (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
   )
 
-
+;; Tree view of projects on F8
 (use-package treemacs
   :ensure t
   :defer t
@@ -123,6 +156,27 @@
   (setq tramp-default-method "ssh")
   )
 
+
+
+;; python
+;; (use-package pyvenv
+;;   :ensure t
+;;   :init
+;;   (pyvenv-mode 1)
+;;   )
+;; (use-package anaconda-mode
+;;   :ensure t
+;;   :config
+;;   (add-hook 'python-mode-hook 'anaconda-mode)
+;;   (pyvenv-activate (expand-file-name "$HOME/Applications/ril3"))
+;;   )
+
+;; (use-package elpy
+;;   :disabled
+;;   :ensure t
+;;   )
+
+
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
 ;; pending delete mode...
@@ -136,6 +190,9 @@
 
 ;; keep old clipboard contents
 (setq save-interprogram-paste-before-kill 't)
+
+;; No startup message
+(setq inhibit-startup-message t)
 
 ;; smooth scrolling
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
@@ -391,23 +448,23 @@
 
   )
 
-;; Find tags without the prompt
-(defun find-tag-no-prompt ()
-  "Jump to the tag at point without prompting"
-  (interactive)
-  (xref-find-definitions (find-tag-default)))
-;; don't prompt when finding a tag
-(global-set-key (kbd "M-.") 'find-tag-no-prompt)
-;; (use-package etags-select
-;;   :ensure t
-;;   )
-;; (require 'etags-table)
-;; (setq etags-table-search-up-depth 10)
-;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
-(global-set-key (kbd "M-*") 'pop-tag-mark)
-;; never add tags, keeps annoying waring away
-;; https://emacs.stackexchange.com/questions/14802/never-keep-current-list-of-tags-tables-also
-(setq tags-add-tables nil)
+;; ;; Find tags without the prompt
+;; (defun find-tag-no-prompt ()
+;;   "Jump to the tag at point without prompting"
+;;   (interactive)
+;;   (xref-find-definitions (find-tag-default)))
+;; ;; don't prompt when finding a tag
+;; (global-set-key (kbd "M-.") 'find-tag-no-prompt)
+;; ;; (use-package etags-select
+;; ;;   :ensure t
+;; ;;   )
+;; ;; (require 'etags-table)
+;; ;; (setq etags-table-search-up-depth 10)
+;; ;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
+;; (global-set-key (kbd "M-*") 'pop-tag-mark)
+;; ;; never add tags, keeps annoying waring away
+;; ;; https://emacs.stackexchange.com/questions/14802/never-keep-current-list-of-tags-tables-also
+;; (setq tags-add-tables nil)
 
 
 (custom-set-faces
@@ -464,10 +521,8 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
- '(python-guess-indent t)
- '(python-indent 4)
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
  '(tool-bar-mode nil)
