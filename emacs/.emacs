@@ -127,7 +127,6 @@
 
 ;; Gives us unique buffer names
 (use-package uniquify
-  :ensure t
   :config
   (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
   )
@@ -156,26 +155,11 @@
   (setq tramp-default-method "ssh")
   )
 
-
-
-;; python
-;; (use-package pyvenv
-;;   :ensure t
-;;   :init
-;;   (pyvenv-mode 1)
-;;   )
-;; (use-package anaconda-mode
-;;   :ensure t
-;;   :config
-;;   (add-hook 'python-mode-hook 'anaconda-mode)
-;;   (pyvenv-activate (expand-file-name "$HOME/Applications/ril3"))
-;;   )
-
-;; (use-package elpy
-;;   :disabled
-;;   :ensure t
-;;   )
-
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-center-theme)
+)
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
@@ -219,21 +203,23 @@
 (add-hook 'tex-mode-hook 'visual-line-mode)
 (add-hook 'tex-mode-hook 'flyspell-mode)
 
-
 ;; In version 23, the command key was mapped to 'super' to allow common mac shortcuts
 (setq mac-command-modifier 'meta)
 
 ;; Company (complete anything), see http://company-mode.github.io/
+(use-package company
+  :ensure t
+  :config
 (global-company-mode)
-
-;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
-;; (add-hook 'js-mode-hook (lambda() (tern-mode t)))
-
 ;; bind to M-? for autocomplete now
 (global-set-key "\M-?" 'company-complete-common)
 ;; in text, company mode always suggests lowercase options.
 ;; see http://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text for fix
 (setq company-dabbrev-downcase nil)
+  )
+
+;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
+;; (add-hook 'js-mode-hook (lambda() (tern-mode t)))
 
 ;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
 ;; (setq mac-option-modifier 'meta)
@@ -308,17 +294,17 @@
 ;; (set-face-attribute 'default nil :font "Source Code Pro-15")
 
 ;; In Makefiles, set the tab-width to 8
-(add-hook 'makefile-mode-hook
-          (function
-           (lambda()
-             (setq tab-width 8))))
+;; (add-hook 'makefile-mode-hook
+;;           (function
+;;            (lambda()
+;;              (setq tab-width 8))))
 
 ;; In Python, set to 4 character tabs
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil
-                  tab-width 2)))
-(add-hook 'python-mode-hook 'subword-mode)
+;; (add-hook 'python-mode-hook
+;;           (lambda ()
+;;             (setq indent-tabs-mode nil
+;;                   tab-width 2)))
+;; (add-hook 'python-mode-hook 'subword-mode)
 
 ;; GLSL mode
 (add-to-list 'auto-mode-alist '("\\.vs\\'" . glsl-mode))
@@ -521,7 +507,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
