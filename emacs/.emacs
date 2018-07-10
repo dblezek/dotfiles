@@ -157,6 +157,7 @@
 
 (use-package powerline
   :ensure t
+  :disabled t
   :config
   (powerline-center-theme)
 )
@@ -167,6 +168,9 @@
 (pending-delete-mode t)
 
 
+;; Set path
+;; add /usr/local/bin
+(setq exec-path (append exec-path '("/usr/local/bin/")))
 ;; Get our path from the shell
 ;; (when (memq window-system '(mac ns))
 ;;   (exec-path-from-shell-initialize))
@@ -507,7 +511,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode matlab-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
