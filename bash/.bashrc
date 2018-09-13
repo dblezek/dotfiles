@@ -16,10 +16,6 @@ unset VTK_DIR
 
 # A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
 
-# MacPorts Installer addition on 2009-02-11_at_16:17:44: adding an appropriate PATH variable for use with MacPorts.
-# export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# export MANPATH=/opt/local/share/man:$MANPATH
-
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
 
@@ -143,10 +139,14 @@ export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
 
 
 # Java, choose the most recent
-if [ -e /usr/libexec/java_home ]; then
+if [[ ! -v JAVA_HOME && -e /usr/libexec/java_home ]]; then
   export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
-else
-  export JAVA_HOME=/usr/java/latest/
+fi
+if [[ ! -v JAVA_HOME && -e /usr/java/latest ]]; then
+    export JAVA_HOME=/usr/java/latest/
+fi
+if [[ ! -v JAVA_HOME && -e /usr/bin/java ]]; then
+    export JAVA_HOME=/usr/bin/
 fi
 
 # Use logout to exit the shell
@@ -407,6 +407,9 @@ add_path /Applications/blender/blender.app/Contents/MacOS
 # HCP Workbench
 add_path $HOME/Applications/workbench/bin_macosx64
 
+# GCP SDK
+add_path $HOME/Applications/google-cloud-sdk/bin/
+
 # RCF tools
 add_path /data5/radiology/bje01/mra9161/mricron_lx
 add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
@@ -436,6 +439,26 @@ function hgrep {
 if [ -e ${HOME}/.z.sh ]; then
   . ${HOME}/.z.sh
 fi
+
+# Autocomplete
+# See
+# https://debian-administration.org/article/317/An_introduction_to_bash_completion_part_2
+# https://unix.stackexchange.com/a/181603/261626
+function _ssh() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts=$(grep '^Host' ~/.ssh/config ~/.ssh/config.d/* 2>/dev/null | grep -v '[?*]' | cut -d ' ' -f 2-)
+
+    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
+    return 0
+}
+complete -F _ssh ssh
+complete -F _ssh rtmux
+complete -F _ssh rsync
+complete -F _ssh scp
 
 # Detect TRAMP from emacs and play dumb
 if [[ $TERM = dumb ]]; then
