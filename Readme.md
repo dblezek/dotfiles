@@ -19,7 +19,18 @@ git clone git@github.com:blezek/dotfiles.git .dotfiles
 # aah, good to be home
 ```
 
+## Bash 4 on Mac
 
+1. Install brew: `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+2. install bash: `brew install bash`
+3. let the Mac use the new bash: `sudo bash -c 'echo /usr/local/bin/bash >> /etc/shells'`
+4. change my shell to bash 4: `chsh -s /usr/local/bin/bash`
+
+## Fonts
+
+```sh
+brew tap caskroom/fonts && brew cask install font-source-code-pro
+```
 
 # Git configuration
 
@@ -28,3 +39,4 @@ Tell `git` to put log lines in merge messages.
 ``` sh
 git config --global --add merge.log true
 ```
+
