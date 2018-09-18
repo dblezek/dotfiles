@@ -523,7 +523,11 @@
 
 ;; SML needs to be after custom-set-variables
 ;; https://github.com/Malabarba/smart-mode-line/issues/88
-(sml/setup)
+(use-package sml
+  :ensure t
+  :config
+  (sml/setup)
+  )
 
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")
