@@ -53,6 +53,17 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias fv='freeview \
+      -v mri/T1.mgz \
+      -v mri/aseg.mgz:colormap=lut:opacity=0.2 \
+      -f surf/lh.white:edgecolor=yellow \
+      -f surf/rh.white:edgecolor=yellow \
+      -f surf/lh.pial:annot=aparc:edgecolor=red \
+      -f surf/rh.pial:annot=aparc:edgecolor=red \
+      -f surf/lh.thickness \
+      -f surf/rh.thickness '
+
+
 
 # Parallel
 alias parallel="$HOME/.dotfiles/bash/parallel"
