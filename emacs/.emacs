@@ -78,8 +78,8 @@
      helm-display-function 'helm-default-display-buffer
      helm-display-buffer-reuse-frame t
      helm-use-undecorated-frame-option t
-     helm-always-two-windows t
-     helm-split-window-in-side-p t
+     helm-always-two-windows nil
+     helm-split-window-in-side-p nil
      helm-source-names-using-follow '("Occur")
      helm-follow-mode-persistent t
      )
@@ -96,7 +96,13 @@
   (defun helm-swoop-multiline-4 ()
     (interactive)
     (helm-swoop :$query "" :$multiline 4))
+
+  ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
+  (setq helm-swoop-pre-input-function
+        (lambda () (if (boundp 'helm-swoop-pattern)
+                       helm-swoop-pattern "")))
   
+  (setq helm-swoop-split-direction 'split-window-vertically)
   (global-set-key (kbd "C-s") 'helm-swoop)
   (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
   (global-set-key (kbd "M-i") 'helm-swoop)
@@ -152,7 +158,8 @@
 
 (use-package tramp
   :config
-  (setq tramp-default-method "ssh")
+  ;; (setq tramp-default-method "ssh")
+  (tramp-change-syntax 'simplified)
   )
 
 (use-package powerline
@@ -275,9 +282,6 @@
       version-control t)
 ;; No more # files
 (setq auto-save-default nil)
-
-;; restore opened files
-(desktop-save-mode 1)
 
 ;; Keep Tramp happy...
 (setq tramp-bkup-backup-directory-info nil)
@@ -482,6 +486,7 @@
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(desktop-save-mode t)
+ '(desktop-restore-eager 1)
  '(groovy-indent-offset 2)
  '(helm-mode t)
  '(ido-ignore-directories
