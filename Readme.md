@@ -34,9 +34,13 @@ brew tap caskroom/fonts && brew cask install font-source-code-pro
 
 # Git configuration
 
-Tell `git` to put log lines in merge messages.
+Tell `git` to put log lines in merge messages, and setup username and email.
 
 ``` sh
 git config --global --add merge.log true
+git config --global user.name "Daniel Blezek"
+git config --global user.email daniel.blezek@gmail.com
 ```
+
+
 

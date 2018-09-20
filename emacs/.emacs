@@ -162,6 +162,32 @@
   (tramp-change-syntax 'simplified)
   )
 
+;; languages
+(use-package matlab-mode)
+(use-package edit-indirect)
+(use-package smart-mode-line)
+(use-package json-mode)
+(use-package which-key)
+(use-package rib-mode)
+(use-package go-mode)
+(use-package web-mode)
+(use-package sql-indent)
+(use-package sqlite)
+(use-package company-ansible)
+(use-package company-lua)
+(use-package company-go)
+(use-package company)
+(use-package yaml-mode)
+(use-package toml-mode)
+(use-package terraform-mode)
+(use-package markdown-mode)
+(use-package lua-mode)
+(use-package groovy-mode)
+(use-package gradle-mode)
+(use-package dockerfile-mode)
+(use-package cmake-mode)
+(use-package autopair)
+
 (use-package powerline
   :ensure t
   :disabled t
