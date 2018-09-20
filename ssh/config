@@ -83,9 +83,9 @@ Host ril-gcp
   Hostname 35.208.17.105
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
-  LocalForward :6006 localhost:6006
-  LocalForward :4096 localhost:4096
-  LocalForward :18080 localhost:8080
+  # LocalForward :6006 localhost:6006
+  # LocalForward :4096 localhost:4096
+  # LocalForward :18080 localhost:8080
 
 Host *
   Compression yes
