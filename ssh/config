@@ -72,7 +72,7 @@ Host bitbucket.org
   ControlMaster no
 
 Host gpu
-  Hostname 192.168.2.4
+  Hostname 192.168.0.201
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
   LocalForward localhost:8888 localhost:8888
