@@ -54,3 +54,9 @@ docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
 sudo systemctl stop firewalld
 sudo systemctl disable firewalld
 ```
+
+## Install WIFI
+
+(This page)[https://lintut.com/how-to-setup-network-after-rhelcentos-7-minimal-installation/] details how to use `nmcli` and `nmtui` to manage the WiFi connection.  Once that was done, it's a snap...
+
+Remember to add an entry to give the system the same IP in the WiFi router...
