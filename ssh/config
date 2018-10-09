@@ -89,7 +89,7 @@ Host ril-gcp
 
 Host *
   Compression yes
-  CompressionLevel 9
+  # CompressionLevel 9
   # Lowering at the suggestion of the Tramp FAQ
   ServerAliveInterval 5
   # Share connections
