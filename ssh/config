@@ -51,6 +51,9 @@ Host localhost 127.0.0.1
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
 
+Host dsvm
+  Hostname dsvmu0110a.mayo.edu
+
 # Field of Dreams server
 Host fod fod1
   Hostname fod1.mayo.edu
@@ -82,6 +85,16 @@ Host ril-gcp
   # This is a static ip...
   Hostname 35.208.17.105
   StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  # LocalForward :6006 localhost:6006
+  # LocalForward :4096 localhost:4096
+  # LocalForward :18080 localhost:8080
+
+Host ril-gcp-gpu
+  User blezek.daniel
+  # This is a static ip...
+  Hostname 35.231.109.49
+  Stricthostkeychecking no
   UserKnownHostsFile=/dev/null
   # LocalForward :6006 localhost:6006
   # LocalForward :4096 localhost:4096

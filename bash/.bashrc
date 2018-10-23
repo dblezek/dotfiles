@@ -39,6 +39,7 @@ alias ls="ls -GFh"
 alias lsl="ls -GF -lah"
 alias la="lsl"
 alias lr="ls -lhtr"
+alias lrs="ls -lhSr"
 alias dir=ls
 # alias top="top -u"
 alias g="./gradlew"
@@ -50,6 +51,7 @@ alias tags="ctags -e -R"
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 # always show everyone's jobs in the SGE
 alias qstat="qstat -u '*' -f"
+alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
