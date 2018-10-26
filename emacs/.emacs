@@ -100,10 +100,12 @@
   ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
   (setq helm-swoop-pre-input-function
         (lambda () (if (boundp 'helm-swoop-pattern)
-                       helm-swoop-pattern "")))
+                       "" "")))
   
   (setq helm-swoop-split-direction 'split-window-vertically)
   (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; keep regular search around
+  (global-set-key (kbd "C-c C-s") 'isearch-forward)
   (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
   (global-set-key (kbd "M-i") 'helm-swoop)
   (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
@@ -542,7 +544,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (nginx-mode matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
@@ -555,10 +557,11 @@
 
 ;; SML needs to be after custom-set-variables
 ;; https://github.com/Malabarba/smart-mode-line/issues/88
-(use-package sml
+(use-package sml-modeline
   :ensure t
   :config
   (sml/setup)
+  (sml-modeline-mode t)
   )
 
 ;; Kill the scratch buffer

@@ -14,6 +14,13 @@ fi
 unset ITK_DIR
 unset VTK_DIR
 
+
+# Detect TRAMP from emacs and play dumb
+if [[ $TERM == "dumb" ]]; then
+  PS1='> '
+  return
+fi
+
 # A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
 
 # Catch any locally installed files
@@ -32,6 +39,7 @@ alias ls="ls -GFh"
 alias lsl="ls -GF -lah"
 alias la="lsl"
 alias lr="ls -lhtr"
+alias lrs="ls -lhSr"
 alias dir=ls
 # alias top="top -u"
 alias g="./gradlew"
@@ -43,6 +51,7 @@ alias tags="ctags -e -R"
 alias curl-trace='curl -w "@$HOME/.curl-format"'
 # always show everyone's jobs in the SGE
 alias qstat="qstat -u '*' -f"
+alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
@@ -99,8 +108,6 @@ if [[ "$ARCH" == "Linux" ]]; then
 fi
 
 
-function enscriptCode() {  enscript --line-numbers -numbers -Ecpp -r2 -o - "$@" | ps2pdf - "$@".pdf; }
-
 # Allow file overwrite on stdout redirection
 set +o noclobber
 
@@ -118,8 +125,20 @@ shopt -s cmdhist
 # http://stackoverflow.com/questions/10456784/behavior-of-cd-bash-on-symbolic-links
 set -o physical
 
-# Record each line as it gets issued
-# PROMPT_COMMAND='history -a'
+# Correcting directory names
+shopt -s cdspell
+# Prepend cd to directory names automatically, silence where not available
+if shopt | grep autocd > /dev/null; then
+  shopt -s autocd
+fi
+# Correct spelling errors during tab-completion, silenced
+if shopt | grep dirspell > /dev/null; then
+  shopt -s dirspell
+fi
+
+# This allows you to bookmark your favorite places across the file system
+# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
+shopt -s cdable_vars
 
 # Huge history. Doesn't appear to slow things down, so why not?
 HISTSIZE=500000
@@ -130,14 +149,7 @@ HISTCONTROL="erasedups:ignoreboth"
 
 # Don't record some commands
 # Specifically, ignore any command that has a leading space using the ' *' pattern
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear: *"
-
-# Useful timestamp format
-# HISTTIMEFORMAT='%F %T '
-
-# Have PROMPT_COMMAND rewrite history to include the directory
-# Unused for the moment...
-# export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]*  }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; hpwd="${hpwd% ### *} ### cd $cwd"; history -s "$hpwd"'
+export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:history:clear: *"
 
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
@@ -145,9 +157,8 @@ mkdir -p $HOME/.bash-history-log
 export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
 
 # Make our terminal names more helpful to Timing
-PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
-
+# PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+# export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
 
 # Java, choose the most recent
 if [[ ! -v JAVA_HOME && -e /usr/libexec/java_home ]]; then
@@ -185,20 +196,7 @@ export LESS="-XF --search-skip-screen --ignore-case --raw-control-chars"
 # make directories grey...
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
-# Change the title of the terminal window
-function titleold() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
-
-# function for setting terminal titles in OSX
-function title {
-  printf "\033]0;%s\007" "$1"
-}
-
 # installed software
-
-# Add developer tools
-# export PATH=$PATH:/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin
-# instead (cd ${HOME}/.macosx/bin && ln -s /Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool .)
-# We only really want texturetool...
 
 # Editor
 export EDITOR=emacs
@@ -212,10 +210,6 @@ alias gl='git pull'
 alias gf='git fetch'
 alias git-cleanup-branches='git branch --merged | egrep -v "(^\*|master|dev)" | xargs -n 1 git branch -d'
 
-# Help out git a bit
-# alias cmerge='git cmerge'
-# complete -o default -o nospace -F _git_checkout cmerge
-
 # Git branch on the prompt
 function parse_git_branch {
   # This version has ()'s
@@ -228,7 +222,6 @@ function current_git_branch {
 
 # Alias to help when a branch has moved on
 alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
-
 
 # Detect TRAMP from emacs and play dumb
 if [[ $TERM = dumb ]]; then
@@ -255,22 +248,6 @@ else
     PS1='\h:\W$(parse_git_branch) \u: '
   fi
 fi
-
-# cd options
-# Correcting directory names
-shopt -s cdspell
-# Prepend cd to directory names automatically, silence where not available
-if shopt | grep autocd > /dev/null; then
-  shopt -s autocd
-fi
-# Correct spelling errors during tab-completion, silenced
-if shopt | grep dirspell > /dev/null; then
-  shopt -s dirspell
-fi
-
-# This allows you to bookmark your favorite places across the file system
-# Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
-shopt -s cdable_vars
 
 export dotfiles="$HOME/.dotfiles"
 export Source="$HOME/Source"
@@ -468,36 +445,29 @@ function _ssh()
 }
 complete -F _ssh ssh
 complete -F _ssh rtmux
-complete -F _ssh rsync
-complete -F _ssh scp
+# complete -F _ssh rsync
+# complete -F _ssh scp
 
-# Detect TRAMP from emacs and play dumb
-if [[ $TERM = dumb ]]; then
-  PS1='> '
-else
-  # iTerm2
-  # from https://gitlab.com/gnachman/iterm2/issues/4743
-  # Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
-  # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
-  # if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
-  source $HOME/.iterm2_shell_integration.bash
-  # Color the GIT branch
-  # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
-  # No colors
-  PS1='\h:\W$(parse_git_branch) \u\$ '
-  
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
-  
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
-  
-  if [[ `hostname -s` = myst ]]; then
+# from https://gitlab.com/gnachman/iterm2/issues/4743
+# Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
+# source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
+# if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
+source $HOME/.iterm2_shell_integration.bash
+# Color the GIT branch
+# PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
+
+# No colors
+PS1='\h:\W$(parse_git_branch) \u\$ '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
+PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
+
+if [[ `hostname -s` = myst ]]; then
     PS1='\h:\W$(parse_git_branch) \u: '
-  fi
 fi
 
 # Any local customization?
 if [ -f $HOME/.bashrc_local ]; then
-	. $HOME/.bashrc_local
+    . $HOME/.bashrc_local
 fi
