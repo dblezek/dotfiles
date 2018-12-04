@@ -412,6 +412,17 @@ function rtmux {
 # Check if TMUX is set and tmux exists and then rename the session to the hostname, if it's not already set
 [[ -v TMUX ]] && [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1 && [[ $(tmux display-message -p '#S') == $(hostname) || $(tmux rename-session $(hostname)) ]]
 
+# See https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md
+# to configure hstr
+if hash hstr 2>/dev/null; then
+    if [[ $- =~ .*i.* ]]; then
+        bind '"\C-r": "\C-a hstr -- \C-j"';
+        alias hh=hstr
+        export HSTR_CONFIG=hicolor
+    fi
+fi
+
+
 # history grep
 function hgrep {
   if hash ag 2>/dev/null; then
