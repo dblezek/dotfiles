@@ -154,7 +154,11 @@ export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:history:clear: *"
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 mkdir -p $HOME/.bash-history-log
-export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M:%S") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
+
+# Sync .bash_history with in-memory history
+# see https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md
+# export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
 
 # Make our terminal names more helpful to Timing
 # PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
@@ -416,7 +420,9 @@ function rtmux {
 # to configure hstr
 if hash hstr 2>/dev/null; then
     if [[ $- =~ .*i.* ]]; then
-        bind '"\C-r": "\C-a hstr -- \C-j"';
+        # search this shell's history only!
+        # send the 
+        bind '"\C-r": "\C-a history -w /tmp/hh.$$ && HISTFILE=/tmp/hh.$$ hstr -- \C-j"';
         alias hh=hstr
         export HSTR_CONFIG=hicolor
     fi
