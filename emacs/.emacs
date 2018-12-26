@@ -548,6 +548,7 @@
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
+ '(sh-basic-offset 2)
  '(tool-bar-mode nil)
  '(tramp-syntax (quote simplified) nil (tramp))
  '(vc-follow-symlinks t)
