@@ -106,6 +106,7 @@
   (global-set-key (kbd "C-s") 'helm-swoop)
   ;; keep regular search around
   (global-set-key (kbd "C-c C-s") 'isearch-forward)
+  (global-set-key (kbd "C-s-s") 'isearch-forward)
   (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
   (global-set-key (kbd "M-i") 'helm-swoop)
   (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
