@@ -85,10 +85,10 @@ alias WGET="wget -mkEpnp"
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
   alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
-  export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:/opt/X11/lib/flat_namespace:$DYLD_LIBRARY_PATH
-  export PATH=${HOME}/.macosx/bin:$PATH
+  # export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:/opt/X11/lib/flat_namespace:$DYLD_LIBRARY_PATH
+  # export PATH=${HOME}/.macosx/bin:$PATH
   export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
-  export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
+  # export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
 
   # Renderman
   export RMANTREE=/Applications/Pixar/RenderManProServer-21.3
@@ -303,8 +303,8 @@ set show-all-if-ambiguous on
 set visible-stats on
 
 # NPM, see .npmrc for details
-export PATH=${HOME}/.macosx/npm/bin:${PATH}
-export PATH=${HOME}/.macosx/bin:${PATH}
+# export PATH=${HOME}/.macosx/npm/bin:${PATH}
+# export PATH=${HOME}/.macosx/bin:${PATH}
 
 # Bump up open files
 ulimit -n 2048
@@ -386,9 +386,11 @@ add_path $HOME/Applications/afni
 add_path $HOME/Applications/FSLeyes.app/Contents/MacOS
 
 # Maven?
-add_path $HOME/Source/maven/bin
+# add_path $HOME/Source/maven/bin
+
 # brew
 add_path /usr/local/sbin
+
 # Blender
 add_path /Applications/blender/blender.app/Contents/MacOS
 
@@ -402,6 +404,8 @@ add_path $HOME/Applications/google-cloud-sdk/bin/
 add_path /data5/radiology/bje01/mra9161/mricron_lx
 add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 # add_path /data5/radiology/bje01/shared/anaconda/bin
+
+add_path $HOME/Source/mrtrix3/bin
 
 # Remote tmux connection
 function rtmux {
@@ -417,26 +421,26 @@ function rtmux {
 if hash hstr 2>/dev/null; then
     if [[ $- =~ .*i.* ]]; then
         bind '"\C-r": "\C-a hstr -- \C-j"';
-        alias hh=hstr
-        export HSTR_CONFIG=hicolor
+        alias hh='history -a && history -n && hstr'
+        export HSTR_CONFIG=hicolor,prompt-top,raw-history-view
     fi
 fi
 
 
 # history grep
 function hgrep {
+  # Use ag, if it exists
   if hash ag 2>/dev/null; then
-    # Use ag, if it exists
-    ag $1 ${HOME}/.bash-history-log/
+    find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
   else
     # Fall back to good old grep
-    grep -i $1 ${HOME}/.bash-history-log/*
+    find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
   fi
 }
 
 # z from https://github.com/rupa/z
 if [ -e ${HOME}/.z.sh ]; then
-  . ${HOME}/.z.sh
+    . ${HOME}/.z.sh
 fi
 
 # Autocomplete
