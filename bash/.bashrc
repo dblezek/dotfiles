@@ -435,14 +435,26 @@ fi
 
 # history grep
 function hgrep {
-  # Use ag, if it exists
-  if hash ag 2>/dev/null; then
-    find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
-  else
-    # Fall back to good old grep
-    find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
-  fi
+    if [[ $1 == "-t" ]]; then TODAY=$(date "+%Y-%m-%d"); shift;
+                              if hash ag 2>/dev/null; then
+                                  # Use ag, if it exists
+                                  ag $1 ${HOME}/.bash-history-log/*${TODAY}*
+                              else
+                                  # Fall back to good old grep
+                                  grep -i $1 ${HOME}/.bash-history-log/*${TODAY}*
+                              fi
+    else
+        
+        # Use ag, if it exists
+        if hash ag 2>/dev/null; then
+            find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
+        else
+            # Fall back to good old grep
+            find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
+        fi
+    fi
 }
+
 
 # z from https://github.com/rupa/z
 if [ -e ${HOME}/.z.sh ]; then
