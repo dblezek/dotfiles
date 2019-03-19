@@ -26,8 +26,8 @@ fi
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
 
-# Local packages
-# export PATH=${HOME}/Source/bin:$PATH
+# Specific for GNU Tar on Mac
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
 alias CC="emacs -nw CMakeCache.txt"
 # Copy last command into the clipboard (Mac) http://apple.stackexchange.com/questions/110343/copy-last-command-in-terminal
@@ -154,15 +154,7 @@ export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:history:clear: *"
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 mkdir -p $HOME/.bash-history-log
-export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d.%H:%M") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
-
-# Sync .bash_history with in-memory history
-# see https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md
-# export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
-
-# Make our terminal names more helpful to Timing
-# PROMPT_TITLE='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
-# export PROMPT_COMMAND="${PROMPT_COMMAND}; ${PROMPT_TITLE}; "
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d-%H:%M") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
 
 # Java, choose the most recent
 if [[ ! -v JAVA_HOME && -e /usr/libexec/java_home ]]; then
@@ -432,27 +424,36 @@ if hash hstr 2>/dev/null; then
     fi
 fi
 
+# Window resize
+# Iterm2 > Preferences > Profiles > Terminal uncheck "Disable session-initiated window resizing"
+# see https://stackoverflow.com/questions/47296382/iterm2-window-resizing-through-commands-not-working
+function resize {
+  w=${1:-80}
+  h=${2:-25}
+  # echo $w x $h
+  printf '\e[8;%d;%dt' $h $w
+}
 
 # history grep
 function hgrep {
-    if [[ $1 == "-t" ]]; then TODAY=$(date "+%Y-%m-%d"); shift;
-                              if hash ag 2>/dev/null; then
-                                  # Use ag, if it exists
-                                  ag $1 ${HOME}/.bash-history-log/*${TODAY}*
-                              else
-                                  # Fall back to good old grep
-                                  grep -i $1 ${HOME}/.bash-history-log/*${TODAY}*
-                              fi
+  # if [[ $1 == "-t" ]]; then
+  #   TODAY=$(date "+%Y-%m-%d"); shift;
+  #   if hash ag 2>/dev/null; then
+  #     # Use ag, if it exists
+  #     ag $1 ${HOME}/.bash-history-log/*${TODAY}*
+  #   else
+  #     # Fall back to good old grep
+  #     grep -i $1 ${HOME}/.bash-history-log/*${TODAY}*
+  #   fi
+  # else
+  #   # Use ag, if it exists
+    if hash ag 2>/dev/null; then
+      find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
     else
-        
-        # Use ag, if it exists
-        if hash ag 2>/dev/null; then
-            find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
-        else
-            # Fall back to good old grep
-            find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
-        fi
+      # Fall back to good old grep
+      find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
     fi
+  # fi
 }
 
 
