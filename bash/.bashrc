@@ -56,7 +56,7 @@ alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
 alias ag='\ag --pager=less'
-alias httpd='python -m SimpleHTTPServer'
+alias httpd='python -m http.server'
 # Quick nav
 alias ..="cd .."
 alias ...="cd ../.."
