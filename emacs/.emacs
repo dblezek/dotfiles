@@ -280,7 +280,7 @@
 (setq-default frame-title-format "%b (%f)")
 
 ;; always indent on return
-(define-key global-map (kbd "RET") 'newline-and-indent)
+;; (define-key global-map (kbd "RET") 'newline-and-indent)
 (defun indent-buffer ()
   (interactive)
   (save-excursion
