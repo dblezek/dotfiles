@@ -106,7 +106,6 @@
   (global-set-key (kbd "C-s") 'helm-swoop)
   ;; keep regular search around
   (global-set-key (kbd "C-c C-s") 'isearch-forward)
-  (global-set-key (kbd "C-s-s") 'isearch-forward)
   (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
   (global-set-key (kbd "M-i") 'helm-swoop)
   (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
@@ -266,6 +265,9 @@
 ;; (global-set-key (kbd "s-/") 'auto-complete)
 ;; Also in v23, moving was line by line visually, not by logical line
 (setq line-move-visual nil)
+
+;; since we like the screenshot tool in macOS, replace becomes
+(global-set-key (kbd "M-&") 'query-replace-regexp)
 
 (global-set-key [C-tab] 'other-window)
 (global-set-key "\M-g" 'goto-line)

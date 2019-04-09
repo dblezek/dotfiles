@@ -101,22 +101,22 @@ Host ril-gcp-gpu
   # LocalForward :18080 localhost:8080
 
 Host *
-  Compression yes
-  # CompressionLevel 9
-  # Lowering at the suggestion of the Tramp FAQ
-  ServerAliveInterval 5
-  # Share connections
-  ControlMaster auto
-  # Stupid Azure has very long host names, so we have to keep short control
-  # paths
-  ControlPath ~/.ssh/cp-%r@%h:%p
-  # Keep the control open for 1 hour after all the connections exit
-  # This also puts the initial connection into the background!
-  ControlPersist 1h
-  ServerAliveCountMax 10
-  ServerAliveInterval 5
-  # Not supported on Mac
-  # ControlPersist 4h
-  IdentityFile ~/.ssh/id_rsa
+  # Compression yes
+  # # CompressionLevel 9
+  # # Lowering at the suggestion of the Tramp FAQ
+  # ServerAliveInterval 5
+  # # Share connections
+  # ControlMaster auto
+  # # Stupid Azure has very long host names, so we have to keep short control
+  # # paths
+  # ControlPath ~/.ssh/cp-%r@%h:%p
+  # # Keep the control open for 1 hour after all the connections exit
+  # # This also puts the initial connection into the background!
+  # ControlPersist 1h
+  # ServerAliveCountMax 10
+  # ServerAliveInterval 5
+  # # Not supported on Mac
+  # # ControlPersist 4h
+  # IdentityFile ~/.ssh/id_rsa
   StrictHostKeyChecking no
 
