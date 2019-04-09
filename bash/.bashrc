@@ -57,6 +57,7 @@ alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
 alias ag='\ag --pager=less'
 alias httpd='python -m http.server'
+alias blue='blueutil -p 0; sleep 3s; blueutil -p 1'
 # Quick nav
 alias ..="cd .."
 alias ...="cd ../.."
