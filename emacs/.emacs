@@ -58,13 +58,16 @@
   :disabled
   )
 
+
+
 ;; try helm http://tuhdo.github.io/helm-intro.html
 (use-package helm
   :ensure t
   :config
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; keep the old one around
+  (global-set-key (kbd "C-x f") 'find-file)
   ;; (global-set-key (kbd "C-s") 'helm-occur)
-  (global-set-key (kbd "C-S-s") 'isearch-forward)
   (global-set-key (kbd "M-.") 'helm-etags-select)
   (global-set-key (kbd "M-*") 'pop-tag-mark)
   
@@ -74,15 +77,15 @@
   (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
   ;; https://www.reddit.com/r/emacs/comments/7rho4f/now_you_can_use_helm_with_frames_instead_of/
   (setq
-     ;; helm-display-function 'helm-display-buffer-in-own-frame
-     helm-display-function 'helm-default-display-buffer
-     helm-display-buffer-reuse-frame t
-     helm-use-undecorated-frame-option t
-     helm-always-two-windows nil
-     helm-split-window-in-side-p nil
-     helm-source-names-using-follow '("Occur")
-     helm-follow-mode-persistent t
-     )
+   ;; helm-display-function 'helm-display-buffer-in-own-frame
+   helm-display-function 'helm-default-display-buffer
+   helm-display-buffer-reuse-frame t
+   helm-use-undecorated-frame-option t
+   helm-always-two-windows nil
+   helm-split-window-in-side-p nil
+   helm-source-names-using-follow '("Occur")
+   helm-follow-mode-persistent t
+   )
   (helm-mode 1)
   )
 
@@ -156,7 +159,7 @@
   ;; for details
   (setq desktop-buffers-not-to-save "^$")
   (setq desktop-files-not-to-save "^$")
-)
+  )
 
 (use-package tramp
   :config
@@ -195,7 +198,7 @@
   :disabled t
   :config
   (powerline-center-theme)
-)
+  )
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
@@ -249,12 +252,12 @@
 (use-package company
   :ensure t
   :config
-(global-company-mode)
-;; bind to M-? for autocomplete now
-(global-set-key "\M-?" 'company-complete-common)
-;; in text, company mode always suggests lowercase options.
-;; see http://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text for fix
-(setq company-dabbrev-downcase nil)
+  (global-company-mode)
+  ;; bind to M-? for autocomplete now
+  (global-set-key "\M-?" 'company-complete-common)
+  ;; in text, company mode always suggests lowercase options.
+  ;; see http://emacs.stackexchange.com/questions/10837/how-to-make-company-mode-be-case-sensitive-on-plain-text for fix
+  (setq company-dabbrev-downcase nil)
   )
 
 ;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
@@ -277,6 +280,8 @@
 (global-set-key "\M-`" 'next-multiframe-window)
 
 (setq kill-whole-line t)       ;;; Killing line also deletes \n
+
+(global-set-key (kbd "M-?") 'just-one-space)
 
 ;; Set the frame title
 (setq-default frame-title-format "%b (%f)")
