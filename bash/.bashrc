@@ -403,6 +403,7 @@ add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 # add_path /data5/radiology/bje01/shared/anaconda/bin
 
 add_path $HOME/Source/mrtrix3/bin
+add_path $HOME/Source/ntr.plugins/build/MI3CLib-build/bin
 
 # Remote tmux connection
 function rtmux {
