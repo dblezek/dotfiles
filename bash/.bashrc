@@ -73,6 +73,12 @@ alias fv='freeview \
       -f surf/lh.thickness \
       -f surf/rh.thickness '
 
+# if pbcopy does not exist, use the Perl script from
+# https://github.com/skaji/remote-pbcopy-iterm2
+if ! hash hstr 2>/dev/null; then
+  alias pbcopy=$HOME/.dotfiles/bash/pbcopy
+fi
+
 
 
 # Parallel
