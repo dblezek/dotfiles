@@ -78,6 +78,10 @@ alias fv='freeview \
 # Parallel
 alias parallel="$HOME/.dotfiles/bash/parallel"
 
+function ff() {
+  find . -iname "*${1}*"
+}
+
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
 alias WGET="wget -mkEpnp"
@@ -92,7 +96,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
   # export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
 
   # Renderman
-  export RMANTREE=/Applications/Pixar/RenderManProServer-21.3
+  export RMANTREE=/Applications/Pixar/RenderManProServer-22.4
   export PATH=${RMANTREE}/bin:${RMANTREE}/bin/it.app/Contents/MacOS/it:${PATH}
   alias top="top -o cpu"
 fi
@@ -108,6 +112,11 @@ if [[ "$ARCH" == "Linux" ]]; then
   alias ls="ls -Fh --color"
 fi
 
+
+# confirm history expansions
+if shopt | grep histverify > /dev/null; then
+  shopt -s histverify
+fi
 
 # Allow file overwrite on stdout redirection
 set +o noclobber
@@ -128,10 +137,12 @@ set -o physical
 
 # Correcting directory names
 shopt -s cdspell
+
 # Prepend cd to directory names automatically, silence where not available
 if shopt | grep autocd > /dev/null; then
   shopt -s autocd
 fi
+
 # Correct spelling errors during tab-completion, silenced
 if shopt | grep dirspell > /dev/null; then
   shopt -s dirspell
