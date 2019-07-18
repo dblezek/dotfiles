@@ -85,6 +85,8 @@
    helm-split-window-in-side-p nil
    helm-source-names-using-follow '("Occur")
    helm-follow-mode-persistent t
+   ;; Don't try to be clever when opening files
+   helm-find-files-ignore-thing-at-point t
    )
   (helm-mode 1)
   )
@@ -268,6 +270,15 @@
 ;; (global-set-key (kbd "s-/") 'auto-complete)
 ;; Also in v23, moving was line by line visually, not by logical line
 (setq line-move-visual nil)
+
+
+;; Insert the current date
+;; (defun insert-current-date () (interactive)
+;;        (insert (shell-command-to-string "echo -n $(date +%F)")))
+ (defun insert-current-date () (interactive) (insert (format-time-string "%Y-%m-%d")))
+(global-set-key (kbd "C-S-d") 'insert-current-date)
+(defun insert-current-timestamp () (interactive) (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
+(global-set-key (kbd "C-S-t") 'insert-current-timestamp)
 
 ;; since we like the screenshot tool in macOS, replace becomes
 (global-set-key (kbd "M-&") 'query-replace-regexp)
