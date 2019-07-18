@@ -354,7 +354,10 @@ fi
 for fsdir in "${HOME}/Applications/freesurfer" /Applications/freesurfer; do
   if [ -e "$fsdir" ]; then
     export FREESURFER_HOME="$fsdir"
-    source "$FREESURFER_HOME/SetUpFreeSurfer.sh" > /dev/null 2>&1 
+    source "$FREESURFER_HOME/SetUpFreeSurfer.sh" > /dev/null 2>&1
+    if [[ "$ARCH" == "Darwin" ]]; then
+      export DYLD_LIBRARY_PATH=$FREESURFER_HOME/lib/gcc/lib
+    fi
   fi
 done
 
