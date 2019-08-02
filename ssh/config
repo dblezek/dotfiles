@@ -62,6 +62,8 @@ Host packer
 Host bitbucket.org
   ControlMaster no
 
+IdentityFile ~/.ssh/google_compute_engine
+
 Host *
   # Compression yes
   # # CompressionLevel 9
