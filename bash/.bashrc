@@ -55,7 +55,6 @@ alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
-alias ag='\ag --pager=less'
 alias httpd='python -m http.server'
 alias blue='blueutil -p 0; sleep 3s; blueutil -p 1'
 # Quick nav
@@ -72,6 +71,11 @@ alias fv='freeview \
       -f surf/rh.pial:annot=aparc:edgecolor=red \
       -f surf/lh.thickness \
       -f surf/rh.thickness '
+
+# List SSH hosts
+function hosts {
+  grep -v "#" ${HOME}/.ssh/config | grep "Host "  | awk '{$1=""; print $0}' 
+}
 
 # if pbcopy does not exist, use the Perl script from
 # https://github.com/skaji/remote-pbcopy-iterm2
@@ -478,6 +482,13 @@ function hgrep {
   # fi
 }
 
+
+# See if we have the ag command
+if hash ag 2>/dev/null; then
+  alias ag='\ag --pager=less'
+else
+  alias ag='grep --recursive '
+fi
 
 # z from https://github.com/rupa/z
 if [ -e ${HOME}/.z.sh ]; then
