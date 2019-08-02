@@ -179,14 +179,16 @@ mkdir -p $HOME/.bash-history-log
 export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d-%H:%M") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
 
 # Java, choose the most recent
-if [[ ! -v JAVA_HOME && -e /usr/libexec/java_home ]]; then
-  export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
-fi
-if [[ ! -v JAVA_HOME && -e /usr/java/latest ]]; then
-    export JAVA_HOME=/usr/java/latest/
-fi
-if [[ ! -v JAVA_HOME && -e /usr/bin/java ]]; then
-    export JAVA_HOME=/usr/bin/
+if [[ -z ${JAVA_HOME+x} ]]; then
+   if [[ -e /usr/libexec/java_home ]]; then
+     export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
+   fi
+   if [[ -e /usr/java/latest ]]; then
+     export JAVA_HOME=/usr/java/latest/
+   fi
+   if [[ -e /usr/bin/java ]]; then
+     export JAVA_HOME=/usr/bin/
+   fi
 fi
 
 # Use logout to exit the shell
