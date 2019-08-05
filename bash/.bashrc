@@ -77,6 +77,10 @@ function hosts {
   grep -v "#" ${HOME}/.ssh/config | grep "Host "  | awk '{$1=""; print $0}' 
 }
 
+if hash srun 2>/dev/null; then
+  alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
+fi
+
 # if pbcopy does not exist, use the Perl script from
 # https://github.com/skaji/remote-pbcopy-iterm2
 if ! hash hstr 2>/dev/null; then
@@ -391,6 +395,7 @@ add_path $HOME/Applications/MRIcron
 add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
 add_path $HOME/Source/ntr.plugins/build/mrtrix3/bin
+add_path /home/apps/mrtrix3/bin
 # pip local executables
 add_path $HOME/.local/bin
 # catch itksnap
