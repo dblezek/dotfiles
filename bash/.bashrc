@@ -77,6 +77,10 @@ function hosts {
   grep -v "#" ${HOME}/.ssh/config | grep "Host "  | awk '{$1=""; print $0}' 
 }
 
+function dl {
+  echo scp -r "$*" R5174775:./Downloads/
+}
+
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
 fi
