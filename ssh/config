@@ -1,5 +1,5 @@
 # See global options at the end
-Include local_config
+#Include local_config
 
 Host do ftjava
   ControlPath ~/.ssh/cp-do
