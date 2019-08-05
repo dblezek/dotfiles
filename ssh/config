@@ -1,5 +1,5 @@
 # See global options at the end
-#Include local_config
+# Include local_config
 
 Host do ftjava
   ControlPath ~/.ssh/cp-do
@@ -63,7 +63,11 @@ Host packer
 Host bitbucket.org
   ControlMaster no
 
+Host rohaslrailgit.mayo.edu railgit.mayo.edu
+  ControlMaster no
+
 IdentityFile ~/.ssh/google_compute_engine
+IdentityFile ~/.ssh/railgit
 
 Host *
   # Compression yes
