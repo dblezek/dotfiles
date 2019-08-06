@@ -78,7 +78,7 @@ function hosts {
 }
 
 function dl {
-  scp -azr "$*" R5174775:./Downloads/
+  rsync -azr "$*" R5174775:./Downloads/
 }
 
 if hash srun 2>/dev/null; then
