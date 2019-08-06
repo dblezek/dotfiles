@@ -78,7 +78,7 @@ function hosts {
 }
 
 function dl {
-  echo scp -r "$*" R5174775:./Downloads/
+  scp -azr "$*" R5174775:./Downloads/
 }
 
 if hash srun 2>/dev/null; then
