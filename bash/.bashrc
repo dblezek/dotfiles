@@ -78,7 +78,7 @@ function hosts {
 }
 
 function dl {
-  rsync -azr "$*" R5174775:./Downloads/
+  rsync -az $* R5174775:./Downloads/
 }
 
 if hash srun 2>/dev/null; then
