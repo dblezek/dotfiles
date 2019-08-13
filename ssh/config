@@ -66,10 +66,12 @@ Host bitbucket.org
 Host rohaslrailgit.mayo.edu railgit.mayo.edu
   ControlMaster no
 
-IdentityFile ~/.ssh/google_compute_engine
-IdentityFile ~/.ssh/railgit
 
 Host *
+  IdentityFile ~/.ssh/google_compute_engine
+  IdentityFile ~/.ssh/railgit
+  # be sure to include the standard key
+  IdentityFile ~/.ssh/id_rsa
   # Compression yes
   # # CompressionLevel 9
   # # Lowering at the suggestion of the Tramp FAQ
