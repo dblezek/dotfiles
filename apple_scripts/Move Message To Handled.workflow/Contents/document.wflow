@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>419</string>
+	<string>444.42</string>
 	<key>AMApplicationVersion</key>
-	<string>2.6</string>
+	<string>2.9</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -51,9 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>(*
-	Move the current message to the "Handled" folder
-*)on run {}		tell application "Microsoft Outlook"				-- get the currently selected message or messages		set selectedMessages to current messages				-- Check to make sure items are selected, if not then quit		if ((count of selectedMessages) &lt; 1) then return				set theFolder to inbox of default account				-- set theFolder to folder "Handled" of inbox folder		set theName to name of theFolder		-- set theParent to name of parent of theFolder		set handled to folder "Handled" of theFolder		-- display dialog "Found folders... " &amp; theName &amp; " to " &amp; name of handled with icon 1				-- set theSelection to «class pusl»		-- set theCurrentMessage to item 1 of theSelection		-- set theMessage to incoming message ID of theCurrentMessage				-- move theCurrentMessage to handled		-- repeat with theMessage in selectedMessages		repeat with theMessage in selectedMessages			--		repeat with i from (count selectedMessages) to 1 by -1			--			set theMessage to item i of theSelection			set theName to subject of theMessage			-- display dialog "Moved message " &amp; theName with icon 1			move theMessage to handled			-- set storage of theMessage to folder "Handled" of folder "Inbox"		end repeat					end tellend run</string>
+					<string>(*	Move the current message to the "Handled" folder*)on run {}			tell application "Microsoft Outlook"				-- get the currently selected message or messages		set selectedMessages to selected objects				-- Check to make sure items are selected, if not then quit		-- display dialog "count ..." &amp; (count of selectedMessages)		if ((count of selectedMessages) &lt; 1) then return				set theFolder to inbox of default account				-- set theFolder to folder "Handled" of inbox folder		set theName to name of theFolder		-- set theParent to name of parent of theFolder		set handled to folder "__Handled" of theFolder		-- display dialog "Found folders... " &amp; theName &amp; " to " &amp; name of handled with icon 1				-- set theSelection to «class pusl»		-- set theCurrentMessage to item 1 of theSelection		-- set theMessage to incoming message ID of theCurrentMessage				-- move theCurrentMessage to handled		-- repeat with theMessage in selectedMessages		repeat with theMessage in selectedMessages						set theName to subject of theMessage			-- display dialog "Moved message " &amp; theName with icon 1			move theMessage to handled			-- set storage of theMessage to folder "Handled" of folder "Inbox"			display notification theName with title "Moved message to Handled"								end repeat					end tellend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -104,12 +102,10 @@ end run</string>
 						<string>0</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:316.000000</string>
+				<string>309.000000:1073.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
@@ -121,6 +117,27 @@ end run</string>
 	<dict/>
 	<key>workflowMetaData</key>
 	<dict>
+		<key>applicationBundleID</key>
+		<string>com.microsoft.Outlook</string>
+		<key>applicationBundleIDsByPath</key>
+		<dict>
+			<key>/Applications/Microsoft Outlook.app</key>
+			<string>com.microsoft.Outlook</string>
+		</dict>
+		<key>applicationPath</key>
+		<string>/Applications/Microsoft Outlook.app</string>
+		<key>applicationPaths</key>
+		<array>
+			<string>/Applications/Microsoft Outlook.app</string>
+		</array>
+		<key>inputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>outputTypeIdentifier</key>
+		<string>com.apple.Automator.nothing</string>
+		<key>presentationMode</key>
+		<integer>11</integer>
+		<key>processesInput</key>
+		<integer>0</integer>
 		<key>serviceApplicationBundleID</key>
 		<string>com.microsoft.Outlook</string>
 		<key>serviceApplicationPath</key>
@@ -130,6 +147,10 @@ end run</string>
 		<key>serviceOutputTypeIdentifier</key>
 		<string>com.apple.Automator.nothing</string>
 		<key>serviceProcessesInput</key>
+		<integer>0</integer>
+		<key>systemImageName</key>
+		<string>NSActionTemplate</string>
+		<key>useAutomaticInputType</key>
 		<integer>0</integer>
 		<key>workflowTypeIdentifier</key>
 		<string>com.apple.Automator.servicesMenu</string>
