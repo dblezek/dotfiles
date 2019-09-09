@@ -13,6 +13,10 @@ fi
 echo "url"
 
 echo "---"
+echo "railtoolbox | bash=$0 param1=http://railgit.mayo.edu/rail/railtoolbox terminal=false"
+echo "TKV | bash=$0 param1=http://rohaslrailgit.mayo.edu/rail/total-kidney-volume-A18-022 terminal=false"
+echo "Body Comp | bash=$0 param1=http://rohaslrailgit.mayo.edu/rail/body-composition-A18-006 terminal=false"
+echo "---"
 echo "OneDrive | bash=$0 param1=https://mctools-my.sharepoint.com/personal/blezek_daniel_mayo_edu/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fblezek%5Fdaniel%5Fmayo%5Fedu%2FDocuments%2FRAIL%20Documents terminal=false"
 echo "rail | bash=$0 param1=http://railgit.mayo.edu/rail/rail terminal=false"
 # echo "rail-discuss | bash=$0 param1=http://railgit.mayo.edu/rail/rail-discuss/issues terminal=false"
