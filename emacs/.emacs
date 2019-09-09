@@ -102,10 +102,12 @@
     (interactive)
     (helm-swoop :$query "" :$multiline 4))
 
+  ;; search across buffers
+  (global-set-key [(meta @)] 'helm-multi-swoop-all)
+  
   ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
   (setq helm-swoop-pre-input-function
-        (lambda () (if (boundp 'helm-swoop-pattern)
-                       "" "")))
+        (lambda () ""))
   
   (setq helm-swoop-split-direction 'split-window-vertically)
   (global-set-key (kbd "C-s") 'helm-swoop)
