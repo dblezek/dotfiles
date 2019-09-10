@@ -545,6 +545,19 @@ if [[ `hostname -s` = myst ]]; then
     PS1='\h:\W$(parse_git_branch) \u: '
 fi
 
+# Homebrew setup
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX=$(brew --prefix)
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+    source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+  else
+    for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+      [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+    done
+  fi
+fi
+
+
 # Any local customization?
 if [ -f $HOME/.bashrc_local ]; then
     . $HOME/.bashrc_local
