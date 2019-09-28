@@ -1,0 +1,125 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+if [[ $# -ne 1 ]]; then
+    echo $0 requires 1 arguments
+    echo "usage: $0 URL"
+    echo
+    echo 'find all MP3 files on the wobsite'
+    echo formatted RSS entry for each MP3 file.
+    exit 1
+fi
+
+url=$1
+
+TZ=`date +"%z"`
+TIME=`date +"%H:%M"`
+WEEKDAY=`date +"%a"`
+DATE=`date +"%d"`
+MONTH=`date +"%b"`
+YEAR=`date +"%Y"`
+FORMATED_DATE_TIME="$WEEKDAY, $DATE $MONTH $YEAR $TIME $TZ"
+
+HOUR=$((RANDOM%20))
+MINUTE=$((RANDOM%60))
+
+counter=0
+
+log () { echo "$@" 1>&2; }
+
+urldecode () {
+  echo $(python -c "import sys, urllib.parse; print (urllib.parse.unquote_plus(sys.argv[1]))" $1)
+}
+
+urlencode () {
+  echo $(python -c "import sys, urllib.parse; print (urllib.parse.quote_plus(sys.argv[1]))" $1)
+}
+
+format_entry() {
+  url=$1
+  printf "<item>\n"
+  printf "<title>%s</title>\n" "$fn"
+  printf "<link>http://archive.org/download/%s/%s</link>\n" $album "$fn"
+  printf "<pubDate>%s %02d:%02d:%02d %s</pubDate>\n" "$WEEKDAY, $DATE $MONTH $YEAR" $HOUR $MINUTE "$counter" $TZ
+  printf '<enclosure url="%s" length="1" type="audio/mpeg" />\n' "$url"
+  printf '<guid isPermaLink="false">%s</guid>\n' $(uuidgen) 
+  printf "</item>\n"
+  printf "\n"
+  counter=$((counter + 1))  
+  
+}
+
+log running spider on "$url"
+
+wget  -r --spider -l1 -A mp3 "$url" 2>&1 | grep '^--' | awk '{print $3}' | grep -i ".mp3" | grep "https://archive.org" | \
+while read url; do
+  fn=${url##*/}
+  title=$(urldecode "$fn")
+
+  log reading $title from $url 
+  
+  printf "<item>\n"
+  printf "<title>%s</title>\n" "$title"
+  printf "<link>%s</link>\n" "$url"
+  printf "<pubDate>%s %02d:%02d:%02d %s</pubDate>\n" "$WEEKDAY, $DATE $MONTH $YEAR" $HOUR $MINUTE "$counter" $TZ
+  printf '<enclosure url="%s" length="1" type="audio/mpeg" />\n' "$url"
+  printf '<guid isPermaLink="false">%s</guid>\n' $(uuidgen) 
+  printf "</item>\n"
+  printf "\n"
+  counter=$((counter + 1))  
+done
+
+
+
+exit
+
+        <item>
+            <title>The Machine Stops</title>
+            <link>https://archive.org/download/MachineStopsThe/Machine%20Stops%2C%20The.mp3</link>
+            <pubDate>Mon, 27 May 2019 14:25:20 -0500</pubDate>
+            <enclosure url="http://archive.org/download/MachineStopsThe/Machine%20Stops%2C%20The.mp3" length="1" type="audio/mpeg"/>
+            <guid isPermaLink="false">1988488B-FE71-4A75-92D2-50D8E7D8D601</guid>
+        </item>
+
+
+
+        ETag: "9bba67fd36d6d130732e0c5d24acf1a6"
+accept: */*
+accept-encoding: gzip, deflate, br
+accept-language: en-US,en;q=0.9
+authorization: LOW nRIx9rtHketE6dmL:REDACTED_BY_IA_S3
+cache-control: no-cache
+connection: close
+content-length: 26860341
+content-type: multipart/form-data; charset=UTF-8
+dnt: 1
+host: s3.us.archive.org
+origin: https://archive.org
+referer: https://archive.org/upload/
+user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36
+x-amz-acl: bucket-owner-full-control
+x-amz-auto-make-bucket: 1
+x-archive-interactive-priority: 1
+x-archive-meta-mediatype: uri(audio)
+x-archive-meta01-collection: uri(opensource_audio)
+x-archive-meta01-creator: uri(Simon%20Bevoy)
+x-archive-meta01-date: uri(2008-03-24)
+x-archive-meta01-description: uri(%3Cspan%20style%3D%22color%3A%20rgb(84%2C%2084%2C%2084)%3B%20font-family%3A%20Roboto%2C%20arial%2C%20sans-serif%3B%20font-size%3A%20small%3B%20background-color%3A%20rgb(255%2C%20255%2C%20255)%3B%22%3ESci-fi%20adventure%20series%20set%20during%20World%20War%20II%20written%20by%20Simon%20Bevoy%3C%2Fspan%3E)
+x-archive-meta01-language: uri(eng)
+x-archive-meta01-scanner: uri(Internet%20Archive%20HTML5%20Uploader%201.6.3)
+x-archive-meta01-subject: uri(bbc%20radio)
+x-archive-meta01-title: uri(Slipstream%20by%20Simon%20Bevoy)
+x-archive-meta02-subject: uri(scifi%20radio%20drama)
+x-archive-meta03-subject: uri(radio%20drama)
+x-archive-queue-derive: 0
+x-archive-size-hint: 134159019
+x-file-name: uri(Slipstream%20-%20E1_%20Into%20The%20Wolf's%20Lair.mp3)
+x-file-size: 26860341
+x-ias3-encoded-key: Slipstream%20-%20E1_%20Into%20The%20Wolf%27s%20Lair.mp3
+x-ias3-upload-bytes-per-second: 358358.566398
+x-ias3-upload-duration: 74.953813
+x-ias3-upload-start-time: 1520698535.900461
+x-requested-with: XMLHttpRequest
+x-upload-date: 2018-03-10T16:16:50.000Z
