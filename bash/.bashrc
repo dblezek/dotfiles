@@ -72,6 +72,10 @@ alias fv='freeview \
       -f surf/lh.thickness \
       -f surf/rh.thickness '
 
+# see https://community.atlassian.com/t5/Bitbucket-questions/can-t-commit/qaq-p/719732
+# for how to use the a GUI as needed
+alias gpg-reset='export GPG_TTY=$(tty) ; gpgconf --kill gpg-agent'
+
 # List SSH hosts
 function hosts {
   grep -v "#" ${HOME}/.ssh/config | grep "Host "  | awk '{$1=""; print $0}' 
@@ -114,7 +118,7 @@ if [[ "$ARCH" == "Darwin" ]]; then
   # export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
 
   # Renderman
-  export RMANTREE=/Applications/Pixar/RenderManProServer-22.4
+  export RMANTREE=/Applications/Pixar/RenderManProServer-22.6
   export PATH=${RMANTREE}/bin:${RMANTREE}/bin/it.app/Contents/MacOS/it:${PATH}
   alias top="top -o cpu"
 fi
