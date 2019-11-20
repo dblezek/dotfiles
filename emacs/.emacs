@@ -44,8 +44,102 @@
   (global-set-key (kbd "C-@") 'er/expand-region))
 
 
+;; try neo tree
+(use-package neotree
+  :ensure t
+  :disabled
+  :config
+  (global-set-key [f8] 'neotree-toggle)
+  )
+
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)
+    )
+  :config
+  (global-set-key [f8] 'treemacs)
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-follow-delay             0.2
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         t
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-desc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+
 ;; different theme
 (use-package zenburn-theme
+  :ensure t
+  ;; :disabled
+  )
+
+(use-package all-the-icons
+  :ensure t)
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :after (treemacs)
+;;   :config
+;;   ;; (load-theme 'doom-one)
+;;   (load-theme 'doom-spacegrey)
+;;   (doom-themes-treemacs-config)
+;;   )
+
+;; fix broken titlebar brightess
+(use-package ns-auto-titlebar
   :ensure t
   )
 
@@ -533,7 +627,7 @@
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(custom-safe-themes
    (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+    ("c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "428754d8f3ed6449c1078ed5b4335f4949dc2ad54ed9de43c56ea9b803375c23" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(desktop-restore-eager 1)
  '(desktop-save-mode t)
  '(groovy-indent-offset 2)
@@ -549,6 +643,7 @@
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(ns-auto-titlebar-mode t nil (ns-auto-titlebar))
  '(org-edit-src-content-indentation 0)
  '(org-emphasis-alist
    (quote
@@ -565,7 +660,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    (all-the-icons doom-themes ns-auto-titlebar ns-aut-titlebar sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
