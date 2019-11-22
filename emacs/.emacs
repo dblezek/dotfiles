@@ -30,6 +30,95 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+
+;; Tree view of projects on F8
+(use-package treemacs
+  :ensure t
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (progn
+    (setq
+     treemacs-is-never-other-window         t
+     )
+    )
+  :init
+  (bind-key '[(f8)] 'treemacs)
+  )
+
+
+;; (use-package all-the-icons
+;;   :ensure t)
+
+;; (use-package treemacs
+;;   :ensure t
+;;   :init
+;;   (with-eval-after-load 'winum
+;;     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)
+;;     )
+;;   :config
+;;   (treemacs-follow-mode t)
+;;   (treemacs-filewatch-mode t)
+;;   (global-set-key [f8] 'treemacs)
+;;   (progn
+;;     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+;;           treemacs-deferred-git-apply-delay      0.5
+;;           treemacs-display-in-side-window        t
+;;           treemacs-eldoc-display                 t
+;;           treemacs-file-event-delay              5000
+;;           treemacs-file-follow-delay             0.2
+;;           treemacs-follow-after-init             t
+;;           treemacs-git-command-pipe              ""
+;;           treemacs-goto-tag-strategy             'refetch-index
+;;           treemacs-indentation                   2
+;;           treemacs-indentation-string            " "
+;;           treemacs-is-never-other-window         t
+;;           treemacs-max-git-entries               5000
+;;           treemacs-missing-project-action        'ask
+;;           treemacs-no-png-images                 nil
+;;           treemacs-no-delete-other-windows       t
+;;           treemacs-project-follow-cleanup        nil
+;;           treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+;;           treemacs-position                      'left
+;;           treemacs-recenter-distance             0.1
+;;           treemacs-recenter-after-file-follow    nil
+;;           treemacs-recenter-after-tag-follow     nil
+;;           treemacs-recenter-after-project-jump   'always
+;;           treemacs-recenter-after-project-expand 'on-distance
+;;           treemacs-show-cursor                   nil
+;;           treemacs-show-hidden-files             t
+;;           treemacs-silent-filewatch              nil
+;;           treemacs-silent-refresh                nil
+;;           treemacs-sorting                       'alphabetic-desc
+;;           treemacs-space-between-root-nodes      t
+;;           treemacs-tag-follow-cleanup            t
+;;           treemacs-tag-follow-delay              1.5
+;;           treemacs-width                         35)
+
+;;     ;; The default width and height of the icons is 22 pixels. If you are
+;;     ;; using a Hi-DPI display, uncomment this to double the icon size.
+;;     ;;(treemacs-resize-icons 44)
+
+;;     (treemacs-follow-mode t)
+;;     (treemacs-filewatch-mode t)
+;;     (treemacs-fringe-indicator-mode t)
+;;     (pcase (cons (not (null (executable-find "git")))
+;;                  (not (null treemacs-python-executable)))
+;;       (`(t . t)
+;;        (treemacs-git-mode 'deferred))
+;;       (`(t . _)
+;;        (treemacs-git-mode 'simple))))
+;;   :bind
+;;   (:map global-map
+;;         ("M-0"       . treemacs-select-window)
+;;         ("C-x t 1"   . treemacs-delete-other-windows)
+;;         ("C-x t t"   . treemacs)
+;;         ("C-x t B"   . treemacs-bookmark)
+;;         ("C-x t C-t" . treemacs-find-file)
+;;         ("C-x t M-t" . treemacs-find-tag)))
+
+
+
 (use-package try
   :ensure t)
 
@@ -53,81 +142,11 @@
   )
 
 
-(use-package treemacs
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)
-    )
-  :config
-  (global-set-key [f8] 'treemacs)
-  (progn
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-follow-delay             0.2
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         t
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'left
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-desc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-width                         35)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-
 ;; different theme
 (use-package zenburn-theme
   :ensure t
   ;; :disabled
   )
-
-(use-package all-the-icons
-  :ensure t)
 
 ;; (use-package doom-themes
 ;;   :ensure t
@@ -204,7 +223,7 @@
         (lambda () ""))
   
   (setq helm-swoop-split-direction 'split-window-vertically)
-  (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; (global-set-key (kbd "C-s") 'helm-swoop)
   ;; keep regular search around
   (global-set-key (kbd "C-c C-s") 'isearch-forward)
   (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
@@ -240,17 +259,6 @@
   (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
   )
 
-;; Tree view of projects on F8
-(use-package treemacs
-  :ensure t
-  :defer t
-  :config
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  :init
-  (bind-key '[(f8)] 'treemacs)
-  )
-
 (use-package desktop
   :config
   ;; see https://stackoverflow.com/questions/4053708/emacs-desktop-doesnt-remember-tramp-connections?rq=1
@@ -274,7 +282,6 @@
 (use-package rib-mode :ensure t)
 (use-package go-mode :ensure t)
 (use-package web-mode :ensure t)
-(use-package sql-indent :ensure t)
 (use-package sqlite :ensure t)
 (use-package company-ansible :ensure t)
 (use-package company-lua :ensure t)
@@ -514,6 +521,9 @@
 (global-set-key (kbd "s-f") 'forward-word)
 (global-set-key (kbd "s-d") 'kill-word)
 (global-set-key (kbd "<s-backspace>") 'backward-kill-word)
+
+;; Remove multiple spaces
+(global-set-key (kbd "S-SPC") 'just-one-space)
 
 ;; Line numbers
 (global-linum-mode)
