@@ -57,6 +57,7 @@ alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
 alias httpd='python -m http.server'
 alias blue='blueutil -p 0; sleep 3s; blueutil -p 1'
+
 # Quick nav
 alias ..="cd .."
 alias ...="cd ../.."
@@ -85,6 +86,7 @@ function dl {
   rsync -az $* R5174775:./Downloads/
 }
 
+export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
 fi
