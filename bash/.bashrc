@@ -52,6 +52,7 @@ alias curl-trace='curl -w "@$HOME/.curl-format"'
 # always show everyone's jobs in the SGE
 alias qstat="qstat -u '*' -f"
 alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
+alias tfgpus="python3 -c 'import tensorflow as tf; tf.config.experimental.list_physical_devices("GPU")'"
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
@@ -86,7 +87,7 @@ function dl () {
   scp $* R5174775:./Downloads/
 }
 
-export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p"
+export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p %R"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
 fi
@@ -307,6 +308,14 @@ function cronenv () {
       LOGNAME=$LOGNAME \
       _=/usr/bin/env \
       HOME=$HOME /bin/sh --noprofile --norc -c "$t"
+}
+
+# Change iTerm tab name
+function tname() {
+  # do nothing if outside of TMUX
+  if [ ! -z $TMUX ] ; then
+   tmux rename-window "$@"
+  fi
 }
 
 # Clean up history by ignoring certain items
