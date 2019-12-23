@@ -122,6 +122,12 @@
 (use-package try
   :ensure t)
 
+(use-package magit
+  :ensure t
+  :config
+  (setq vc-handled-backends nil)
+)
+
 (use-package which-key
   :ensure t 
   :config
