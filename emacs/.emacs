@@ -131,7 +131,8 @@
 (use-package which-key
   :ensure t 
   :config
-  (which-key-mode))
+  (which-key-mode)
+  (which-key-setup-side-window-right-bottom))
 
 (use-package expand-region
   :ensure t
@@ -247,6 +248,8 @@
   (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
   )
 
+(use-package helm-descbinds :ensure t :config ( helm-descbinds-mode ) )
+
 ;; Highight indent mode
 ;; https://github.com/DarthFennec/highlight-indent-guides
 (use-package highlight-indent-guides
@@ -274,10 +277,21 @@
   )
 
 (use-package tramp
+  :ensure t
+  :bind ("<f5>" . tramp-cleanup-all-connections)
   :config
   ;; (setq tramp-default-method "ssh")
   (tramp-change-syntax 'simplified)
   )
+
+(use-package projectile
+  :disabled
+  :config
+  (projectile-mode +1)
+  (global-set-key (kbd "M-p") 'projectile-command-map)
+  )
+  
+  
 
 ;; languages
 ;; (use-package matlab-mode :ensure t)
@@ -676,7 +690,7 @@
  '(org-startup-truncated nil)
  '(package-selected-packages
    (quote
-    (all-the-icons doom-themes ns-auto-titlebar ns-aut-titlebar sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
+    ( helm-descbinds all-the-icons doom-themes ns-auto-titlebar ns-aut-titlebar sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)

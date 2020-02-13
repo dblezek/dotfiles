@@ -255,13 +255,13 @@ Paste Special.Paste Slowly</string>
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>650 588 620 392 0 0 1920 1177 </string>
+	<string>1370 1106 620 392 0 0 3360 1867 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>551 691 796 486 0 0 1920 1177 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>323 1283 592 584 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>258 149 1580 1028 0 0 1920 1177 </string>
+	<string>507 584 1130 728 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>131 538 570 452 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2463,12 +2463,13 @@ Paste Special.Paste Slowly</string>
 	</array>
 	<key>NoSyncAllAppVersions</key>
 	<array>
-		<string>3.2.9</string>
-		<string>3.3.1</string>
-		<string>3.3.4</string>
-		<string>3.3.0</string>
-		<string>3.3.3</string>
 		<string>3.3.6</string>
+		<string>3.3.1</string>
+		<string>3.3.3</string>
+		<string>3.3.7</string>
+		<string>3.2.9</string>
+		<string>3.3.0</string>
+		<string>3.3.4</string>
 	</array>
 	<key>NoSyncAutoBurialReveal</key>
 	<true/>
@@ -2496,7 +2497,7 @@ Paste Special.Paste Slowly</string>
 	<key>NoSyncInstallationId</key>
 	<string>E6416149-9FDE-4F69-9B84-23E67B998E22</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>15</integer>
+	<integer>24</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3365,9 +3366,9 @@ Paste Special.Paste Slowly</string>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/mra9161/.dotfiles/iterm2</string>
 	<key>QuickPasteBytesPerCall</key>
-	<integer>445</integer>
+	<integer>293</integer>
 	<key>QuickPasteDelayBetweenCalls</key>
-	<real>0.022956840693950653</real>
+	<real>0.034783091396093369</real>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -3377,7 +3378,7 @@ Paste Special.Paste Slowly</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-11-06T21:38:06Z</date>
+	<date>2020-01-29T12:29:25Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -3425,7 +3426,7 @@ Paste Special.Paste Slowly</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.6</string>
+	<string>3.3.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
