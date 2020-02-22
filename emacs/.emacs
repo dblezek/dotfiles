@@ -124,6 +124,7 @@
 
 (use-package magit
   :ensure t
+  :disabled
   :config
   (setq vc-handled-backends nil)
 )

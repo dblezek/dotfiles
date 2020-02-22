@@ -84,7 +84,7 @@ function hosts {
 }
 
 function dl () {
-  scp $* R5174775:./Downloads/
+  scp -r $* R5174775:./Downloads/
 }
 
 export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p %R"
