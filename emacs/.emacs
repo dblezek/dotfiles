@@ -1,5 +1,14 @@
 ;; -*-no-byte-compile: t; -*-
 
+;; To recompile all the packages...
+;; see: https://stackoverflow.com/a/24735377
+;; M-: (byte-recompile-directory package-user-dir nil 'force)
+
+;; To update all packages
+;; M-x package-list-packages
+;; Ux
+
+
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
@@ -16,20 +25,10 @@
     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
 
-(defun package-reinstall-activated ()
-  "Reinstall all activated packages."
-  (interactive)
-  (dolist (package-name package-activated-list)
-    (when (package-installed-p package-name)
-      (unless (ignore-errors                   ;some packages may fail to install
-                (package-reinstall package-name )
-                (warn "Package %s failed to reinstall" package-name))))))
-
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
-
 
 ;; Tree view of projects on F8
 (use-package treemacs
@@ -45,79 +44,6 @@
   :init
   (bind-key '[(f8)] 'treemacs)
   )
-
-
-;; (use-package all-the-icons
-;;   :ensure t)
-
-;; (use-package treemacs
-;;   :ensure t
-;;   :init
-;;   (with-eval-after-load 'winum
-;;     (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)
-;;     )
-;;   :config
-;;   (treemacs-follow-mode t)
-;;   (treemacs-filewatch-mode t)
-;;   (global-set-key [f8] 'treemacs)
-;;   (progn
-;;     (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-;;           treemacs-deferred-git-apply-delay      0.5
-;;           treemacs-display-in-side-window        t
-;;           treemacs-eldoc-display                 t
-;;           treemacs-file-event-delay              5000
-;;           treemacs-file-follow-delay             0.2
-;;           treemacs-follow-after-init             t
-;;           treemacs-git-command-pipe              ""
-;;           treemacs-goto-tag-strategy             'refetch-index
-;;           treemacs-indentation                   2
-;;           treemacs-indentation-string            " "
-;;           treemacs-is-never-other-window         t
-;;           treemacs-max-git-entries               5000
-;;           treemacs-missing-project-action        'ask
-;;           treemacs-no-png-images                 nil
-;;           treemacs-no-delete-other-windows       t
-;;           treemacs-project-follow-cleanup        nil
-;;           treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-;;           treemacs-position                      'left
-;;           treemacs-recenter-distance             0.1
-;;           treemacs-recenter-after-file-follow    nil
-;;           treemacs-recenter-after-tag-follow     nil
-;;           treemacs-recenter-after-project-jump   'always
-;;           treemacs-recenter-after-project-expand 'on-distance
-;;           treemacs-show-cursor                   nil
-;;           treemacs-show-hidden-files             t
-;;           treemacs-silent-filewatch              nil
-;;           treemacs-silent-refresh                nil
-;;           treemacs-sorting                       'alphabetic-desc
-;;           treemacs-space-between-root-nodes      t
-;;           treemacs-tag-follow-cleanup            t
-;;           treemacs-tag-follow-delay              1.5
-;;           treemacs-width                         35)
-
-;;     ;; The default width and height of the icons is 22 pixels. If you are
-;;     ;; using a Hi-DPI display, uncomment this to double the icon size.
-;;     ;;(treemacs-resize-icons 44)
-
-;;     (treemacs-follow-mode t)
-;;     (treemacs-filewatch-mode t)
-;;     (treemacs-fringe-indicator-mode t)
-;;     (pcase (cons (not (null (executable-find "git")))
-;;                  (not (null treemacs-python-executable)))
-;;       (`(t . t)
-;;        (treemacs-git-mode 'deferred))
-;;       (`(t . _)
-;;        (treemacs-git-mode 'simple))))
-;;   :bind
-;;   (:map global-map
-;;         ("M-0"       . treemacs-select-window)
-;;         ("C-x t 1"   . treemacs-delete-other-windows)
-;;         ("C-x t t"   . treemacs)
-;;         ("C-x t B"   . treemacs-bookmark)
-;;         ("C-x t C-t" . treemacs-find-file)
-;;         ("C-x t M-t" . treemacs-find-tag)))
-
-
 
 (use-package try
   :ensure t)
@@ -140,7 +66,6 @@
   :config
   (global-set-key (kbd "C-@") 'er/expand-region))
 
-
 ;; try neo tree
 (use-package neotree
   :ensure t
@@ -149,24 +74,8 @@
   (global-set-key [f8] 'neotree-toggle)
   )
 
-
 ;; different theme
 (use-package zenburn-theme
-  :ensure t
-  ;; :disabled
-  )
-
-;; (use-package doom-themes
-;;   :ensure t
-;;   :after (treemacs)
-;;   :config
-;;   ;; (load-theme 'doom-one)
-;;   (load-theme 'doom-spacegrey)
-;;   (doom-themes-treemacs-config)
-;;   )
-
-;; fix broken titlebar brightess
-(use-package ns-auto-titlebar
   :ensure t
   )
 
@@ -179,7 +88,10 @@
   :disabled
   )
 
-
+;; fix broken titlebar brightess
+(use-package ns-auto-titlebar
+  :ensure t
+  )
 
 ;; try helm http://tuhdo.github.io/helm-intro.html
 (use-package helm
@@ -213,40 +125,41 @@
   )
 
 ;; better helm search
+;; NB: this doesn't seem to work with treemacs!?!
 (use-package helm-swoop
   :ensure t
   :config
   
-  ;; this is perhaps the best search tool ever
-  ;; https://github.com/ShingoFukuyama/helm-swoop
-  (defun helm-swoop-multiline-4 ()
-    (interactive)
-    (helm-swoop :$query "" :$multiline 4))
+  ;; ;; this is perhaps the best search tool ever
+  ;; ;; https://github.com/ShingoFukuyama/helm-swoop
+  ;; (defun helm-swoop-multiline-4 ()
+  ;;   (interactive)
+  ;;   (helm-swoop :$query "" :$multiline 4))
 
-  ;; search across buffers
-  (global-set-key [(meta @)] 'helm-multi-swoop-all)
+  ;; ;; search across buffers
+  ;; (global-set-key [(meta @)] 'helm-multi-swoop-all)
   
-  ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
-  (setq helm-swoop-pre-input-function
-        (lambda () ""))
+  ;; ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
+  ;; (setq helm-swoop-pre-input-function
+  ;;       (lambda () ""))
   
-  (setq helm-swoop-split-direction 'split-window-vertically)
-  ;; (global-set-key (kbd "C-s") 'helm-swoop)
-  ;; keep regular search around
-  (global-set-key (kbd "C-c C-s") 'isearch-forward)
-  (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
-  (global-set-key (kbd "M-i") 'helm-swoop)
-  (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
-  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
-  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+  ;; (setq helm-swoop-split-direction 'split-window-vertically)
+  ;; ;; (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; ;; keep regular search around
+  ;; (global-set-key (kbd "C-c C-s") 'isearch-forward)
+  ;; (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
+  ;; (global-set-key (kbd "M-i") 'helm-swoop)
+  ;; (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
+  ;; (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+  ;; (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+  ;; ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+  ;; (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
 
-  ;; Move up and down like isearch
-  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+  ;; ;; Move up and down like isearch
+  ;; (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+  ;; (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+  ;; (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+  ;; (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
   )
 
 (use-package helm-descbinds :ensure t :config ( helm-descbinds-mode ) )
@@ -269,6 +182,7 @@
   (setq uniquify-buffer-name-style 'post-forward uniquify-separator ":")
   )
 
+;; Save buffers and reload at startup
 (use-package desktop
   :config
   ;; see https://stackoverflow.com/questions/4053708/emacs-desktop-doesnt-remember-tramp-connections?rq=1
@@ -290,8 +204,14 @@
   :ensure t
   :bind ("<f5>" . tramp-cleanup-all-connections)
   :config
-  ;; (setq tramp-default-method "ssh")
   (tramp-change-syntax 'simplified)
+  ;; Keep Tramp happy...
+  (setq tramp-bkup-backup-directory-info nil)
+  (setq delete-old-versions t
+        kept-old-versions 1
+        kept-new-versions 3
+        version-control t)
+  (setq tramp-verbose 5)
   )
 
 (use-package projectile
@@ -308,7 +228,6 @@
 (use-package edit-indirect :ensure t)
 (use-package smart-mode-line :ensure t)
 (use-package json-mode :ensure t)
-(use-package which-key :ensure t)
 (use-package rib-mode :ensure t)
 (use-package go-mode :ensure t)
 (use-package web-mode :ensure t)
@@ -328,6 +247,7 @@
 (use-package cmake-mode :ensure t)
 (use-package autopair :ensure t)
 
+;; nicer status bar
 (use-package powerline
   :ensure t
   :disabled t
@@ -340,14 +260,9 @@
 ;; pending delete mode...
 (pending-delete-mode t)
 
-
 ;; Set path
 ;; add /usr/local/bin
 (setq exec-path (append exec-path '("/usr/local/bin/")))
-;; Get our path from the shell
-;; (when (memq window-system '(mac ns))
-;;   (exec-path-from-shell-initialize))
-;; (setenv "GOPATH" (shell-command-to-string ". ~/.bashrc; echo $GOPATH"))
 
 ;; keep old clipboard contents
 (setq save-interprogram-paste-before-kill 't)
@@ -359,10 +274,6 @@
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-
-;; Go Configuration
-(use-package go-mode
-  :ensure t)
 
 ;; convert a buffer to unix from DOS
 (defun dos2unix ()
@@ -395,9 +306,6 @@
   (setq company-dabbrev-downcase nil)
   )
 
-;; tern, very handy for Javascript.  Be sure to install in ~/.macosx or the like
-;; (add-hook 'js-mode-hook (lambda() (tern-mode t)))
-
 ;; NB: these two go together, let option be the "super" key (not sure how this will work for CLI)
 ;; (setq mac-option-modifier 'meta)
 ;; (global-set-key (kbd "s-/") 'auto-complete)
@@ -406,14 +314,12 @@
 
 
 ;; Insert the current date
-;; (defun insert-current-date () (interactive)
-;;        (insert (shell-command-to-string "echo -n $(date +%F)")))
  (defun insert-current-date () (interactive) (insert (format-time-string "%Y-%m-%d")))
 (global-set-key (kbd "C-S-d") 'insert-current-date)
 (defun insert-current-timestamp () (interactive) (insert (format-time-string "%Y-%m-%d %H:%M:%S")))
 (global-set-key (kbd "C-S-t") 'insert-current-timestamp)
 
-;; since we like the screenshot tool in macOS, replace becomes
+;; since we like the screenshot tool in macOS, replace becomes (Meta-shift-7)
 (global-set-key (kbd "M-&") 'query-replace-regexp)
 
 (global-set-key [C-tab] 'other-window)
@@ -425,18 +331,21 @@
 
 (setq kill-whole-line t)       ;;; Killing line also deletes \n
 
+;; collapse all spaces between words
 (global-set-key (kbd "M-?") 'just-one-space)
+(global-set-key (kbd "S-SPC") 'just-one-space)
+
 
 ;; Set the frame title
 (setq-default frame-title-format "%b (%f)")
 
 ;; always indent on return
-;; (define-key global-map (kbd "RET") 'newline-and-indent)
 (defun indent-buffer ()
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 (global-set-key "\M-i" 'indent-buffer)
+
 ;; Don't indent, just insert a new line
 (global-set-key (kbd "C-<return>") (lambda () (interactive) (insert "\n")))
 
@@ -463,14 +372,6 @@
 ;; No more # files
 (setq auto-save-default nil)
 
-;; Keep Tramp happy...
-(setq tramp-bkup-backup-directory-info nil)
-(setq delete-old-versions t
-      kept-old-versions 1
-      kept-new-versions 3
-      version-control t)
-(setq tramp-verbose 5)
-
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
 
@@ -480,19 +381,7 @@
 
 ;; ;; Font
 ;; (set-face-attribute 'default nil :font "Source Code Pro-15")
-
-;; In Makefiles, set the tab-width to 8
-;; (add-hook 'makefile-mode-hook
-;;           (function
-;;            (lambda()
-;;              (setq tab-width 8))))
-
-;; In Python, set to 4 character tabs
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (setq indent-tabs-mode nil
-;;                   tab-width 2)))
-;; (add-hook 'python-mode-hook 'subword-mode)
+(set-face-attribute 'default nil :font "Input Mono-16")
 
 ;; GLSL mode
 (add-to-list 'auto-mode-alist '("\\.vs\\'" . glsl-mode))
@@ -514,12 +403,6 @@
 
 ;; Confirm quit
 (setq confirm-kill-emacs 'yes-or-no-p)          
-
-;; IDO, allows smart search
-;; (require 'ido)
-;; (setq ido-enable-flex-matching t)
-;; (setq ido-everywhere t)
-;; (ido-mode 1)
 
 ;; Auto pair parens!  cool
 (electric-pair-mode 1)
@@ -551,9 +434,6 @@
 (global-set-key (kbd "s-f") 'forward-word)
 (global-set-key (kbd "s-d") 'kill-word)
 (global-set-key (kbd "<s-backspace>") 'backward-kill-word)
-
-;; Remove multiple spaces
-(global-set-key (kbd "S-SPC") 'just-one-space)
 
 ;; Line numbers
 (global-linum-mode)
@@ -610,10 +490,6 @@
   (let ((indent-tabs-mode nil))
     ad-do-it))
 
-;; Insert the date
-(defun insert-date () (interactive)
-       (insert (shell-command-to-string "echo -n $(date +%F)")))
-
 ;; Fuzzy finder
 (use-package fiplr
   :ensure t
@@ -625,33 +501,13 @@
 
   )
 
-;; ;; Find tags without the prompt
-;; (defun find-tag-no-prompt ()
-;;   "Jump to the tag at point without prompting"
-;;   (interactive)
-;;   (xref-find-definitions (find-tag-default)))
-;; ;; don't prompt when finding a tag
-;; (global-set-key (kbd "M-.") 'find-tag-no-prompt)
-;; ;; (use-package etags-select
-;; ;;   :ensure t
-;; ;;   )
-;; ;; (require 'etags-table)
-;; ;; (setq etags-table-search-up-depth 10)
-;; ;; (global-set-key (kbd "M-.") 'etags-select-find-tag)
-;; (global-set-key (kbd "M-*") 'pop-tag-mark)
-;; ;; never add tags, keeps annoying waring away
-;; ;; https://emacs.stackexchange.com/questions/14802/never-keep-current-list-of-tags-tables-also
-;; (setq tags-add-tables nil)
-
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :height 150 :width normal :foundry "apple" :family "Hack"))))
- '(fixed-pitch ((t (:height 150 :family "Hack"))))
- '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9")))))
+ '(highlight-indent-guides-character-face ((t (:foreground "#a9a9a9"))))
+ '(markdown-code-face ((t nil))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -665,9 +521,10 @@
  '(c-basic-offset 2)
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-enabled-themes (quote (zenburn)))
  '(custom-safe-themes
    (quote
-    ("c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "428754d8f3ed6449c1078ed5b4335f4949dc2ad54ed9de43c56ea9b803375c23" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
+    ("cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "428754d8f3ed6449c1078ed5b4335f4949dc2ad54ed9de43c56ea9b803375c23" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(desktop-restore-eager 1)
  '(desktop-save-mode t)
  '(groovy-indent-offset 2)
@@ -705,6 +562,7 @@
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
  '(sh-basic-offset 2)
+ '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(tramp-syntax (quote simplified) nil (tramp))
  '(vc-follow-symlinks t)

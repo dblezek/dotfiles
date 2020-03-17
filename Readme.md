@@ -29,7 +29,10 @@ git clone git@github.com:blezek/dotfiles.git .dotfiles
 ## Fonts
 
 ```sh
+# Source Code Pro
 brew tap caskroom/fonts && brew cask install font-source-code-pro
+# Input font
+https://input.fontbureau.com/
 ```
 
 # Git configuration
