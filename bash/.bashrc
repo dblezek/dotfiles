@@ -85,6 +85,7 @@ function hosts {
 
 function dl () {
   scp -r $* R5174775:./Downloads/
+  # rsync --relative -r $* R5174775:./Downloads/
 }
 
 export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p %R"
