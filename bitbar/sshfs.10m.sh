@@ -12,6 +12,8 @@ if [[ -n "$1" ]]; then
   mkdir -p "$HOME/sshfs/$DIR"
   echo /usr/local/bin/sshfs -o volname=$DIR "raildev1.mayo.edu:$P" "$HOME/sshfs/$DIR"
   /usr/local/bin/sshfs -o volname=$DIR "raildev1.mayo.edu:$P" "$HOME/sshfs/$DIR"
+  sleep 1s
+  open "$HOME/sshfs/$DIR"
   exit
 fi
 
