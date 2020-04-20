@@ -93,7 +93,7 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
-export SQUEUE_FORMAT="%.10i %.4P %.18j %.8u %.12M  %.12p %R"
+export SQUEUE_FORMAT="%.17i %.4P %.18j %.8u %.12M  %R"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
 fi
@@ -239,9 +239,6 @@ export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # installed software
 
-# Editor
-export EDITOR=emacs
-
 # git completion commands
 source $HOME/.git-completion.bash
 alias gs='git status'
@@ -340,7 +337,7 @@ export FIGNORE=.DS_Store
 export PATH=./node_modules/.bin:$PATH
 
 # Editor for commit messages
-export EDITOR="emacs -nw"
+export EDITOR="emacs -nw -q"
 
 # Correcting directory names
 shopt -s cdspell
