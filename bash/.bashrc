@@ -29,7 +29,7 @@ export PATH=/usr/local/bin:$PATH
 # Specific for GNU Tar on Mac
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 
-alias CC="emacs -nw CMakeCache.txt"
+alias CC="emacs -q -nw CMakeCache.txt"
 # Copy last command into the clipboard (Mac) http://apple.stackexchange.com/questions/110343/copy-last-command-in-terminal
 alias cc="history 2 | head -1 | cut -d ' ' -f 4- | pbcopy"
 alias rm="rm -i"
@@ -58,6 +58,11 @@ alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
 alias httpd='python -m http.server'
 alias blue='blueutil -p 0; sleep 3s; blueutil -p 1'
+
+# some helpers
+alias e="emacs -q -nw"
+alias pc="pbcopy"
+alias pp="pbpaste"
 
 # Quick nav
 alias ..="cd .."
@@ -227,9 +232,9 @@ bind "set show-all-if-ambiguous on"
 bind "set visible-stats on"
 
 # LESS options
-export LESS="-XF --search-skip-screen --ignore-case --raw-control-chars"
+alias less="less -F --search-skip-screen --ignore-case "
 
-# make directories grey...
+# control less colors make directories grey...
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # installed software

@@ -284,6 +284,9 @@
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 
+;; collapse spaces
+(global-set-key (kbd "s-SPC") 'just-one-space)
+
 ;; convert a buffer to unix from DOS
 (defun dos2unix ()
   "Not exactly but it's easier to remember"
