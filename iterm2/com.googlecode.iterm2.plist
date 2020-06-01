@@ -202,7 +202,7 @@ Paste Special.Paste Slowly</string>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
-	<true/>
+	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>IRMemory</key>
@@ -263,7 +263,7 @@ Paste Special.Paste Slowly</string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>323 1283 592 584 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>762 151 810 527 0 0 3360 1867 </string>
+	<string>1497 612 1680 791 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>131 538 570 452 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2470,6 +2470,7 @@ Paste Special.Paste Slowly</string>
 		<string>3.3.1</string>
 		<string>3.3.3</string>
 		<string>3.3.7</string>
+		<string>3.3.9</string>
 		<string>3.2.9</string>
 		<string>3.3.0</string>
 		<string>3.3.4</string>
@@ -2488,19 +2489,26 @@ Paste Special.Paste Slowly</string>
 	<true/>
 	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
 	<integer>1</integer>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{0, 0}, {3360, 1890}}</string>
+		<key>topLeft</key>
+		<string>{1377, 1529}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {3360, 1890}}</string>
 		<key>topLeft</key>
-		<string>{213, 1436}</string>
+		<string>{593, 1524}</string>
 	</dict>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>E6416149-9FDE-4F69-9B84-23E67B998E22</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>31</integer>
+	<integer>46</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3375,13 +3383,13 @@ Paste Special.Paste Slowly</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-02-14T12:35:55Z</date>
+	<date>2020-05-07T11:30:35Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
 	<integer>1650303405</integer>
 	<key>SUUpdateRelaunchingMarker</key>
-	<true/>
+	<false/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>SeparateStatusBarsPerPane</key>
@@ -3396,6 +3404,8 @@ Paste Special.Paste Slowly</string>
 	<real>0.42485593971631208</real>
 	<key>StatusBarPosition</key>
 	<integer>1</integer>
+	<key>StretchTabsToFillBar</key>
+	<false/>
 	<key>TabStyle</key>
 	<integer>0</integer>
 	<key>TabStyleWithAutomaticOption</key>
@@ -3425,7 +3435,7 @@ Paste Special.Paste Slowly</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.3.8</string>
+	<string>3.3.9</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
