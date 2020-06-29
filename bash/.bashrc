@@ -93,12 +93,7 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
-function cf () {
-  realpath $* | pbcopy
-}
-
-
-export SQUEUE_FORMAT="%.17i %.4P %.18j %.8u %.12M  %R"
+export SQUEUE_FORMAT="%.22i %.4P %.18j %.8u %.12M  %R"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
 fi
@@ -109,7 +104,9 @@ if ! hash hstr 2>/dev/null; then
   alias pbcopy=$HOME/.dotfiles/bash/pbcopy
 fi
 
-
+function rp {
+  realpath "$@" | pbcopy
+}
 
 # Parallel
 alias parallel="$HOME/.dotfiles/bash/parallel"
@@ -397,7 +394,7 @@ if [ -f $HOME/.bash_mayobiotools ]; then
 fi
 
 # Look for Freesurfer
-for fsdir in "${HOME}/Applications/freesurfer" /Applications/freesurfer; do
+for fsdir in "${HOME}/Applications/freesurfer" /Applications/freesurfer /home/apps/freesurfer/latest/; do
   if [ -e "$fsdir" ]; then
     export FREESURFER_HOME="$fsdir"
     source "$FREESURFER_HOME/SetUpFreeSurfer.sh" > /dev/null 2>&1
@@ -471,7 +468,11 @@ add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
 # add_path /data5/radiology/bje01/shared/anaconda/bin
 
 add_path $HOME/Source/mrtrix3/bin
-add_path $HOME/Source/ntr.plugins/build/MI3CLib-build/bin
+add_path $HOME/Source/MI3CLib-build/bin
+
+# ~/Applications/bin
+add_path $HOME/Applications/bin
+
 
 # Remote tmux connection
 function rtmux {
