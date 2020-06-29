@@ -263,7 +263,7 @@ Paste Special.Paste Slowly</string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>323 1283 592 584 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1497 612 1680 791 0 0 3360 1867 </string>
+	<string>413 42 1390 1071 0 0 3360 1867 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>131 538 570 452 0 0 1680 1027 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -2508,7 +2508,7 @@ Paste Special.Paste Slowly</string>
 	<key>NoSyncInstallationId</key>
 	<string>E6416149-9FDE-4F69-9B84-23E67B998E22</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>46</integer>
+	<integer>57</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -3321,6 +3321,8 @@ Paste Special.Paste Slowly</string>
 	<real>577121114.70708501</real>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>1</integer>
+	<key>PMPrintingExpandedStateForPrint2</key>
+	<false/>
 	<key>PasteSpecialChunkDelay</key>
 	<real>0.01</real>
 	<key>PasteSpecialChunkSize</key>
@@ -3370,6 +3372,8 @@ Paste Special.Paste Slowly</string>
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/mra9161/.dotfiles/iterm2</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>QuickPasteBytesPerCall</key>
 	<integer>293</integer>
 	<key>QuickPasteDelayBetweenCalls</key>
@@ -3383,7 +3387,7 @@ Paste Special.Paste Slowly</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-05-07T11:30:35Z</date>
+	<date>2020-06-08T11:22:30Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>

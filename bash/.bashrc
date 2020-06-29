@@ -93,6 +93,11 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
+function cf () {
+  realpath $* | pbcopy
+}
+
+
 export SQUEUE_FORMAT="%.17i %.4P %.18j %.8u %.12M  %R"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
@@ -120,11 +125,18 @@ alias WGET="wget -mkEpnp"
 # Mac specific things
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
-  alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
+  # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
   # export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:/opt/X11/lib/flat_namespace:$DYLD_LIBRARY_PATH
   # export PATH=${HOME}/.macosx/bin:$PATH
   export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
   # export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
+
+  # Simple shell script for emacs
+  if [[ ! -e $HOME/Applications/bin/emacs ]]; then
+    mkdir -p $HOME/Applications/bin/
+    ln -sfn $HOME/.dotfiles/bash/emacs $HOME/Applications/bin/
+    chmod 755 $HOME/Applications/bin/emacs
+  fi  
 
   # Renderman
   export RMANTREE=/Applications/Pixar/RenderManProServer-22.6
@@ -232,7 +244,8 @@ bind "set show-all-if-ambiguous on"
 bind "set visible-stats on"
 
 # LESS options
-alias less="less --search-skip-screen --ignore-case "
+# alias less="less --search-skip-screen --ignore-case "
+export LESS="--search-skip-screen --ignore-case -R -X "
 
 # control less colors make directories grey...
 export LSCOLORS='gxfxcxdxbxegedabagacad'
@@ -241,12 +254,13 @@ export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # git completion commands
 source $HOME/.git-completion.bash
-alias gs='git status'
-alias gc='git commit -m' # requires you to type a commit message
-alias gp='git push'
-alias gl='git pull'
-alias gf='git fetch'
+# alias gs='git status'
+# alias gc='git commit -m' # requires you to type a commit message
+# alias gp='git push'
+# alias gl='git pull'
+# alias gf='git fetch'
 alias git-cleanup-branches='git branch --merged | egrep -v "(^\*|master|dev)" | xargs -n 1 git branch -d'
+alias git-tree='git log --oneline --graph --color --decorate --all'
 
 # Git branch on the prompt
 function parse_git_branch {
@@ -413,6 +427,7 @@ function add_path() {
 
 # add_path $HOME/anaconda/bin
 # add_path /research/projects/DJB/anaconda/bin
+add_path $HOME/Applications/bin
 add_path $HOME/Applications/MRIcron
 add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
