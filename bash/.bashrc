@@ -93,6 +93,17 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
+function dll () {
+  temp=$(mktemp)
+  printf "scp" > $temp
+  for f in $*; do
+    printf " $(hostname):$(realpath $f) " >> $temp
+  done
+  printf " .\n" >> $temp
+  cat $temp | pbcopy
+  rm -f $temp
+}
+
 export SQUEUE_FORMAT="%.22i %.4P %.18j %.8u %.12M  %R"
 if hash srun 2>/dev/null; then
   alias SRUN="srun --job-name=rcnn --dependency=singleton --partition=m32 --mem-per-cpu=10G --gres=gpu:1 "
