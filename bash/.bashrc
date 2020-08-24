@@ -154,10 +154,15 @@ fi
 
 if [[ "$ARCH" == "Linux" ]]; then
   export PATH=${HOME}/.software/bin:${PATH}
-  if [ -e /opt/pixar/RenderManProServer-21.4/ ]; then
-    # Renderman
-    export RMANTREE=/opt/pixar/RenderManProServer-21.4/
-    export PATH=${PATH}:${RMANTREE}/bin
+
+  if [[ -e "/opt/pixar" ]]; then
+    # Guess at Renderman version
+    r=$(find /opt/pixar/ -maxdepth 1 -type d -name 'RenderManProServer-*' | sort --reverse | head -n 1 )
+    if [ -e ${r} ]; then
+      # Renderman
+      export RMANTREE=$r
+      export PATH=${PATH}:${RMANTREE}/bin
+    fi
   fi
   # Use color in Linux
   alias ls="ls -Fh --color"
@@ -259,6 +264,11 @@ export LESS="--search-skip-screen --ignore-case -R -X "
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # installed software
+
+# cheat from https://github.com/cheat/cheat
+source $HOME/.dotfiles/cheat/.cheat-completion.bash
+export CHEAT_CONFIG_PATH="$HOME/.dotfiles/cheat/config.yml"
+
 
 # git completion commands
 source $HOME/.git-completion.bash
