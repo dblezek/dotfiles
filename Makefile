@@ -1,4 +1,4 @@
-install: brew
+install: brew cheat
 #	git pull
 	ln -sfn .dotfiles/emacs/.emacs ${HOME}
 	ln -sfn .dotfiles/bash/.bash_profile ${HOME}
@@ -29,4 +29,21 @@ ifdef BREW
 endif
 
 
-.PHONY: ssh pull install
+# install the cheat cli from https://github.com/cheat/cheat/ into $HOME/Applications/bin
+cheat: ${HOME}/Applications/bin/cheat ${HOME}/.dotfiles/cheat/config.yml
+
+${HOME}/Applications/bin/cheat:
+	mkdir -p ${HOME}/Applications/bin
+ifeq "$(shell uname)" "Linux"
+	${AT} curl --location https://github.com/cheat/cheat/releases/download/4.0.4/cheat-linux-amd64.gz | gunzip > $@
+else
+	${AT} curl --location https://github.com/cheat/cheat/releases/download/4.0.4/cheat-darwin-amd64.gz | gunzip > $@
+endif
+	chmod 755 $@
+
+${HOME}/.dotfiles/cheat/config.yml:
+	mkdir -p $(@D)
+	${HOME}/Applications/bin/cheat --init > $@
+
+.PHONY: ssh pull install brew cheat
+

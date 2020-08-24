@@ -1,0 +1,28 @@
+---
+syntax: bash
+tags: [ radiology ]
+---
+# Setup paths 
+MRGFUS_HOME=${HOME}/Source/ntr.plugins/build/Plugins/mrgfus
+export PATH=${PATH}:${MRGFUS_HOME}:${HOME}/Source/railfetch/src
+
+railfetch-sort /p1 /2
+mkdir -p input && railway $MRGFUS_HOME/dcmsort --filter ${MRGFUS_HOME}/filter_mrgfus ./MR* "input" 2>&1 /dev/null
+
+# Preprocess
+mrgfus --preprocess --label $(basename $(pwd)) input output
+
+# Check
+mrgfus --fast --check --unified --label $(basename $(pwd)) input output
+
+# If the algorithm struggles with connecting the sensory tracts, limit the number of seeds
+mrgfus --seeds 500000 --fast --check --unified --label $(basename $(pwd)) input output
+
+# Generate Streamlines and render to DICOM
+mrgfus --fast --render --unified input output
+
+# or fewer tracts
+mrgfus --seeds 500000 --fast --render --unified input output
+
+# clean
+mrgfus-cleanup .
