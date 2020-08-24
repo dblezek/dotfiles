@@ -1,0 +1,14 @@
+---
+language: bash
+tags: [ radiology, dicom, fast, slurm ]
+# -*- mode: sh -*-
+---
+# adjust number of array jobs
+scontrol update ArrayTaskThrottle=100 JobId=
+
+# watch the queue
+watch squeue
+
+# format squeue output
+export SQUEUE_FORMAT="%.22i %.4P %.18j %.8u %.12M  %R"
+

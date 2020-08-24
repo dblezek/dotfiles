@@ -1,0 +1,16 @@
+---
+language: bash
+tags: [ radiology, dicom, fast, terarecon ]
+# -*- mode: sh -*-
+---
+
+# Production servers
+# ROPTRE001A_AE@ROPTRE001A.mayo.edu:105
+# ROPTRE002A_AE@ROPTRE002A.mayo.edu:105
+# ROPTRE003A_AE@ROPTRE003A.mayo.edu:105
+dcmsend -v --call ROPTRE001A_AE ROPTRE001A.mayo.edu 105
+
+# Test server
+# ROETRE901A_AE@ROETRE901A.mayo.edu:105
+dcmsend -v --call ROETRE901A_AE ROETRE901A.mayo.edu 105
+

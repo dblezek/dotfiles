@@ -1,0 +1,18 @@
+---
+language: bash
+tags: [ radiology, dicom, fast, mrgfus ]
+# -*- mode: sh -*-
+---
+
+# Visage only
+# VISAGE_ONLY@lbc-mcr-core.mayo.edu:11112
+dcmsend -v --call VISAGE_ONLY lbc-mcr-core.mayo.edu 11112 *.dcm
+
+# To Visage, QREADS, MIDIA
+# LBC_COMPASS@lbc-mcr-core.mayo.edu:11112
+dcmsend -v --call LBC_COMPASS lbc-mcr-core.mayo.edu 11112 *.dcm
+
+# Visage Train
+# ROEVIS601A@roevis601a.mayo.edu:2010
+dcmsend --scan-directories --recurse --aetitle DEWEY-FOD1 --call ROEVIS601A roevis601a.mayo.edu 2010 .
+

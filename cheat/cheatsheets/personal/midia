@@ -1,0 +1,17 @@
+---
+language: bash
+tags: [ radiology, dicom, fast, midia ]
+# -*- mode: sh -*-
+---
+
+# MCR
+# PRIV_SCP@dicom1.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_SCP dicom1.mayo.edu 4000
+
+# MRA
+# PRIV_ARZ_SCP@mcamidprod.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_ARZ_SCP mcamidprod.mayo.edu 4000
+
+# MCF
+# PRIV_FLA_SCP@midmcfprod.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_FLA_SCP midmcfprod.mayo.edu 4000
