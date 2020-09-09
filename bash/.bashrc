@@ -93,6 +93,11 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
+function md () {
+  mkdir -p "$1"
+  cd "$1"
+}
+
 function dll () {
   temp=$(mktemp)
   printf "scp" > $temp
