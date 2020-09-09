@@ -84,13 +84,14 @@
   (which-key-setup-side-window-right-bottom))
 
 (use-package expand-region
-  :ensure t
+  :ensure f
+  :disabled
   :config
   (global-set-key (kbd "C-@") 'er/expand-region))
 
 ;; try neo tree
 (use-package neotree
-  :ensure t
+  :ensure f
   :disabled
   :config
   (global-set-key [f8] 'neotree-toggle)
@@ -115,6 +116,7 @@
 ;; fix broken titlebar brightess
 (use-package ns-auto-titlebar
   :ensure t
+  :disabled
   )
 
 ;; try helm http://tuhdo.github.io/helm-intro.html
@@ -122,6 +124,7 @@
   :ensure t
   :config
   (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "M-S") 'helm-multi-occur-from-isearch)
   ;; keep the old one around
   (global-set-key (kbd "C-x f") 'find-file)
   ;; (global-set-key (kbd "C-s") 'helm-occur)
