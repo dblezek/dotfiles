@@ -1,5 +1,5 @@
 ---
-language: bash
+syntax: bash
 tags: [ radiology, dicom, fast, terarecon ]
 # -*- mode: sh -*-
 ---

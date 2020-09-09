@@ -1,0 +1,8 @@
+---
+syntax: markdown
+tags: [ bash, dotfiles ]
+# -*- mode: sh -*-
+---
+
+Split Vertical         S-M-|
+Split Horizontal       S-M--  (M "minus")

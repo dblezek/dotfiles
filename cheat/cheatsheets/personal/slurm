@@ -1,5 +1,5 @@
 ---
-language: bash
+syntax: bash
 tags: [ radiology, dicom, fast, slurm ]
 # -*- mode: sh -*-
 ---
@@ -12,3 +12,5 @@ watch squeue
 # format squeue output
 export SQUEUE_FORMAT="%.22i %.4P %.18j %.8u %.12M  %R"
 
+# limit number of simultaneous jobs to 4
+--array=1-100%4

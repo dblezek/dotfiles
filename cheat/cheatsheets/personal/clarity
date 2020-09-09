@@ -1,0 +1,18 @@
+---
+syntax: markdown
+tags: [ sql, datagrip, clarity, epic ]
+# -*- mode: markdown -*-
+---
+# Configure DataGrip
+
+1. Create new datasource using the MS SQL Server driver
+2. Configure host, user and database, be sure port is 4901
+   - ROCCLA002QL001
+   - 4901
+   - CLARITY
+3. Add the following VM Options in the "Adavanced" tab
+   - `-Djavax.security.auth.useSubjectCredsOnly=false -Djava.security.krb5.realm=MFAD.MFROOT.ORG -Djava.security.krb5.kdc=mfadsamba1.mfad.mfroot.org -Dsun.security.krb5.debug=true4`
+4. Set the following connection options under “Advanced” tab
+   - `authenticationScheme: javaKerberos`
+   - `integratedSecurity: true`
+
