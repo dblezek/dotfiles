@@ -52,7 +52,11 @@ alias curl-trace='curl -w "@$HOME/.curl-format"'
 # always show everyone's jobs in the SGE
 alias qstat="qstat -u '*' -f"
 alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
-alias tfgpus="python3 -c 'import tensorflow as tf; tf.config.experimental.list_physical_devices("GPU")'"
+
+function tfgpus {
+# alias tfgpus="python3 -c 'import tensorflow as tf; tf.config.experimental.list_physical_devices(""GPU")'"
+  python3 -c 'import tensorflow as tf; print(tf.config.experimental.list_physical_devices("GPU"))'
+}
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
@@ -222,7 +226,7 @@ HISTCONTROL="erasedups:ignoreboth"
 
 # Don't record some commands
 # Specifically, ignore any command that has a leading space using the ' *' pattern
-export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:history:clear: *"
+export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:rm:history:clear: *"
 
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
@@ -357,10 +361,6 @@ function tname() {
    tmux rename-window "$@"
   fi
 }
-
-# Clean up history by ignoring certain items
-export HISTIGNORE="&:ls"
-export HISTCONTROL=erasedups
 
 # bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
