@@ -617,8 +617,43 @@ if type brew &>/dev/null; then
   fi
 fi
 
+# mirror up to a remote server
+function mirror {
+  uname=$(uname)
+  tmp=$(mktemp)
+  for f in "$@"; do
+    p=$(realpath $f)
+    p=${p/Users/home}
+
+    
+    if [[ $uname == "Linux" ]]; then
+      printf 'rsync -arv "raildev1:%s" "%s"\n' "$(realpath $f)" "$p" >> $tmp
+    else
+      # printf 'rsync -arv "%s" "%s"\n' "$(realpath $f)" "$p"
+      rsync -arv "$(realpath $f)" "raildev1:$p"
+    fi
+  done
+  if [[ $uname == "Linux" ]]; then
+    cat "$tmp"
+    rm -f "$tmp"
+  fi
+}
+
+function dl {
+  tmp=$(mktemp)
+  for f in "$@"; do
+    p=$(realpath $f)
+    p=${p/Users/home}
+    printf 'rsync -arv "raildev1:%s" "%s"\n' "$(realpath $f)" "." >> $tmp
+  done
+    cat "$tmp"
+    rm -f "$tmp"
+}
 
 # Any local customization?
 if [ -f $HOME/.bashrc_local ]; then
     . $HOME/.bashrc_local
 fi
+
+
+
