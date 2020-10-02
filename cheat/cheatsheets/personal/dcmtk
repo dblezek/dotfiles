@@ -1,0 +1,2 @@
+# dump a particular tag with filename
+dcmdump --scan-directories --scan-pattern '*.dcm' --print-filename --search Manufacturer */input/DTI | grep -i --before-context 1 GE
