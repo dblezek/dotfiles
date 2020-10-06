@@ -109,7 +109,7 @@ function dll () {
     printf " $(hostname):$(realpath $f) " >> $temp
   done
   printf " .\n" >> $temp
-  cat $temp | pbcopy
+  cat $temp
   rm -f $temp
 }
 
@@ -630,7 +630,8 @@ function mirror {
       printf 'rsync -arv "raildev1:%s" "%s"\n' "$(realpath $f)" "$p" >> $tmp
     else
       # printf 'rsync -arv "%s" "%s"\n' "$(realpath $f)" "$p"
-      rsync -arv "$(realpath $f)" "raildev1:$p"
+      printf "upload %s to %s\n" "$f" "raildev1:$p"
+      rsync -ar "$(realpath $f)" "raildev1:$p"
     fi
   done
   if [[ $uname == "Linux" ]]; then
