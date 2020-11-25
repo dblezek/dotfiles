@@ -104,12 +104,11 @@ function md () {
 
 function dll () {
   temp=$(mktemp)
-  printf "scp" > $temp
   for f in $*; do
-    printf " $(hostname):$(realpath $f) " >> $temp
+    printf "rsync -r --info=progress2" >> $temp
+    printf " $(hostname):$(realpath $f) .\n" >> $temp
   done
-  printf " .\n" >> $temp
-  cat $temp
+  cat $temp | $HOME/.dotfiles/bash/pbcopy
   rm -f $temp
 }
 
@@ -224,6 +223,9 @@ export HISTFILESIZE=100000
 # Avoid duplicate entries
 # export HISTCONTROL="ignoreboth"
 
+# show date and time in history
+HISTTIMEFORMAT="%D %r "
+
 # Don't record some commands
 # Specifically, ignore any command that has a leading space using the ' *' pattern
 # taking out the space because cut/paste from emacs gets broken...
@@ -314,6 +316,7 @@ else
   # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
   # if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
   [[ $(uname) == "Darwin" ]] && source $HOME/.iterm2_shell_integration.bash
+
   # Color the GIT branch
   # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
@@ -593,6 +596,7 @@ complete -F _ssh rtmux
 # Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
 # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
 # if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
+export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=yes
 source $HOME/.iterm2_shell_integration.bash
 # Color the GIT branch
 # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
