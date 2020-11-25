@@ -1,0 +1,2 @@
+# replace literal '\n' with newlines
+pbpaste | sed 's/\\n/\'$'\n''/g' | pbcopy

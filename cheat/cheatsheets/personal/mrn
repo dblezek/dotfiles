@@ -1,0 +1,6 @@
+# Convert a Cycare number to a normalized mrn
+#                   remove -#       leading 0      remove '-'  
+echo 07-555-228-1 | sed 's/-.$//' | sed 's/^0//' | sed 's/-//g'
+
+# from pasteboard
+pbpaste | sed 's/-.$//' | sed 's/^0//' | sed 's/-//g' | pbcopy
