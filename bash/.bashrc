@@ -194,7 +194,7 @@ shopt -s checkwinsize
 shopt -s histappend
 
 # Save multi-line commands as one command
-shopt -s cmdhist
+# shopt -s cmdhist
 
 # Use the physical directory structure instead of symbolic links
 # http://stackoverflow.com/questions/10456784/behavior-of-cd-bash-on-symbolic-links
@@ -218,15 +218,17 @@ fi
 shopt -s cdable_vars
 
 # Huge history. Doesn't appear to slow things down, so why not?
-HISTSIZE=500000
-HISTFILESIZE=100000
+export HISTSIZE=500000
+export HISTFILESIZE=100000
 
 # Avoid duplicate entries
-HISTCONTROL="erasedups:ignoreboth"
+# export HISTCONTROL="ignoreboth"
 
 # Don't record some commands
 # Specifically, ignore any command that has a leading space using the ' *' pattern
-export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:rm:history:clear: *"
+# taking out the space because cut/paste from emacs gets broken...
+# export HISTIGNORE="&:[ ]*:cd:exit:ls:bg:fg:rm:history:clear"
+export HISTIGNORE="cd:exit:ls:bg:fg:rm:history:clear"
 
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/

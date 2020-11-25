@@ -8,22 +8,35 @@
 ;; M-x package-list-packages
 ;; Ux
 
+;; NB: See https://apple.stackexchange.com/questions/371888/restore-access-to-file-system-for-emacs-on-macos-catalina
+;; if Emacs doesn't have full access to the disk.
+
 
 ;; Autofill for GIT COMMIT Messages
 (setq auto-mode-alist (cons '("COMMIT_EDITMSG$" . auto-fill-mode) auto-mode-alist))
 
 ;; Package manager
 (require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
+
+;; (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+;;                     (not (gnutls-available-p))))
+;;        (proto (if no-ssl "http" "https")))
+;;   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+;;   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+;;   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+;;   (when (< emacs-major-version 24)
+;;     ;; For important compatibility libraries like cl-lib
+;;     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
+
 (package-initialize)
+
+;; (add-to-list 'package-archives
+;;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+
 
 
 ;; I want an easy command for opening new shells:
@@ -38,6 +51,30 @@
     (comint-simple-send (get-buffer-process (current-buffer)) 
                         (concat "export PS1=\"\033[33m" name "\033[0m:\033[35m\\W\033[0m>\""))))
 (global-set-key (kbd "C-c s") 'new-shell)
+
+
+
+(defun load-history-filename-element (file-regexp)
+  "Get the first elt of `load-history' whose car matches FILE-REGEXP.
+Return nil if there isn't one."
+  (let* ((loads load-history)
+   (load-elt (and loads (car loads))))
+    (save-match-data
+      (while (and loads
+      (or (null (car load-elt))
+          (not (stringp (car load-elt)))
+          (not (string-match file-regexp (car load-elt)))))
+  (setq loads (cdr loads)
+        load-elt (and loads (car loads)))))
+    load-elt))
+
+(defun shell-command-on-buffer ()
+  "Prompt for a shell command to run on the buffer, replacing the entire text
+"
+  (interactive)
+  (shell-command-on-region (point-min) (point-max) (read-shell-command "Shell command on buffer: ") (current-buffer) t))
+(global-set-key (kbd "C-|" ) 'shell-command-on-buffer)
+
 
 ;; Bootstrap `use-package'
 (unless (package-installed-p 'use-package)
@@ -70,37 +107,15 @@
 (use-package try
   :ensure t)
 
-(use-package magit
-  :ensure t
-  :disabled
-  :config
-  (setq vc-handled-backends nil)
-)
-
 (use-package which-key
   :ensure t 
   :config
   (which-key-mode)
   (which-key-setup-side-window-right-bottom))
 
-(use-package expand-region
-  :ensure f
-  :disabled
-  :config
-  (global-set-key (kbd "C-@") 'er/expand-region))
-
-;; try neo tree
-(use-package neotree
-  :ensure f
-  :disabled
-  :config
-  (global-set-key [f8] 'neotree-toggle)
-  )
-
 ;; different theme
 (use-package zenburn-theme
   :ensure t
-  :disabled
   )
 
 (use-package nimbus-theme
@@ -113,10 +128,15 @@
   :disabled
   )
 
+(use-package solarized-theme
+  :ensure t
+  )
+
 ;; fix broken titlebar brightess
 (use-package ns-auto-titlebar
   :ensure t
-  :disabled
+  :config
+  (ns-auto-titlebar-mode)
   )
 
 ;; try helm http://tuhdo.github.io/helm-intro.html
@@ -248,7 +268,6 @@
   (global-set-key (kbd "M-p") 'projectile-command-map)
   )
   
-  
 
 ;; languages
 ;; (use-package matlab-mode :ensure t)
@@ -277,7 +296,7 @@
 ;; nicer status bar
 (use-package powerline
   :ensure t
-  :disabled t
+  :disabled
   :config
   (powerline-center-theme)
   )
@@ -304,6 +323,10 @@
 
 ;; collapse spaces
 (global-set-key (kbd "s-SPC") 'just-one-space)
+
+;; split windows like iTerm
+(global-set-key (kbd "M-|") 'split-window-right)
+(global-set-key (kbd "M-_") 'split-window-below)
 
 ;; convert a buffer to unix from DOS
 (defun dos2unix ()
@@ -401,6 +424,16 @@
       version-control t)
 ;; No more # files
 (setq auto-save-default nil)
+
+;; Emacs will save all buffers after 300 seconds
+;; (auto-save-visited-mode 1)
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t)
+)
+
 
 ;; localize it for safety.
 (make-variable-buffer-local 'backup-inhibited)
@@ -545,20 +578,29 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#657b83"])
  '(auto-compression-mode nil)
  '(c-basic-offset 2)
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(compilation-message-face 'default)
- '(custom-enabled-themes '(smart-mode-line-dark monokai))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
+ '(custom-enabled-themes '(solarized-zenburn))
  '(custom-safe-themes
-   '("8b58ef2d23b6d164988a607ee153fd2fa35ee33efc394281b1028c2797ddeebb" "f3ab34b145c3b2a0f3a570ddff8fabb92dafc7679ac19444c31058ac305275e1" "4b6deee4167dfdb24ead4b3f717fa4b8109dd1cf71cdc9b59e05cc0f6588ee33" "f56eb33cd9f1e49c5df0080a3e8a292e83890a61a89bceeaa481a5f183e8e3ef" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "fe39cdf19d576f14f8a0abd8bcad9eb7aa07599d81e0be8dba99248802c6dc4d" "f9aede508e587fe21bcfc0a85e1ec7d27312d9587e686a6f5afdbb0d220eab50" "83ae405e25a0a81f2840bfe5daf481f74df0ddb687f317b5e005aa61261126e9" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "428754d8f3ed6449c1078ed5b4335f4949dc2ad54ed9de43c56ea9b803375c23" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "711efe8b1233f2cf52f338fd7f15ce11c836d0b6240a18fffffc2cbd5bfe61b0" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "f2927d7d87e8207fa9a0a003c0f222d45c948845de162c885bf6ad2a255babfd" "8b58ef2d23b6d164988a607ee153fd2fa35ee33efc394281b1028c2797ddeebb" "f3ab34b145c3b2a0f3a570ddff8fabb92dafc7679ac19444c31058ac305275e1" "4b6deee4167dfdb24ead4b3f717fa4b8109dd1cf71cdc9b59e05cc0f6588ee33" "f56eb33cd9f1e49c5df0080a3e8a292e83890a61a89bceeaa481a5f183e8e3ef" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "fe39cdf19d576f14f8a0abd8bcad9eb7aa07599d81e0be8dba99248802c6dc4d" "f9aede508e587fe21bcfc0a85e1ec7d27312d9587e686a6f5afdbb0d220eab50" "83ae405e25a0a81f2840bfe5daf481f74df0ddb687f317b5e005aa61261126e9" "cdb4ffdecc682978da78700a461cdc77456c3a6df1c1803ae2dd55c59fa703e3" "c8f959fb1ea32ddfc0f50db85fea2e7d86b72bb4d106803018be1c3566fd6c72" "d6f04b6c269500d8a38f3fabadc1caa3c8fdf46e7e63ee15605af75a09d5441e" "7d56fb712ad356e2dacb43af7ec255c761a590e1182fe0537e1ec824b7897357" "428754d8f3ed6449c1078ed5b4335f4949dc2ad54ed9de43c56ea9b803375c23" "2d1fe7c9007a5b76cea4395b0fc664d0c1cfd34bb4f1860300347cdad67fb2f9" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "190a9882bef28d7e944aa610aa68fe1ee34ecea6127239178c7ac848754992df" "c3d4af771cbe0501d5a865656802788a9a0ff9cf10a7df704ec8b8ef69017c68" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(desktop-restore-eager 1)
  '(desktop-save-mode t)
- '(fci-rule-color "#383838")
+ '(fci-rule-color "#073642")
  '(groovy-indent-offset 2)
  '(helm-mode t)
  '(highlight-changes-colors '("#FD5FF0" "#AE81FF"))
+ '(highlight-symbol-colors
+   '("#3b6b40f432d6" "#07b9463c4d36" "#47a3341e358a" "#1d873c3f56d5" "#2d86441c3361" "#43b7362d3199" "#061d417f59d7"))
+ '(highlight-symbol-foreground-color "#93a1a1")
  '(highlight-tail-colors
    '(("#3C3D37" . 0)
      ("#679A01" . 20)
@@ -568,17 +610,22 @@
      ("#A75B00" . 70)
      ("#F309DF" . 85)
      ("#3C3D37" . 100)))
+ '(hl-bg-colors
+   '("#866300" "#992700" "#a7020a" "#a00559" "#243e9b" "#0061a8" "#007d76" "#5b7300"))
+ '(hl-fg-colors
+   '("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36"))
+ '(hl-paren-colors '("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900"))
  '(ido-ignore-directories
    '("\\`CVS/" "\\`\\.\\./" "\\`\\./" ".git" "node_modules" "bower_components"))
  '(js-indent-level 2)
  '(latex-run-command "latex --synctex=1")
+ '(lsp-ui-doc-border "#93a1a1")
  '(lua-indent-level 2)
  '(lua-prefix-key "C-c")
  '(magit-diff-use-overlays nil)
  '(markdown-fontify-code-blocks-natively t)
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
- '(ns-auto-titlebar-mode t nil (ns-auto-titlebar))
  '(org-edit-src-content-indentation 0)
  '(org-emphasis-alist
    '(("*" bold)
@@ -593,52 +640,59 @@
  '(org-startup-folded nil)
  '(org-startup-truncated nil)
  '(package-selected-packages
-   '(auto-package-update centaur-tabs all-the-icons doom-themes ns-auto-titlebar ns-aut-titlebar sml-modeline matlab-mode sml spaceline telephone-line powerline minimap sublimity-map sublimity helm-swoop magit anaconda-mode elpy monokai-theme nimbus-theme treemacs highlight-indent-guides-mode helm zenburn-theme edit-indirect-region-latex expand-region elm-mode edit-indirect highlight-indent-guides smart-mode-line json-navigator json-mode org-bullets which-key try use-package rib-mode package-lint ## etags-select etags-table go-mode company-tern web-mode sqlite sql-indent company-shell company-ansible company-lua company-go company markdown-preview-mode cmake-font-lock yaml-mode toml-mode terraform-mode tabbar scss-mode scala-mode2 scala-mode popwin neotree markdown-mode lua-mode groovy-mode gradle-mode go-errcheck go-direx go-autocomplete glsl-mode ggtags fiplr exec-path-from-shell dockerfile-mode direx-grep cmake-mode autopair))
- '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
+   '(zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(python-indent-guess-indent-offset t)
  '(python-indent-offset 4)
  '(sh-basic-offset 2)
  '(show-paren-mode t)
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
  '(tool-bar-mode nil)
  '(tramp-syntax 'simplified nil (tramp))
- '(vc-annotate-background "#2B2B2B")
+ '(vc-annotate-background nil)
+ '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
-   '((20 . "#BC8383")
-     (40 . "#CC9393")
-     (60 . "#DFAF8F")
-     (80 . "#D0BF8F")
-     (100 . "#E0CF9F")
-     (120 . "#F0DFAF")
-     (140 . "#5F7F5F")
-     (160 . "#7F9F7F")
-     (180 . "#8FB28F")
-     (200 . "#9FC59F")
-     (220 . "#AFD8AF")
-     (240 . "#BFEBBF")
-     (260 . "#93E0E3")
-     (280 . "#6CA0A3")
-     (300 . "#7CB8BB")
-     (320 . "#8CD0D3")
-     (340 . "#94BFF3")
-     (360 . "#DC8CC3")))
- '(vc-annotate-very-old-color "#DC8CC3")
+   '((20 . "#dc322f")
+     (40 . "#cb4366eb20b4")
+     (60 . "#c1167942154f")
+     (80 . "#b58900")
+     (100 . "#a6ae8f7c0000")
+     (120 . "#9ed892380000")
+     (140 . "#96be94cf0000")
+     (160 . "#8e5397440000")
+     (180 . "#859900")
+     (200 . "#77679bfc4635")
+     (220 . "#6d449d465bfd")
+     (240 . "#5fc09ea47092")
+     (260 . "#4c68a01784aa")
+     (280 . "#2aa198")
+     (300 . "#303498e7affc")
+     (320 . "#2fa1947cbb9b")
+     (340 . "#2c879008c736")
+     (360 . "#268bd2")))
+ '(vc-annotate-very-old-color nil)
  '(vc-follow-symlinks t)
  '(web-mode-attr-indent-offset 2)
  '(web-mode-code-indent-offset 2)
  '(web-mode-markup-indent-offset 2)
  '(weechat-color-list
-   '(unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
+   '(unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0"))
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 
 ;; SML needs to be after custom-set-variables
 ;; https://github.com/Malabarba/smart-mode-line/issues/88
-(use-package sml-modeline
-  :ensure t
-  :config
-  (sml/setup)
-  (sml-modeline-mode t)
-  )
+;; (use-package sml-modeline
+;;   :ensure t
+;;   :config
+;;   (sml/setup)
+;;   (sml-modeline-mode t)
+;;   )
 
 ;; Kill the scratch buffer
 (when (get-buffer "*scratch*")

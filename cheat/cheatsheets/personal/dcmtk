@@ -1,2 +1,23 @@
 # dump a particular tag with filename
 dcmdump --scan-directories --scan-pattern '*.dcm' --print-filename --search Manufacturer */input/DTI | grep -i --before-context 1 GE
+
+# decompress Visage data
+find . -name '*.dcm' -type f -print0 | while read -d $'\0' f; do
+    dcmdjpeg "$f" "$f.uncompressed"
+    mv -f "$f.uncompressed" "$f"
+done
+
+# to PNG
+find . -name '*.dcm' -type f -print0 | while read -d $'\0' f; do
+     /usr/local/bin/dcm2pnm --write-png "$f" "${f/.dcm/.png}"
+done
+
+# change series description
+dcmodify --no-backup --modify "SeriesDescription=new series description" *.dcm
+
+find . -name '*.dcm' -type f -print0 | while read -d $'\0' f; do
+     sd=$(dcmdump --search SeriesDescription "$f" | sed -e 's/.*\[\(.*\)\].*/\1/')
+     sd=$(printf "%s%s" "$prefix" "$sd")
+     dcmodify --no-backup --modify "SeriesDescription=$sd" $f
+done
+     

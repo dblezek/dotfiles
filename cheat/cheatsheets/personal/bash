@@ -1,6 +1,8 @@
 # Is a variable set?  https://stackoverflow.com/a/17538964/334619
 [[ -v foo ]]; echo $?
 
+# Stderr into stdout
+command > file.log 2>&1
 
 # Safe mode
 #!/bin/bash
