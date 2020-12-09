@@ -53,6 +53,12 @@
 (global-set-key (kbd "C-c s") 'new-shell)
 
 
+(add-to-list 'load-path "~/.dotfiles/emacs/")
+(require 'markdown-dnd-images)
+(setq dnd-save-directory "images")
+(setq dnd-save-buffer-name nil)
+
+
 
 (defun load-history-filename-element (file-regexp)
   "Get the first elt of `load-history' whose car matches FILE-REGEXP.
@@ -137,6 +143,21 @@ Return nil if there isn't one."
   :ensure t
   :config
   (ns-auto-titlebar-mode)
+  )
+
+;; open with
+(use-package openwith
+  :ensure t
+  :config
+  (setq openwith-associations
+        (list
+         (list (openwith-make-extension-regexp
+                '("xbm" "pbm" "pgm" "ppm" "pnm"
+                  "png" "gif" "bmp" "tif" "jpeg" "jpg" "pdf"))
+               "open"
+               '(file))
+         ))
+  (openwith-mode t)
   )
 
 ;; try helm http://tuhdo.github.io/helm-intro.html
@@ -640,7 +661,7 @@ Return nil if there isn't one."
  '(org-startup-folded nil)
  '(org-startup-truncated nil)
  '(package-selected-packages
-   '(zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
+   '(openwith zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(python-indent-guess-indent-offset t)

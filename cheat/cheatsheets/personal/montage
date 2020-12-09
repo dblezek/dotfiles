@@ -1,0 +1,2 @@
+# no space, 2 wide
+montage -geometry +0+0 -tile 2x rocket-users.png rocket-accepted.png rocket-rejected.png rocket-ignored.png rocket-results.png

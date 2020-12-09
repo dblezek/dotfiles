@@ -216,6 +216,9 @@ fi
 # Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
 shopt -s cdable_vars
 
+# Don't be fancy expanding '$'
+shopt -u progcomp
+
 # Huge history. Doesn't appear to slow things down, so why not?
 export HISTSIZE=500000
 export HISTFILESIZE=100000
@@ -241,11 +244,9 @@ export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d-%H:
 if [[ -z ${JAVA_HOME+x} ]]; then
    if [[ -e /usr/libexec/java_home ]]; then
      export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
-   fi
-   if [[ -e /usr/java/latest ]]; then
+   elif [[ -e /usr/java/latest ]]; then
      export JAVA_HOME=/usr/java/latest/
-   fi
-   if [[ -e /usr/bin/java ]]; then
+   elif [[ -e /usr/bin/java ]]; then
      export JAVA_HOME=/usr/bin/
    fi
 fi

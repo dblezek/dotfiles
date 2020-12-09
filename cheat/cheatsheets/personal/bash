@@ -8,3 +8,50 @@ command > file.log 2>&1
 #!/bin/bash
 set -euo pipefail
 trap 's=$?; printf "$0: Error on line %s command was:\n %s\n" "$LINENO" "$BASH_COMMAND"; exit $s' ERR
+
+# directory of current script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# set defaults
+: ${AETITLE=PRIV_SCP}
+: ${HOST=dicom1.mayo.edu}
+: ${PORT=4000}
+: ${CALLING=raildev1}
+: ${MOVE=$CALLING}
+: ${LISTEN=11112}
+
+POSITIONAL=()
+while (( "$#" )); do
+  case "$1" in
+    --call|--aetitle)
+      AETITLE=$2
+      shift 2
+      ;;
+    --host)
+      HOST=$2
+      shift 2
+      ;;
+    --port)
+      PORT=$2
+      shift 2
+      ;;
+    --calling)
+      CALLING=$2
+      shift 2
+      ;;
+    --move)
+      MOVE=$2
+      shift 2
+      ;;
+    --listen)
+      LISTEN=$2
+      shift 2
+      ;;
+    *) # Capture positional args
+      POSITIONAL+=("$1")
+      shift
+      ;;
+  esac
+done
+# set positional arguments in their proper place
+set -- "${POSITIONAL[@]}"

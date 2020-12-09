@@ -4,7 +4,10 @@ tags: [ radiology, dicom, fast, slurm ]
 # -*- mode: sh -*-
 ---
 # adjust number of array jobs
-scontrol update ArrayTaskThrottle=100 JobId=
+scontrol update ArrayTaskThrottle=16 JobId=
+
+# renice a job
+scontrol update nice=100 JobId=
 
 # watch the queue
 watch squeue
