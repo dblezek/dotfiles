@@ -162,8 +162,8 @@ fi
 # Define a variable containing a path and you will be able to cd into it regardless of the directory you're in
 shopt -s cdable_vars
 
-# Don't be fancy expanding '$'
-shopt -u progcomp_alias
+# Don't be fancy expanding '$', just substitute them
+shopt -s direxpand
 
 # Huge history. Doesn't appear to slow things down, so why not?
 export HISTSIZE=500000
