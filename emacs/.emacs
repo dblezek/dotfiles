@@ -92,23 +92,8 @@ Return nil if there isn't one."
    :ensure t
    :config
    (setq auto-package-update-delete-old-versions t
-         auto-package-update-interval 4)
+         auto-package-update-interval 31)
    (auto-package-update-maybe))
-
-;; Tree view of projects on F8
-(use-package treemacs
-  :ensure t
-  :config
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-  (progn
-    (setq
-     treemacs-is-never-other-window         t
-     )
-    )
-  :init
-  (bind-key '[(f8)] 'treemacs)
-  )
 
 (use-package try
   :ensure t)
@@ -198,36 +183,36 @@ Return nil if there isn't one."
   :ensure t
   :config
   
-  ;; ;; this is perhaps the best search tool ever
-  ;; ;; https://github.com/ShingoFukuyama/helm-swoop
-  ;; (defun helm-swoop-multiline-4 ()
-  ;;   (interactive)
-  ;;   (helm-swoop :$query "" :$multiline 4))
+  ;; this is perhaps the best search tool ever
+  ;; https://github.com/ShingoFukuyama/helm-swoop
+  (defun helm-swoop-multiline-4 ()
+    (interactive)
+    (helm-swoop :$query "" :$multiline 4))
 
-  ;; ;; search across buffers
-  ;; (global-set-key [(meta @)] 'helm-multi-swoop-all)
+  ;; search across buffers
+  (global-set-key [(meta @)] 'helm-multi-swoop-all)
   
-  ;; ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
-  ;; (setq helm-swoop-pre-input-function
-  ;;       (lambda () ""))
+  ;; Always use the previous search for helm. Remember C-<backspace> will delete entire line
+  (setq helm-swoop-pre-input-function
+        (lambda () ""))
   
-  ;; (setq helm-swoop-split-direction 'split-window-vertically)
-  ;; ;; (global-set-key (kbd "C-s") 'helm-swoop)
-  ;; ;; keep regular search around
-  ;; (global-set-key (kbd "C-c C-s") 'isearch-forward)
-  ;; (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
-  ;; (global-set-key (kbd "M-i") 'helm-swoop)
-  ;; (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
-  ;; (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
-  ;; (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
-  ;; ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
-  ;; (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
+  (setq helm-swoop-split-direction 'split-window-vertically)
+  ;; (global-set-key (kbd "C-s") 'helm-swoop)
+  ;; keep regular search around
+  (global-set-key (kbd "C-c C-s") 'isearch-forward)
+  (global-set-key [(control shift s)] 'helm-swoop-multiline-4)
+  (global-set-key (kbd "M-i") 'helm-swoop)
+  (global-set-key [(meta shift i)] 'helm-swoop-multiline-4)
+  (global-set-key (kbd "C-c M-i") 'helm-multi-swoop)
+  (global-set-key (kbd "C-x M-i") 'helm-multi-swoop-all)
+  ;; Instead of helm-multi-swoop-all, you can also use helm-multi-swoop-current-mode
+  (define-key helm-swoop-map (kbd "M-m") 'helm-multi-swoop-current-mode-from-helm-swoop)
 
-  ;; ;; Move up and down like isearch
-  ;; (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
-  ;; (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-  ;; (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
-  ;; (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
+  ;; Move up and down like isearch
+  (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+  (define-key helm-multi-swoop-map (kbd "C-r") 'helm-previous-line)
+  (define-key helm-multi-swoop-map (kbd "C-s") 'helm-next-line)
   )
 
 (use-package helm-descbinds :ensure t :config ( helm-descbinds-mode ) )
@@ -242,6 +227,21 @@ Return nil if there isn't one."
   (setq highlight-indent-guides-auto-odd-face-perc 35)
   (setq highlight-indent-guides-auto-even-face-perc 35)
   (setq highlight-indent-guides-auto-character-face-perc 30)  
+  )
+
+;; Tree view of projects on F8
+(use-package treemacs
+  :ensure t
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-filewatch-mode t)
+  (progn
+    (setq
+     treemacs-is-never-other-window         t
+     )
+    )
+  :init
+  (bind-key '[(f8)] 'treemacs)
   )
 
 ;; Gives us unique buffer names
@@ -259,13 +259,13 @@ Return nil if there isn't one."
   (setq desktop-files-not-to-save "^$")
   )
 
-(use-package yasnippet
-  :disabled
-  :ensure t
-  :config
-  (setq yas-snippet-dirs '("~/.dotfiles/snippits"))
-  (yas-global-mode 1)
-  )
+;; (use-package yasnippet
+;;   :disabled
+;;   :ensure t
+;;   :config
+;;   (setq yas-snippet-dirs '("~/.dotfiles/snippits"))
+;;   (yas-global-mode 1)
+;;   )
 
 
 (use-package tramp
@@ -661,7 +661,7 @@ Return nil if there isn't one."
  '(org-startup-folded nil)
  '(org-startup-truncated nil)
  '(package-selected-packages
-   '(openwith zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
+   '(projectile exec-path-from-shell ag openwith zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(python-indent-guess-indent-offset t)

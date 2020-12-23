@@ -190,7 +190,7 @@ Paste Special.Paste Slowly</string>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
 	<key>HideScrollbar</key>
-	<true/>
+	<false/>
 	<key>HideTab</key>
 	<false/>
 	<key>HotkeyMigratedFromSingleToMulti</key>

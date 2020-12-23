@@ -4,7 +4,7 @@
 # Stderr into stdout
 command > file.log 2>&1
 
-# Safe mode
+# Safe mode, or see https://betterdev.blog/minimal-safe-bash-script-template/
 #!/bin/bash
 set -euo pipefail
 trap 's=$?; printf "$0: Error on line %s command was:\n %s\n" "$LINENO" "$BASH_COMMAND"; exit $s' ERR
