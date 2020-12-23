@@ -10,11 +10,6 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# /etc/profile.d sets some toxic variables...
-unset ITK_DIR
-unset VTK_DIR
-
-
 # Detect TRAMP from emacs and play dumb
 if [[ $TERM == "dumb" ]]; then
   PS1='> '
@@ -22,6 +17,7 @@ if [[ $TERM == "dumb" ]]; then
 fi
 
 # A fair number of settings were taken from https://github.com/mrzool/bash-sensible/blob/master/sensible.bash
+. $HOME/.dotfiles/bash/.bash_functions
 
 # Catch any locally installed files
 export PATH=/usr/local/bin:$PATH
@@ -40,23 +36,12 @@ alias lsl="ls -GF -lah"
 alias la="lsl"
 alias lr="ls -lhtr"
 alias lrs="ls -lhSr"
-alias dir=ls
-# alias top="top -u"
 alias g="./gradlew"
 alias l="less"
 alias tags="ctags -e -R"
-# Activate a Python virtulenv
-# alias activate="source */bin/activate"
 # curl-trace (https://github.com/wickett/curl-trace)
 alias curl-trace='curl -w "@$HOME/.curl-format"'
-# always show everyone's jobs in the SGE
-alias qstat="qstat -u '*' -f"
 alias tfversion="python3 -c 'import tensorflow as tf; print(tf.__version__)'"
-
-function tfgpus {
-# alias tfgpus="python3 -c 'import tensorflow as tf; tf.config.experimental.list_physical_devices(""GPU")'"
-  python3 -c 'import tensorflow as tf; print(tf.config.experimental.list_physical_devices("GPU"))'
-}
 
 alias ccat="ccat --color=always"
 alias cgrep="grep --color=always"
@@ -87,30 +72,6 @@ alias fv='freeview \
 # for how to use the a GUI as needed
 alias gpg-reset='export GPG_TTY=$(tty) ; gpgconf --kill gpg-agent'
 
-# List SSH hosts
-function hosts {
-  grep -v "#" ${HOME}/.ssh/config | grep "Host "  | awk '{$1=""; print $0}' 
-}
-
-function dl () {
-  scp -r $* R5174775:./Downloads/
-  # rsync --relative -r $* R5174775:./Downloads/
-}
-
-function md () {
-  mkdir -p "$1"
-  cd "$1"
-}
-
-function dll () {
-  temp=$(mktemp)
-  for f in $*; do
-    printf "rsync -r --info=progress2" >> $temp
-    printf " $(hostname):$(realpath $f) .\n" >> $temp
-  done
-  cat $temp | $HOME/.dotfiles/bash/pbcopy
-  rm -f $temp
-}
 
 export SQUEUE_FORMAT="%.22i %.4P %.18j %.8u %.12M  %R"
 if hash srun 2>/dev/null; then
@@ -123,16 +84,8 @@ if ! hash hstr 2>/dev/null; then
   alias pbcopy=$HOME/.dotfiles/bash/pbcopy
 fi
 
-function rp {
-  realpath "$@" | pbcopy
-}
-
 # Parallel
 alias parallel="$HOME/.dotfiles/bash/parallel"
-
-function ff() {
-  find . -iname "*${1}*"
-}
 
 # Get a website recursively
 # https://www.guyrutenberg.com/2014/05/02/make-offline-mirror-of-a-site-using-wget/
@@ -141,12 +94,6 @@ alias WGET="wget -mkEpnp"
 # Mac specific things
 ARCH=$(uname)
 if [[ "$ARCH" == "Darwin" ]]; then
-  # alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw --no-desktop"
-  # export DYLD_LIBRARY_PATH=${HOME}/.macosx/lib:/opt/X11/lib/flat_namespace:$DYLD_LIBRARY_PATH
-  # export PATH=${HOME}/.macosx/bin:$PATH
-  export PATH=${PATH}:/Applications/VMware\ OVF\ Tool/
-  # export PATH=${HOME}/.macosx/node_modules/.bin/:${PATH}
-
   # Simple shell script for emacs
   if [[ ! -e $HOME/Applications/bin/emacs ]]; then
     mkdir -p $HOME/Applications/bin/
@@ -175,7 +122,6 @@ if [[ "$ARCH" == "Linux" ]]; then
   # Use color in Linux
   alias ls="ls -Fh --color"
 fi
-
 
 # confirm history expansions
 if shopt | grep histverify > /dev/null; then
@@ -217,14 +163,11 @@ fi
 shopt -s cdable_vars
 
 # Don't be fancy expanding '$'
-shopt -u progcomp
+shopt -u progcomp_alias
 
 # Huge history. Doesn't appear to slow things down, so why not?
 export HISTSIZE=500000
 export HISTFILESIZE=100000
-
-# Avoid duplicate entries
-# export HISTCONTROL="ignoreboth"
 
 # show date and time in history
 HISTTIMEFORMAT="%D %r "
@@ -246,8 +189,6 @@ if [[ -z ${JAVA_HOME+x} ]]; then
      export JAVA_HOME=`/usr/libexec/java_home -v 1.8+`
    elif [[ -e /usr/java/latest ]]; then
      export JAVA_HOME=/usr/java/latest/
-   elif [[ -e /usr/bin/java ]]; then
-     export JAVA_HOME=/usr/bin/
    fi
 fi
 
@@ -258,6 +199,7 @@ set -o ignoreeof
 set -o emacs
 
 ## SMARTER TAB-COMPLETION (Readline bindings) ##
+
 
 # Perform file completion in a case insensitive fashion
 bind "set completion-ignore-case on"
@@ -271,7 +213,6 @@ bind "set show-all-if-ambiguous on"
 bind "set visible-stats on"
 
 # LESS options
-# alias less="less --search-skip-screen --ignore-case "
 export LESS="--search-skip-screen --ignore-case -R -X "
 
 # control less colors make directories grey...
@@ -286,87 +227,14 @@ export CHEAT_CONFIG_PATH="$HOME/.dotfiles/cheat/config.yml"
 
 # git completion commands
 source $HOME/.git-completion.bash
-# alias gs='git status'
-# alias gc='git commit -m' # requires you to type a commit message
-# alias gp='git push'
-# alias gl='git pull'
-# alias gf='git fetch'
 alias git-cleanup-branches='git branch --merged | egrep -v "(^\*|master|dev)" | xargs -n 1 git branch -d'
 alias git-tree='git log --oneline --graph --color --decorate --all'
-
-# Git branch on the prompt
-function parse_git_branch {
-  # This version has ()'s
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
-}
-function current_git_branch {
-  # no ()'s
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
-}
-
-# Alias to help when a branch has moved on
-alias gup='git fetch origin && git rebase -p origin/$(git_current_branch)'
-
-# Detect TRAMP from emacs and play dumb
-if [[ $TERM = dumb ]]; then
-  PS1='> '
-else
-  # iTerm2
-  # from https://gitlab.com/gnachman/iterm2/issues/4743
-  # Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
-  # source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
-  # if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
-  [[ $(uname) == "Darwin" ]] && source $HOME/.iterm2_shell_integration.bash
-
-  # Color the GIT branch
-  # PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
-
-  # No colors
-  PS1='\h:\W$(parse_git_branch) \u\$ '
-  
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
-  
-  PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
-  
-  if [[ `hostname -s` = myst ]]; then
-    PS1='\h:\W$(parse_git_branch) \u: '
-  fi
-fi
-
-export dotfiles="$HOME/.dotfiles"
-export Source="$HOME/Source"
-export dropbox="$HOME/Dropbox"
-
 
 # Setup a gradle properties file
 if [ ! -f $HOME/.gradle/gradle.properties ]; then
   mkdir -p $HOME/.gradle
   touch ~/.gradle/gradle.properties && echo "org.gradle.daemon=true" >> ~/.gradle/gradle.properties
 fi
-
-function cronenv () {
-  # Expand it here, then quote it on the next line
-  t=$@
-  env -i \
-      MAILTO=blezek.daniel@mayo.edu \
-      SHELL=/bin/sh \
-      USER=$USER \
-      PATH=/usr/bin:/bin \
-      PWD=$PWD \
-      SHLVL=1 \
-      LOGNAME=$LOGNAME \
-      _=/usr/bin/env \
-      HOME=$HOME /bin/sh --noprofile --norc -c "$t"
-}
-
-# Change iTerm tab name
-function tname() {
-  # do nothing if outside of TMUX
-  if [ ! -z $TMUX ] ; then
-   tmux rename-window "$@"
-  fi
-}
 
 # bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
@@ -376,40 +244,17 @@ fi
 # Ignore files in completion, dumb .DS_Store files!
 export FIGNORE=.DS_Store
 
-# Node modules
-export PATH=./node_modules/.bin:$PATH
-
 # Editor for commit messages
 export EDITOR="emacs -nw -q"
-
-# Correcting directory names
-shopt -s cdspell
-
-# Use logout to exit the shell
-set -o ignoreeof
-
-set show-all-if-ambiguous on
-set visible-stats on
-
-# NPM, see .npmrc for details
-# export PATH=${HOME}/.macosx/npm/bin:${PATH}
-# export PATH=${HOME}/.macosx/bin:${PATH}
 
 # Bump up open files
 ulimit -n 2048
 
-# Cross-compiling GO, and standard go-bin
-# export PATH=${HOME}/Source/go/bin:${HOME}/Source/go-bin/bin:/usr/local/go/bin:${PATH}
-export PATH=/usr/local/go/bin:${HOME}/Source/go/bin:${PATH}
-export GO15VENDOREXPERIMENT=1
-
 # GO
+# Cross-compiling GO, and standard go-bin
+export PATH=/usr/local/go/bin:${HOME}/Source/go/bin:${PATH}
 # "go get" by default installs in the first directory, make sure it's in our path.
 export GOPATH=${HOME}/Source/go
-
-function ec () {
-  osascript -e 'tell application "Emacs" to activate' && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient --no-wait "$@"
-}
 
 
 # Source RCF Cluster Definitions
@@ -445,23 +290,12 @@ for fsldir in "${HOME}/Applications/fsl" /usr/local/fsl; do
   fi
 done
 
-# Helper to manage all the paths
-function add_path() {
-  if [ -d "$1" ]; then
-    export PATH=${PATH}:"$1"
-    return 1
-  fi
-  return 0
-}
-
-# add_path $HOME/anaconda/bin
-# add_path /research/projects/DJB/anaconda/bin
 add_path $HOME/Applications/bin
-add_path $HOME/Applications/MRIcron
-add_path $HOME/Applications/node_modules/.bin
 add_path $HOME/Applications/mrtrix/bin
-add_path $HOME/Source/ntr.plugins/build/mrtrix3/bin
 add_path /home/apps/mrtrix3/bin
+add_path $HOME/Source/mrtrix3/bin
+add_path $HOME/Source/railway-build/bin
+
 # pip local executables
 add_path $HOME/.local/bin
 # catch itksnap
@@ -469,8 +303,6 @@ add_path $HOME/Applications
 # catch itksnap
 add_path /Applications/Convert3DGUI.app/Contents/bin
 
-# Matlab?
-add_path /Applications/MATLAB_R2016b.app/bin/
 # MacTex 2016 under El Capitan
 add_path /Library/TeX/texbin
 # AFNI
@@ -478,9 +310,6 @@ add_path $HOME/Applications/afni
 
 # FSLEyes
 add_path $HOME/Applications/FSLeyes.app/Contents/MacOS
-
-# Maven?
-# add_path $HOME/Source/maven/bin
 
 # brew
 add_path /usr/local/sbin
@@ -494,26 +323,10 @@ add_path $HOME/Applications/workbench/bin_macosx64
 # GCP SDK
 add_path $HOME/Applications/google-cloud-sdk/bin/
 
-# RCF tools
-add_path /data5/radiology/bje01/mra9161/mricron_lx
-add_path /data5/radiology/bje01/mra9161/mrtrix3/release/bin
-# add_path /data5/radiology/bje01/shared/anaconda/bin
-
-add_path $HOME/Source/mrtrix3/bin
-add_path $HOME/Source/MI3CLib-build/bin
-
 # ~/Applications/bin
 add_path $HOME/Applications/bin
 
 
-# Remote tmux connection
-function rtmux {
-  ssh -t $1 "tmux -u -CC attach || tmux -u -CC"
-}
-
-# Silently set the session name
-# Check if TMUX is set and tmux exists and then rename the session to the hostname, if it's not already set
-# [[ -z ${TMUX+x} ]] && [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1 && [[ $(tmux display-message -p '#S') == $(hostname) || $(tmux rename-session $(hostname)) ]]
 
 # See https://github.com/dvorka/hstr/blob/master/CONFIGURATION.md
 # to configure hstr
@@ -527,49 +340,12 @@ if hash hstr 2>/dev/null; then
     fi
 fi
 
-# Window resize
-# Iterm2 > Preferences > Profiles > Terminal uncheck "Disable session-initiated window resizing"
-# see https://stackoverflow.com/questions/47296382/iterm2-window-resizing-through-commands-not-working
-function resize {
-  w=${1:-80}
-  h=${2:-25}
-  # echo $w x $h
-  printf '\e[8;%d;%dt' $h $w
-}
-
-# history grep
-function hgrep {
-  # if [[ $1 == "-t" ]]; then
-  #   TODAY=$(date "+%Y-%m-%d"); shift;
-  #   if hash ag 2>/dev/null; then
-  #     # Use ag, if it exists
-  #     ag $1 ${HOME}/.bash-history-log/*${TODAY}*
-  #   else
-  #     # Fall back to good old grep
-  #     grep -i $1 ${HOME}/.bash-history-log/*${TODAY}*
-  #   fi
-  # else
-  #   # Use ag, if it exists
-    if hash ag 2>/dev/null; then
-      find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1"
-    else
-      # Fall back to good old grep
-      find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
-    fi
-  # fi
-}
-
 
 # See if we have the ag command
 if hash ag 2>/dev/null; then
   alias ag='\ag --pager=less'
 else
   alias ag='grep --recursive '
-fi
-
-# z from https://github.com/rupa/z
-if [ -e ${HOME}/.z.sh ]; then
-    . ${HOME}/.z.sh
 fi
 
 # Autocomplete
@@ -589,28 +365,16 @@ function _ssh()
 }
 complete -F _ssh ssh
 complete -F _ssh rtmux
-# complete -F _ssh rsync
-# complete -F _ssh scp
-
 
 # from https://gitlab.com/gnachman/iterm2/issues/4743
-# Next line gives all sorts of headaches... like C-c exits the shell?!?, so skip the ".isiterm.sh"
-# source ${HOME}/.isiterm.sh && source $HOME/.iterm2_shell_integration.bash
-# if [ -z ${COLORTERM+x} ]; then source $HOME/.iterm2_shell_integration.bash; fi
 export ITERM_ENABLE_SHELL_INTEGRATION_WITH_TMUX=yes
 source $HOME/.iterm2_shell_integration.bash
-# Color the GIT branch
-# PS1='\h:\W\[\e[1;34m\]$(parse_git_branch)\[\e[0m\] \u\$ '
 
 # No colors
-PS1='\h:\W$(parse_git_branch) \u\$ '
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
-PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
+# PS1='\h:\W$(parse_git_branch) \u\$ '
+# PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\][\@]{\u:\h}\W\#: '
+# PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\[\@\]{\u:\h$(parse_git_branch)}:\W\n\#: '
 PS1=$'\[\e]2;\h:\]$PWD\[\a\]\[\e]1;\]$(basename "$(dirname "$PWD")")/\W\[\a\]\@{\u:\h$(parse_git_branch)}:\W\n\#: '
-
-if [[ `hostname -s` = myst ]]; then
-    PS1='\h:\W$(parse_git_branch) \u: '
-fi
 
 # Homebrew setup
 if type brew &>/dev/null; then
@@ -624,39 +388,6 @@ if type brew &>/dev/null; then
   fi
 fi
 
-# mirror up to a remote server
-function mirror {
-  uname=$(uname)
-  tmp=$(mktemp)
-  for f in "$@"; do
-    p=$(realpath $f)
-    p=${p/Users/home}
-
-    
-    if [[ $uname == "Linux" ]]; then
-      printf 'rsync -arv "raildev1:%s" "%s"\n' "$(realpath $f)" "$p" >> $tmp
-    else
-      # printf 'rsync -arv "%s" "%s"\n' "$(realpath $f)" "$p"
-      printf "upload %s to %s\n" "$f" "raildev1:$p"
-      rsync -ar "$(realpath $f)" "raildev1:$p"
-    fi
-  done
-  if [[ $uname == "Linux" ]]; then
-    cat "$tmp"
-    rm -f "$tmp"
-  fi
-}
-
-function dl {
-  tmp=$(mktemp)
-  for f in "$@"; do
-    p=$(realpath $f)
-    p=${p/Users/home}
-    printf 'rsync -arv "raildev1:%s" "%s"\n' "$(realpath $f)" "." >> $tmp
-  done
-    cat "$tmp"
-    rm -f "$tmp"
-}
 
 # Any local customization?
 if [ -f $HOME/.bashrc_local ]; then
