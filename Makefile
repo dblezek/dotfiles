@@ -12,6 +12,7 @@ install: brew cheat
 	ln -sfn .dotfiles/bash/.iterm2_shell_integration.bash ${HOME}
 	ln -sfn .dotfiles/bash/.isiterm.sh ${HOME}
 	ln -sfn ../.dotfiles/ssh/config ${HOME}/.ssh
+	ln -sfn ${HOME}/.dotfiles/espanso/default.yml ${HOME}/Library/Preferences/espanso/
 	chmod 644 ${HOME}/.ssh/config
 
 ssh:
