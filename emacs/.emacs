@@ -17,40 +17,26 @@
 
 ;; Package manager
 (require 'package)
-
-;; (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-;;                     (not (gnutls-available-p))))
-;;        (proto (if no-ssl "http" "https")))
-;;   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-;;   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-;;   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-;;   (when (< emacs-major-version 24)
-;;     ;; For important compatibility libraries like cl-lib
-;;     (add-to-list 'package-archives '("gnu" . (concat proto "://elpa.gnu.org/packages/")))))
-
 (package-initialize)
 
-;; (add-to-list 'package-archives
-;;             '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
 
-
 ;; I want an easy command for opening new shells:
-(defun new-shell (name)
-  "Opens a new shell buffer with the given name in asterisks (*name*) in the current directory and changes the prompt to 'name>'."
-  (interactive "sName: ")
-  (pop-to-buffer (concat "*" name "*"))
-  (unless (eq major-mode 'shell-mode)
-    (shell (current-buffer))
-    (sleep-for 0 200)
-    (delete-region (point-min) (point-max))
-    (comint-simple-send (get-buffer-process (current-buffer)) 
-                        (concat "export PS1=\"\033[33m" name "\033[0m:\033[35m\\W\033[0m>\""))))
-(global-set-key (kbd "C-c s") 'new-shell)
+;; (defun new-shell (name)
+;;   "Opens a new shell buffer with the given name in asterisks (*name*) in the current directory and changes the prompt to 'name>'."
+;;   (interactive "sName: ")
+;;   (pop-to-buffer (concat "*" name "*"))
+;;   (unless (eq major-mode 'shell-mode)
+;;     (shell (current-buffer))
+;;     (sleep-for 0 200)
+;;     (delete-region (point-min) (point-max))
+;;     (comint-simple-send (get-buffer-process (current-buffer)) 
+;;                         (concat "export PS1=\"\033[33m" name "\033[0m:\033[35m\\W\033[0m>\""))))
+;; (global-set-key (kbd "C-c s") 'new-shell)
 
 
 (add-to-list 'load-path "~/.dotfiles/emacs/")
@@ -59,20 +45,20 @@
 (setq dnd-save-buffer-name nil)
 
 
-
-(defun load-history-filename-element (file-regexp)
-  "Get the first elt of `load-history' whose car matches FILE-REGEXP.
-Return nil if there isn't one."
-  (let* ((loads load-history)
-   (load-elt (and loads (car loads))))
-    (save-match-data
-      (while (and loads
-      (or (null (car load-elt))
-          (not (stringp (car load-elt)))
-          (not (string-match file-regexp (car load-elt)))))
-  (setq loads (cdr loads)
-        load-elt (and loads (car loads)))))
-    load-elt))
+;; 2021-01-12 Deprecated, but is it used?
+;; (defun load-history-filename-element (file-regexp)
+;;   "Get the first elt of `load-history' whose car matches FILE-REGEXP.
+;; Return nil if there isn't one."
+;;   (let* ((loads load-history)
+;;    (load-elt (and loads (car loads))))
+;;     (save-match-data
+;;       (while (and loads
+;;       (or (null (car load-elt))
+;;           (not (stringp (car load-elt)))
+;;           (not (string-match file-regexp (car load-elt)))))
+;;   (setq loads (cdr loads)
+;;         load-elt (and loads (car loads)))))
+;;     load-elt))
 
 (defun shell-command-on-buffer ()
   "Prompt for a shell command to run on the buffer, replacing the entire text
@@ -523,42 +509,50 @@ Return nil if there isn't one."
 (global-linum-mode)
 
 ;; open current buffer in a new frame(window)
-(global-set-key [?\C-x ?5 ?c]
-                '(lambda(newname display-flag)
-                   "Like `clone-indirect-buffer-other-window' but display in another frame."
-                   (interactive
-                    (gn
-                     (if (get major-mode 'no-clone-indirect)
-                         (error "Cannot indirectly clone a buffer in %s mode" mode-name))
-                     (list (if current-prefix-arg
-                               (read-buffer "Name of indirect buffer: " (current-buffer))) t)))
-                   (save-window-excursion
-                     (let ((newbuf (clone-indirect-buffer newname display-flag)))
-                       (switch-to-buffer-other-frame newbuf)
-                       )
-                     )
-                   )
-                )
+;; (global-set-key [?\C-x ?5 ?c]
+;;                 '(lambda(newname display-flag)
+;;                    "Like `clone-indirect-buffer-other-window' but display in another frame."
+;;                    (interactive
+;;                     (gn
+;;                      (if (get major-mode 'no-clone-indirect)
+;;                          (error "Cannot indirectly clone a buffer in %s mode" mode-name))
+;;                      (list (if current-prefix-arg
+;;                                (read-buffer "Name of indirect buffer: " (current-buffer))) t)))
+;;                    (save-window-excursion
+;;                      (let ((newbuf (clone-indirect-buffer newname display-flag)))
+;;                        (switch-to-buffer-other-frame newbuf)
+;;                        )
+;;                      )
+;;                    )
+;;                 )
 
 
 ;; Go configuration
-(setq gofmt-command "goimports")
-(defun my-go-mode-hook ()
-                                        ; Godef jump key binding
-  (local-set-key (kbd "M-.") 'godef-jump)
-  ;; Use goimports
-  ;; (setq gofmt-command "goimports")
-  ;; Call Gofmt before saving
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  ;; Kill by camel case
-  )
-(add-hook 'go-mode-hook 'my-go-mode-hook)
-(add-hook 'go-mode-hook 'subword-mode)
+;; (setq gofmt-command "goimports")
+;; (defun my-go-mode-hook ()
+;;                                         ; Godef jump key binding
+;;   (local-set-key (kbd "M-.") 'godef-jump)
+;;   ;; Use goimports
+;;   ;; (setq gofmt-command "goimports")
+;;   ;; Call Gofmt before saving
+;;   (add-hook 'before-save-hook 'gofmt-before-save)
+;;   ;; Kill by camel case
+;;   )
+;; (add-hook 'go-mode-hook 'my-go-mode-hook)
+;; (add-hook 'go-mode-hook 'subword-mode)
 
+;; Custom Keyboard mappings
 ;; Next / previous buffers
 (global-set-key (kbd "M-{") 'previous-buffer)
 (global-set-key (kbd "M-}") 'next-buffer)
-
+(global-set-key (kbd "M-c") 'kill-ring-save)
+(global-set-key (kbd "M-C") 'capitalize-word)
+(global-set-key (kbd "M-z") 'undo)
+;; keep the region selected when copying
+;; (defadvice kill-ring-save (after keep-transient-mark-active ())
+  ;; "Override the deactivation of the mark."
+  ;; (setq deactivate-mark nil))
+;; (ad-activate 'kill-ring-save)
 
 ;; Markdown mode should include visual-line-mode and flyspell mode
 (add-hook `markdown-mode-hook `flyspell-mode)
@@ -584,6 +578,7 @@ Return nil if there isn't one."
                               (files ("*.jpg" "*.png" "*.zip" "*~" "*.a" "*.class" "*.dcm"))))
 
   )
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -661,7 +656,7 @@ Return nil if there isn't one."
  '(org-startup-folded nil)
  '(org-startup-truncated nil)
  '(package-selected-packages
-   '(projectile exec-path-from-shell ag openwith zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
+   '(zzz-to-char projectile exec-path-from-shell ag openwith zenburn-theme solarized-theme monokai-theme ns-auto-titlebar yaml-mode which-key web-mode use-package try treemacs toml-mode terraform-mode super-save sqlite smart-mode-line rib-mode markdown-mode json-mode highlight-indent-guides helm-swoop helm-descbinds groovy-mode gradle-mode edit-indirect dockerfile-mode company-lua company-go company-ansible cmake-mode autopair auto-package-update))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(python-indent-guess-indent-offset t)

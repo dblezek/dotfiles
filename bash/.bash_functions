@@ -13,10 +13,13 @@ function dl () {
   # rsync --relative -r $* R5174775:./Downloads/
 }
 
-# make a directory and cd into it, never used
+# open using the markdown
 function md () {
-  mkdir -p "$1"
-  cd "$1"
+  if [[ -e "$1" ]]; then
+    open -a 'Marked 2' "$1"
+  else
+    printf 'file %s does not exist, cannot open\n' "$1"
+  fi
 }
 
 function dll () {
@@ -90,6 +93,20 @@ function hgrep {
       find ${HOME}/.bash-history-log/ -type f | sort | xargs grep -i "$1"
     fi
   # fi
+}
+
+# history grep
+function hzf {
+
+  search="$1"
+  # find ${HOME}/.bash-history-log/ -type f | sort | xargs ag --no-break --nonumbers --noheading "$search" | fzf
+  find ${HOME}/.bash-history-log/ -type f | sort | xargs ag --no-break --nonumbers --noheading --nofilename "$search"   | fzf --layout=reverse
+  if hash fzf 2>/dev/null; then
+    find ${HOME}/.bash-history-log/ -type f | sort | xargs ag "$1" | cut -d ' ' -f 5- | fzf --layout=reverse
+  else
+    # Fall back to good old less
+    hgrep "$1" | less
+  fi
 }
 
 # mirror up to a remote server

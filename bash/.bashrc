@@ -181,7 +181,7 @@ export HISTIGNORE="cd:exit:ls:bg:fg:rm:history:clear"
 # Have PROMPT_COMMAND log every command to a log file
 # https://spin.atomicobject.com/2016/05/28/log-bash-history/
 mkdir -p $HOME/.bash-history-log
-export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d-%H:%M") $(pwd) $(history 1)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
+export PROMPT_COMMAND='if [ "$(id -u)" -ne 0 ]; then echo "$(date "+%Y-%m-%d-%H:%M") $(pwd) $(history 1 | cut -c 8-)" >> ~/.bash-history-log/bash-history-$(date "+%Y-%m-%d").log; fi'
 
 # Java, choose the most recent
 if [[ -z ${JAVA_HOME+x} ]]; then
