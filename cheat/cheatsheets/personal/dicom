@@ -1,0 +1,23 @@
+# DICOM Connection information
+
+# raildev1
+# raildev1@raildev1.mayo.edu:11112
+
+# rail-dicom
+# RAIL_DICOM@rail-dicom.mayo.edu:11112
+
+# MCR
+# PRIV_SCP@dicom1.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_SCP dicom1.mayo.edu 4000
+echoscu -v -aet raildev1 -aec PRIV_SCP dicom1.mayo.edu 4000
+
+# MRA
+# PRIV_ARZ_SCP@mcamidprod.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_ARZ_SCP mcamidprod.mayo.edu 4000
+echoscu -v -aet raildev1 -aec PRIV_ARZ_SCP mcamidprod.mayo.edu 4000
+
+# MCF
+# PRIV_FLA_SCP@midmcfprod.mayo.edu:4000
+echoscu -v -aet RAIL_DICOM -aec PRIV_FLA_SCP midmcfprod.mayo.edu 4000
+echoscu -v -aet raildev1 -aec PRIV_FLA_SCP midmcfprod.mayo.edu 4000
+

@@ -28,3 +28,11 @@ matches:
         type: shell
         params:
           cmd: "echo Hello from your shell"
+
+  - trigger: ":cd"
+    replace: "Cheers,\n-dan\n"
+  - trigger: ":sd"
+    replace: "Sincerely,\n-dan\n"
+  - trigger: ":bd"
+    replace: "Best,\n-dan\n"
+    
