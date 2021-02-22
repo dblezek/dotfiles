@@ -12,6 +12,9 @@ trap 's=$?; printf "$0: Error on line %s command was:\n %s\n" "$LINENO" "$BASH_C
 # directory of current script
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+# find
+find . -name '*.dcm' -type f -print0 | while read -d $'\0' f; do echo $f; done
+
 # set defaults
 : ${AETITLE=PRIV_SCP}
 : ${HOST=dicom1.mayo.edu}

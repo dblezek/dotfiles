@@ -394,5 +394,20 @@ if [ -f $HOME/.bashrc_local ]; then
     . $HOME/.bashrc_local
 fi
 
+# Any local customization?
+if [ -f $HOME/.dotfiles/bash/tools.sh ]; then
+    . $HOME/.dotfiles/bash/tools.sh
+fi
 
+if [ -f $HOME/.dotfiles/bash/z.sh ]; then
+    . $HOME/.dotfiles/bash/z.sh
+fi
+  
+
+
+
+# SPINALCORDTOOLBOX (installed on 2021-02-10 07:32:50)
+export PATH="/Users/mra9161/Source/spinalcordtoolbox-5.1.0/bin:$PATH"
+export SCT_DIR=/Users/mra9161/Source/spinalcordtoolbox-5.1.0
+export MPLBACKEND=Agg
 

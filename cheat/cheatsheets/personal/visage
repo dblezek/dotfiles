@@ -4,6 +4,10 @@ tags: [ radiology, dicom, fast, mrgfus ]
 # -*- mode: sh -*-
 ---
 
+# DBSSTEALTH
+# DBSSTEALTH@romb01digi249757.mayo.edu:104
+echoscu --verbose  --call DBSSTEALTH romb01digi249757.mayo.edu 104
+
 # Visage only
 # VISAGE_ONLY@lbc-mcr-core.mayo.edu:11112
 dcmsend -v --call VISAGE_ONLY lbc-mcr-core.mayo.edu 11112 *.dcm

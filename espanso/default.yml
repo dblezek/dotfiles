@@ -35,4 +35,14 @@ matches:
     replace: "Sincerely,\n-dan\n"
   - trigger: ":bd"
     replace: "Best,\n-dan\n"
+  - trigger: ":td"
+    replace: "Thanks,\n-dan\n"
     
+    # "paste text", filter the clipboard through cat to make it plain text
+  - trigger: ":pt"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: "pbpaste | cat"
